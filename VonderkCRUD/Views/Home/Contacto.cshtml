@@ -1,0 +1,72 @@
+﻿@model VonderkCRUD.Models.EmailFormModel
+
+@{
+    ViewBag.Title = "Contacto";
+}
+
+
+
+<section id="mundo" class="bk-grey" data-easy-reveal="fade-in-up">
+    <div class="content">
+        <div class="categoria-min"><a href="#">Grupo Vonderk</a></div>
+        <h1>La empresa</h1>
+        <div class="descripcion info" data-easy-reveal="fade-in-up">
+            <p>
+                <strong>Vonderk</strong> es una empresa moderna, miembro de una multinacional con sede en Hong Kong. Se dedica a comercializar artefactos de iluminación led de alta gama.<br /><br />
+            </p>
+        </div>
+        <div class="container">
+
+            <h2>@ViewBag.Title.</h2>
+
+            @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <h4>Send your comments.</h4>
+        <hr />
+        <div class="form-group">
+            @Html.LabelFor(m => m.FromName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FromName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FromName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.FromPhone, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FromPhone, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FromPhone)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.FromEmail, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FromEmail, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FromEmail)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.FromCompany, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.FromCompany, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FromCompany)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Message, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.Message, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Message)
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Send" />
+            </div>
+        </div>
+}
+            <h2>@ViewBag.Message</h2>
+        </div>
+    </div>
+</section>
+

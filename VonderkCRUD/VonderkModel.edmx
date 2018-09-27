@@ -1,0 +1,421 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Categorias">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="Imagen" Type="nvarchar(max)" />
+          <Property Name="Orden" Type="int" />
+        </EntityType>
+        <EntityType Name="FichasTecnicas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Archivo" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Marcas">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="Imagen" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="ProductImages">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Orden" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Archivo" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Productoes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="DescripcionCorta" Type="nvarchar(max)" />
+          <Property Name="DescripcionLarga" Type="nvarchar(max)" />
+          <Property Name="Imagen" Type="nvarchar(max)" />
+          <Property Name="Caracteristicas" Type="nvarchar(max)" />
+          <Property Name="Garantia" Type="int" />
+          <Property Name="FichaTecnica" Type="nvarchar(max)" />
+          <Property Name="IES" Type="nvarchar(max)" />
+          <Property Name="MarcaID" Type="int" />
+          <Property Name="CategoriaID" Type="int" />
+          <Property Name="CodigoDeProd" Type="nvarchar(max)" />
+          <Property Name="CodProdCorregido" Type="nvarchar" MaxLength="150" />
+          <Property Name="Orden" Type="int" />
+        </EntityType>
+        <EntityType Name="SlidePrincipals">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="Trabajoes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar(max)" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="Imagen" Type="nvarchar(max)" />
+          <Property Name="NombreCorregido" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_Productoes_dbo_Categorias_CategoriaID">
+          <End Role="Categorias" Type="Self.Categorias" Multiplicity="0..1" />
+          <End Role="Productoes" Type="Self.Productoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Productoes">
+              <PropertyRef Name="CategoriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Productoes_dbo_Marcas_MarcaID">
+          <End Role="Marcas" Type="Self.Marcas" Multiplicity="0..1" />
+          <End Role="Productoes" Type="Self.Productoes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marcas">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Productoes">
+              <PropertyRef Name="MarcaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FichasTecnicas_ToProductoes">
+          <End Role="Productoes" Type="Self.Productoes" Multiplicity="1" />
+          <End Role="FichasTecnicas" Type="Self.FichasTecnicas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productoes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FichasTecnicas">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductImages_ToProductoes">
+          <End Role="Productoes" Type="Self.Productoes" Multiplicity="1" />
+          <End Role="ProductImages" Type="Self.ProductImages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Productoes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductImages">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FichasTecnicas" EntityType="Self.FichasTecnicas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Marcas" EntityType="Self.Marcas" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductImages" EntityType="Self.ProductImages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Productoes" EntityType="Self.Productoes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SlidePrincipals" EntityType="Self.SlidePrincipals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trabajoes" EntityType="Self.Trabajoes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Productoes_dbo_Categorias_CategoriaID" Association="Self.FK_dbo_Productoes_dbo_Categorias_CategoriaID">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Productoes" EntitySet="Productoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Productoes_dbo_Marcas_MarcaID" Association="Self.FK_dbo_Productoes_dbo_Marcas_MarcaID">
+            <End Role="Marcas" EntitySet="Marcas" />
+            <End Role="Productoes" EntitySet="Productoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FichasTecnicas_ToProductoes" Association="Self.FK_FichasTecnicas_ToProductoes">
+            <End Role="Productoes" EntitySet="Productoes" />
+            <End Role="FichasTecnicas" EntitySet="FichasTecnicas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductImages_ToProductoes" Association="Self.FK_ProductImages_ToProductoes">
+            <End Role="Productoes" EntitySet="Productoes" />
+            <End Role="ProductImages" EntitySet="ProductImages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Productoes" Relationship="Self.FK_dbo_Productoes_dbo_Categorias_CategoriaID" FromRole="Categorias" ToRole="Productoes" />
+          <Property Name="Orden" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Marca">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Productoes" Relationship="Self.FK_dbo_Productoes_dbo_Marcas_MarcaID" FromRole="Marcas" ToRole="Productoes" />
+        </EntityType>
+        <EntityType Name="Producto">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescripcionCorta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescripcionLarga" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Caracteristicas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Garantia" Type="Int32" />
+          <Property Name="FichaTecnica" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IES" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MarcaID" Type="Int32" />
+          <Property Name="CategoriaID" Type="Int32" />
+          <Property Name="CodigoDeProd" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Categoria" Relationship="Self.FK_dbo_Productoes_dbo_Categorias_CategoriaID" FromRole="Productoes" ToRole="Categorias" />
+          <NavigationProperty Name="Marca" Relationship="Self.FK_dbo_Productoes_dbo_Marcas_MarcaID" FromRole="Productoes" ToRole="Marcas" />
+          <Property Name="CodProdCorregido" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Orden" Type="Int32" />
+          <NavigationProperty Name="ProductImages" Relationship="Model.FK_ProductImages_ToProductoes" FromRole="Producto" ToRole="ProductImage" />
+          <NavigationProperty Name="FichasTecnicas" Relationship="Model.FK_FichasTecnicas_ToProductoes" FromRole="Producto" ToRole="FichasTecnica" />
+        </EntityType>
+        <Association Name="FK_dbo_Productoes_dbo_Categorias_CategoriaID">
+          <End Role="Categorias" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Productoes" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categorias">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Productoes">
+              <PropertyRef Name="CategoriaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Productoes_dbo_Marcas_MarcaID">
+          <End Role="Marcas" Type="Self.Marca" Multiplicity="0..1" />
+          <End Role="Productoes" Type="Self.Producto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Marcas">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Productoes">
+              <PropertyRef Name="MarcaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="VonderkEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categorias" EntityType="Self.Categoria" />
+          <EntitySet Name="Marcas" EntityType="Self.Marca" />
+          <EntitySet Name="Productoes" EntityType="Self.Producto" />
+          <AssociationSet Name="FK_dbo_Productoes_dbo_Categorias_CategoriaID" Association="Self.FK_dbo_Productoes_dbo_Categorias_CategoriaID">
+            <End Role="Categorias" EntitySet="Categorias" />
+            <End Role="Productoes" EntitySet="Productoes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Productoes_dbo_Marcas_MarcaID" Association="Self.FK_dbo_Productoes_dbo_Marcas_MarcaID">
+            <End Role="Marcas" EntitySet="Marcas" />
+            <End Role="Productoes" EntitySet="Productoes" />
+          </AssociationSet>
+          <EntitySet Name="SlidePrincipals" EntityType="Model.SlidePrincipal" />
+          <EntitySet Name="Trabajoes" EntityType="Model.Trabajo" />
+          <EntitySet Name="ProductImages" EntityType="Model.ProductImage" />
+          <AssociationSet Name="FK_ProductImages_ToProductoes" Association="Model.FK_ProductImages_ToProductoes">
+            <End Role="Producto" EntitySet="Productoes" />
+            <End Role="ProductImage" EntitySet="ProductImages" />
+          </AssociationSet>
+          <EntitySet Name="FichasTecnicas" EntityType="Model.FichasTecnica" />
+          <AssociationSet Name="FK_FichasTecnicas_ToProductoes" Association="Model.FK_FichasTecnicas_ToProductoes">
+            <End Role="Producto" EntitySet="Productoes" />
+            <End Role="FichasTecnica" EntitySet="FichasTecnicas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="SlidePrincipal">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Trabajo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NombreCorregido" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Archivo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Producto" Relationship="Model.FK_ProductImages_ToProductoes" FromRole="ProductImage" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK_ProductImages_ToProductoes">
+          <End Type="Model.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="Model.ProductImage" Role="ProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FichasTecnica">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Orden" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Archivo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Producto" Relationship="Model.FK_FichasTecnicas_ToProductoes" FromRole="FichasTecnica" ToRole="Producto" />
+        </EntityType>
+        <Association Name="FK_FichasTecnicas_ToProductoes">
+          <End Type="Model.Producto" Role="Producto" Multiplicity="1" />
+          <End Type="Model.FichasTecnica" Role="FichasTecnica" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Producto">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FichasTecnica">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="VonderkEntities2">
+          <EntitySetMapping Name="Categorias">
+            <EntityTypeMapping TypeName="Model.Categoria">
+              <MappingFragment StoreEntitySet="Categorias">
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Marcas">
+            <EntityTypeMapping TypeName="Model.Marca">
+              <MappingFragment StoreEntitySet="Marcas">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Productoes">
+            <EntityTypeMapping TypeName="Model.Producto">
+              <MappingFragment StoreEntitySet="Productoes">
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="CodProdCorregido" ColumnName="CodProdCorregido" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="DescripcionCorta" ColumnName="DescripcionCorta" />
+                <ScalarProperty Name="DescripcionLarga" ColumnName="DescripcionLarga" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Caracteristicas" ColumnName="Caracteristicas" />
+                <ScalarProperty Name="Garantia" ColumnName="Garantia" />
+                <ScalarProperty Name="FichaTecnica" ColumnName="FichaTecnica" />
+                <ScalarProperty Name="IES" ColumnName="IES" />
+                <ScalarProperty Name="MarcaID" ColumnName="MarcaID" />
+                <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
+                <ScalarProperty Name="CodigoDeProd" ColumnName="CodigoDeProd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SlidePrincipals">
+            <EntityTypeMapping TypeName="Model.SlidePrincipal">
+              <MappingFragment StoreEntitySet="SlidePrincipals">
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trabajoes">
+            <EntityTypeMapping TypeName="Model.Trabajo">
+              <MappingFragment StoreEntitySet="Trabajoes">
+                <ScalarProperty Name="NombreCorregido" ColumnName="NombreCorregido" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductImages">
+            <EntityTypeMapping TypeName="Model.ProductImage">
+              <MappingFragment StoreEntitySet="ProductImages">
+                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FichasTecnicas">
+            <EntityTypeMapping TypeName="Model.FichasTecnica">
+              <MappingFragment StoreEntitySet="FichasTecnicas">
+                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Orden" ColumnName="Orden" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

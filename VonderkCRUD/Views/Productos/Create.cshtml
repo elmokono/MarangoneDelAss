@@ -1,0 +1,455 @@
+﻿@model VonderkCRUD.Producto
+
+@{
+    ViewBag.Title = "Crear producto";
+}
+
+<script>
+    $(function () {
+
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+    });
+</script>
+
+<style>
+
+
+
+
+    #sortable {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 800px;
+    }
+
+        #sortable li {
+            margin: 3px 3px 3px 0;
+            padding: 1px;
+            float: left;
+            width: 200px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+            #sortable li span {
+                position: absolute;
+                margin-left: -1.3em;
+            }
+
+    .gallery {
+        margin-left: 100px;
+        width: 100%;
+    }
+
+    .fichasgallery {
+        width: 100%;
+    }
+
+    .testing {
+        padding: 20px;
+        margin: 20px;
+        border: solid brown 1px;
+    }
+
+    .demo {
+        width: 100%;
+    }
+</style>
+
+<h4>Crear un nuevo producto</h4>
+<hr />
+
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger alert-dismissable alert-dismissible">
+        <b>¡Error!</b> @ViewBag.Message
+    </div>
+}
+
+<div class="container">
+    <form role="form" method="post" action="/Productos/Create" enctype="multipart/form-data">
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.MarcaID, "MarcaID", htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.DropDownList("MarcaID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.MarcaID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.CategoriaID, "CategoriaID", htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoriaID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.CodigoDeProd, htmlAttributes: new { @class = "control-label col-md-2" })*
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.CodigoDeProd, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CodigoDeProd, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })*
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.DescripcionCorta, htmlAttributes: new { @class = "control-label col-md-2" })*
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.DescripcionCorta, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DescripcionCorta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.DescripcionLarga, htmlAttributes: new { @class = "control-label col-md-2" })*
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.DescripcionLarga, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DescripcionLarga, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Caracteristicas, htmlAttributes: new { @class = "control-label col-md-2" })*
+                </div>
+                <div class="col-75">
+                    @Html.TextAreaFor(model => model.Caracteristicas, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Caracteristicas, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Garantia, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Garantia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Garantia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*-----------------------------------------------/UPLOAD IMAGE TEST/------------------------------------------------------------------------------------------
+                 <div class="row">
+                     <div class="col-25">
+                         @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+                     </div>
+                     <div class="col-75">
+                         <input type="file" id="filesupload" name="filesupload" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar archivo">
+                     </div>
+                 </div>
+
+
+
+                ------------------------------------------------/END UPLOAD IMAGE TEST/-----------------------------------------------------------------------------------------*@
+
+            @*-----------------------------------------------/UPLOAD multiple IMAGE TEST/------------------------------------------------------------------------------------------*@
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    <input type="file" multiple="multiple" id="postedFiles" name="postedFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
+                </div>
+            </div>
+
+
+
+            @*------------------------------------------------/END multiple IMAGE TEST/-----------------------------------------------------------------------------------------*@
+
+
+
+            @*-----------------------------------------------/UPLOAD FICHA TECNICA TEST/------------------------------------------------------------------------------------------*@
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.FichaTecnica, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    <input type="file" multiple="multiple" id="filesuploadtecnica" name="filesuploadtecnica" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
+                </div>
+            </div>
+            @*------------------------------------------------/END UPLOAD FICHA TECNICA /-----------------------------------------------------------------------------------------*@
+
+
+            @*-----------------------------------------------/UPLOAD IES TEST/------------------------------------------------------------------------------------------*@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.IES, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    <input type="file" id="filesuploadies" name="filesuploadies" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar" multiple>
+                </div>
+            </div>
+
+            @*-----------------------------------------------/END UPLOAD IES TEST/------------------------------------------------------------------------------------------*@
+
+
+            <input id="hiddenField" name="hiddenField" type="hidden" value="">
+
+            <div class="demo">
+
+                <div class="gallery">
+                    <ul id="sortable" class="gallery"></ul>
+                </div>
+                <div class="fichasgallery">
+                    <div id='file-list-display'>
+
+                    </div>
+                </div>
+
+            </div><!-- End demo -->
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Crear producto" class="btn btn-success" />
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+
+
+
+
+<div style="padding-top: 150px">
+    @Html.ActionLink("Cancelar y volver al listado", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+}
+
+<script>
+
+
+    $(function () {
+
+
+
+        var $sortableList = $("#sortable");
+
+
+
+        // Multiple images preview in browser
+        var imagesPreview = function (input, placeToInsertImagePreview) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        var idx = $('li.text-preview').length;
+                        console.log(input.files[idx]);
+                        var p = $('<li class="text-preview ui-state-default" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
+                        $('<img width="100" height="100" class="img_class">').attr('src', event.target.result).appendTo(p);
+
+                    }
+                    reader.readAsDataURL(input.files[i]);
+
+                }
+
+
+            }
+
+        };
+
+        $('#postedFiles').on('change', function () {
+            $(".demo").prepend($('<h4>Arrastrar y soltar para cambiar el orden de las imagenes</h4>'));
+            $(".demo").prepend($('<hr/>'));
+
+            var files = $('#postedFiles')[0].files;
+            var totalSize = 0;
+
+            for (var i = 0; i < files.length; i++) {
+                // calculate total size of all files
+                totalSize += files[i].size;
+            }
+            //1x10^9 = 1 GB
+            //var sizeInGb = totalSize / 1000000000;
+            if (totalSize < 10485760) {
+                imagesPreview(this, 'ul.gallery');
+            } else {
+
+                alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
+                window.location.reload(true);
+            }
+
+
+
+        });
+
+        $('#filesuploadtecnica').on('change', function () {
+
+
+            var files = $('#filesuploadtecnica')[0].files;
+            var totalSize = 0;
+
+            for (var i = 0; i < files.length; i++) {
+                // calculate total size of all files
+                totalSize += files[i].size;
+            }
+            //1x10^9 = 1 GB
+            //var sizeInGb = totalSize / 1000000000;
+            if (totalSize > 10485760) {
+                alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
+
+            }
+
+
+        });
+
+
+        $('#filesuploadies').on('change', function () {
+
+            var files = $('#filesuploadies')[0].files;
+            var totalSize = 0;
+
+            for (var i = 0; i < files.length; i++) {
+                // calculate total size of all files
+                totalSize += files[i].size;
+            }
+            //1x10^9 = 1 GB
+            //var sizeInGb = totalSize / 1000000000;
+            if (totalSize > 10485760) {
+                alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
+
+            }
+
+        });
+
+        //$('#selector').change(function () {
+        //    alert($('#selector').val());
+        //});
+
+        //$('#selector').on('change keydown paste input propertychange click keyup blur', handler);
+
+        var listValues = [];
+
+        var sortEventHandler = function (event, ui) {
+
+            console.log("New sort order!");
+
+
+
+            var listElements = $sortableList.children();
+            var listOrder = [];
+
+            console.log(listElements); // [ <li>, <li>, ... ]
+
+            listElements.each(function (index, element) {
+                listValues.push(element.innerText);
+                listOrder.push($(element).data('name'));
+            });
+
+            var myJSON = JSON.stringify(listOrder);
+
+            document.getElementById("hiddenField").value = myJSON;
+
+        };
+
+        $sortableList.sortable({
+            stop: sortEventHandler
+        });
+
+        console.log(listValues); // [ "Item 1", "Item 2", ... ]
+
+
+
+    });
+
+
+    //----------------------------------------------------NEW MULTIPLE FICHA TECNICA
+
+
+    (function () {
+        //var fileCatcher = document.getElementById('file-catcher');
+        var fileInput = document.getElementById('filesuploadtecnica');
+        var fileListDisplay = document.getElementById('file-list-display');
+
+        var fileList = [];
+        var renderFileList, sendFile;
+
+        //fileCatcher.addEventListener('submit', function (evnt) {
+        //    evnt.preventDefault();
+        //    fileList.forEach(function (file) {
+        //        sendFile(file);
+        //    });
+        //});
+
+
+        fileInput.addEventListener('change', function (evnt) {
+            fileList = [];
+            for (var i = 0; i < fileInput.files.length; i++) {
+                fileList.push(fileInput.files[i]);
+            }
+            renderFileList();
+        });
+
+        renderFileList = function () {
+            fileListDisplay.innerHTML = '';
+            fileList.forEach(function (file, index) {
+                var fileDisplayEl = document.createElement('p');
+                fileDisplayEl.setAttribute("class", "testing col-25")
+                fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" id="selector">';
+                fileListDisplay.appendChild(fileDisplayEl);
+            });
+        };
+
+
+
+        //#selector.oninput = function () {
+        //    //result.innerHTML = input.value;
+        //    alert(input.value);
+        //};
+
+
+
+
+
+    })();
+
+</script>

@@ -1,0 +1,92 @@
+﻿@model VonderkWEB.Models.ProductDetailsViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4> @Model.Producto.Nombre</h4>
+    <hr />
+   
+
+    @foreach (string item in Model.OrderedImages)
+    {
+
+        <div class="item"><img src="/Images/@item" style="height:160px" alt="1"></div>
+
+    }
+
+
+    @foreach (var item in Model.OrderedFichas)
+    {
+
+        <div class="item">@item.Nombre || @item.Archivo</div>
+
+    }
+
+    @foreach (var item in Model.OrderedIES)
+    {
+
+        <div class="item">@item.Nombre || @item.Archivo</div>
+
+    }
+
+
+
+    @*<dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Nombre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Descripcion)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Caracteristicas)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Caracteristicas)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.CodigoDeProducto)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.CodigoDeProducto)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Categoria.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Categoria.Nombre)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Marca.Nombre)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Marca.Nombre)
+                </dd>
+
+            </dl>
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>*@

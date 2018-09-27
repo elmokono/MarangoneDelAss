@@ -1,0 +1,222 @@
+﻿@model VonderkCRUD.Trabajo
+
+@{
+    /**/
+
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+
+<style>
+
+    #sortable {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 800px;
+    }
+
+        #sortable li {
+            margin: 3px 3px 3px 0;
+            padding: 1px;
+            float: left;
+            width: 200px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+            #sortable li span {
+                position: absolute;
+                margin-left: -1.3em;
+            }
+
+    .gallery {
+        margin-left: 100px;
+    }
+</style>
+@{
+
+    string buildPath = "~/Images/Trabajos/" + Model.NombreCorregido + "/";
+    string folderPath = Server.MapPath(buildPath);
+    string[] files = Directory.GetFiles(folderPath);
+
+}
+
+
+<div class="container">
+    <form role="form" method="post" action="/Trabajos/Edit" enctype="multipart/form-data">
+
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <h4>Trabajo</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.NombreCorregido)
+            @*<div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+            @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.TextAreaFor(model => model.Descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Descripcion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    <input type="file" id="postedFiles" name="postedFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Find file" multiple>
+                </div>
+            </div>
+
+            <input id="hiddenField" name="hiddenField" type="hidden" value="@Model.Imagen">
+            <div class="demo">
+
+                <div class="gallery">
+                    <ul id="sortable" class="gallery">
+                        @foreach (string item in files)
+                {
+
+                    <li class=" ui-state-default" data-name="@Path.GetFileName(item)"><img src="~/Images/Trabajos/@Model.NombreCorregido/@Path.GetFileName(item)" style="height:160px" alt="1"></li>
+
+        }
+
+                    </ul>
+                </div>
+
+            </div><!-- End demo -->
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar cambios" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+
+<script>
+
+
+    $(function () {
+
+
+
+        var $sortableList = $("#sortable");
+
+
+
+        // Multiple images preview in browser
+        var imagesPreview = function (input, placeToInsertImagePreview) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        var idx = $('li.text-preview').length;
+                        console.log(input.files[idx]);
+                        var p = $('<li class="text-preview ui-state-default" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
+
+                        $('<img width="100" height="100" class="img_class">').attr('src', event.target.result).appendTo(p);
+
+                    }
+                    reader.readAsDataURL(input.files[i]);
+
+                }
+
+
+
+            }
+
+        };
+
+
+        $('#postedFiles').on('change', function () {
+            $(".demo").prepend($('<h4>Arrastrar y soltar para cambiar el orden de las imagenes</h4>'));
+            $(".demo").prepend($('<hr/>'));
+
+            imagesPreview(this, 'ul.gallery');
+
+
+
+        });
+
+        var listValues = [];
+
+        var sortEventHandler = function (event, ui) {
+
+            console.log("New sort order!");
+
+
+
+            var listElements = $sortableList.children();
+            var listOrder = [];
+
+            console.log(listElements); // [ <li>, <li>, ... ]
+
+            listElements.each(function (index, element) {
+                listValues.push(element.innerText);
+                listOrder.push($(element).data('name'));
+            });
+
+            var myJSON = JSON.stringify(listOrder);
+
+            document.getElementById("hiddenField").value = myJSON;
+
+        };
+
+        $sortableList.sortable({
+            stop: sortEventHandler
+        });
+
+        console.log(listValues); // [ "Item 1", "Item 2", ... ]
+
+
+
+    });
+
+
+</script>

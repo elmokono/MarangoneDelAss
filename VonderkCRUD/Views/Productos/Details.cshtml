@@ -1,0 +1,134 @@
+﻿@using VonderkCRUD.Models
+@model ProductViewModel
+
+@{
+
+
+    ViewBag.Title = "Details";
+}
+
+
+<section class="top-space">
+    <div class="content">
+        <div class="volver"><a href="javascript:window.history.back();">< Volver </a></div>
+        <div class="categoria-min"><a href="#"> @Html.DisplayFor(model => Model.Producto.Categoria.Nombre) </a></div>
+
+        <h1> Erna </h1>
+
+
+        <div class="producto-fotos">
+
+            <div id="owl-demo-product" class="owl-carousel owl-theme">
+             
+
+                @foreach (string item in Model.OrderedImages)
+    {
+           
+            <div class="item"><img src="@item" style="height:560px" alt="1"></div>
+
+}
+
+            </div>
+
+        </div>
+        <div class="descripcion info" data-easy-reveal="fade-in-up">
+            <p>
+                @Html.DisplayFor(model => Model.Producto.DescripcionCorta)<br />
+                <strong>CÓDIGO:</strong> @Html.DisplayFor(model => Model.Producto.CodigoDeProd)
+            </p>
+        </div>
+        <div class="caracteristicas info" data-easy-reveal="fade-in-up">
+            <h2>Características</h2>
+            @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Producto.Caracteristicas))
+        </div>
+    </div>
+</section>
+<section class="bk-grey" data-easy-reveal="fade-in-up">
+    <div class="content">
+        <div class="docs info">
+            <div class="col-docs">
+                <h2>ies</h2>
+                <a href="~/IES/@Model.Producto.IES"><img src="~/Images/Icons/ico-ies.png" alt="IES" /></a>
+            </div>
+            <div class="col-docs">
+                <h2>ficha técnica</h2>
+                <a href="~/Fichas/@Model.Producto.FichaTecnica"><img src="~/Images/Icons/ico-ficha.png" alt="IES" /></a>
+            </div>
+            <div class="col-docs">
+                <h2>garantía</h2>
+                <h2> @Html.DisplayFor(model => Model.Producto.Garantia) años</h2>
+
+            </div>
+        </div>
+    </div>
+</section>
+<section class="related-products" data-easy-reveal="fade-in-up">
+    <div class="content">
+        <h1 data-easy-reveal="fade-in-up">Productos</h1>
+
+        <div class="product-list" data-easy-reveal="fade-in-up">
+
+            <ul>
+
+                @foreach (var item in Model.RelatedProducts)
+                {
+
+                    string s = item.Imagen;
+                    int index = s.IndexOf(',');
+                    string first = null;
+                    if (index != -1)
+                    {
+                        first = s.Substring(0, index);
+                    }
+                    else
+                    {
+                        first = s;
+                    }
+
+
+
+            <li class="@Html.DisplayFor(modelItem => item.Categoria.Nombre)"><a href="@Url.Action("Details", "Productos", new {id= item.ID})"><img src="~/Images/Productos/@item.CodProdCorregido/@first" width="100" height="100" /><span>@Html.DisplayFor(modelItem => item.Nombre)</span></a></li>
+
+}
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+
+
+
+        $("#owl-demo-product").owlCarousel({
+
+            dots: false,
+            loop: true,
+            //slideSpeed : 200,
+            //paginationSpeed : 900,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            //autoplayHoverPause:true,
+            autoWidth: true,
+            items: 3,
+            margin: 10,
+
+        });
+
+
+    });
+
+
+
+
+</script>
+

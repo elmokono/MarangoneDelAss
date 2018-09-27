@@ -1,0 +1,243 @@
+﻿@model IEnumerable<VonderkCRUD.Categoria>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+
+<style>
+    #sortable {
+        list-style-type: none;
+        padding: 0;
+        width: 60%;
+    }
+
+        #sortable li {
+            margin: 0 3px 3px 3px;
+            padding: 0.4em;
+            padding-left: 1.5em;
+            font-size: 1.1em;
+        }
+
+            #sortable li span {
+                position: absolute;
+                margin-left: -1.3em;
+            }
+</style>
+
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Imagen)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @{
+                    UriBuilder UriBuilder = new UriBuilder("http", "localhost", 55553, "/IMG/Categorias/");
+
+                }
+                <img src="@Html.Raw(UriBuilder.ToString() + item.Imagen)" alt="Photo" width="100" height="100" />
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+
+<div class="demo">
+
+    <h2>Arrastrar y soltar para cambiar el orden del listado</h2>
+
+    <ul id="sortable">
+
+        @foreach (var item in Model)
+        {
+            <li class="ui-state-default"> @Html.DisplayFor(modelItem => item.Nombre)</li>
+
+
+        }
+
+
+    </ul>
+
+
+    <button type="button" onclick="display_array();">Re-ordenar lista!</button>
+
+
+
+</div><!-- End demo -->
+
+<script>
+
+    $(function () {
+
+        //-------------step 1
+        var $sortableList = $("#sortable");
+
+        var sortEventHandler = function (event, ui) {
+            console.log("New sort order!");
+
+        };
+
+        $sortableList.sortable({
+            stop: sortEventHandler
+        });
+
+        // You can also set the event handler on an already existing Sortable widget this way:
+
+        $sortableList.on("sortchange", sortEventHandler);
+
+        //-------------step 2
+
+
+
+
+        var listElements = $sortableList.children();
+
+        console.log(listElements); // [ <li>, <li>, ... ]
+
+        var listValues = [];
+
+        //$( "li" ).each( function( index, element ){
+        //console.log( $( this ).text() );
+        //listValues.push(element.innerText);
+        //listValues.push($( this ).text());
+        //});
+
+
+        //$( "li" ).each( function( index, element ){
+        //console.log( $( this ).text() );
+        //});
+
+        listElements.each(function (index, element) {
+            //listElements.forEach(function(element){
+            listValues.push(element.innerText);
+        });
+
+        //listElements.each(function(element){
+        //listElements.forEach(function(element){
+        //listValues.push(element.innerText);
+        //});
+
+        console.log(listValues); // [ "Item 1", "Item 2", ... ]
+
+
+    });
+
+
+    function display_array() {
+
+        //-------------step 1
+        var $sortableList = $("#sortable");
+
+        var sortEventHandler = function (event, ui) {
+            console.log("New sort order!");
+
+        };
+
+        $sortableList.sortable({
+            stop: sortEventHandler
+        });
+
+        // You can also set the event handler on an already existing Sortable widget this way:
+
+        $sortableList.on("sortchange", sortEventHandler);
+
+        //-------------step 2
+
+
+
+
+        var listElements = $sortableList.children();
+
+        console.log(listElements); // [ <li>, <li>, ... ]
+
+        var listValues = [];
+
+        //$( "li" ).each( function( index, element ){
+        //console.log( $( this ).text() );
+        //listValues.push(element.innerText);
+        //listValues.push($( this ).text());
+        //});
+
+
+        //$( "li" ).each( function( index, element ){
+        //console.log( $( this ).text() );
+        //});
+        var listValues = [];
+        listElements.each(function (index, element) {
+            //listElements.forEach(function(element){
+            listValues.push(element.innerText);
+        });
+
+        //listElements.each(function(element){
+        //listElements.forEach(function(element){
+        //listValues.push(element.innerText);
+        //});
+
+        console.log(listValues); // [ "Item 1", "Item 2", ... ]
+
+
+        //-------------step 3
+
+
+        //-------------step 3
+        var serviceURL = '/Categorias/FirstAjax';
+
+        $.ajax({
+            type: "POST",
+            url: serviceURL,
+            data: { listValues: listValues },
+            success: successFunc,
+            error: errorFunc
+        });
+
+        function successFunc(data, status) {
+            alert(data);
+        }
+
+        function errorFunc() {
+            alert('error');
+        }
+
+    }
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+

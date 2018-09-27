@@ -1,0 +1,509 @@
+﻿@using VonderkCRUD.Models
+@model ProductViewModel
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+<style>
+
+    #sortable {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 800px;
+    }
+
+        #sortable li {
+            margin: 3px 3px 3px 0;
+            padding: 1px;
+            float: left;
+            width: 200px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+            #sortable li span {
+                position: absolute;
+                margin-left: -1.3em;
+            }
+
+    .gallery {
+        margin-left: 100px;
+    }
+</style>
+@{
+
+    string buildPath = "~/Images/Productos/" + Model.Producto.CodProdCorregido + "/";
+    string folderPath = Server.MapPath(buildPath);
+    string[] files = Directory.GetFiles(folderPath);
+
+}
+
+
+<h2>Editar</h2>
+
+@if (!String.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger alert-dismissable alert-dismissible">
+        <b>¡Error!</b> @ViewBag.Message
+    </div>
+}
+
+<div class="container">
+    <form role="form" method="post" action="/Productos/Edit" enctype="multipart/form-data">
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <h4>Producto: <b>@Model.Producto.Nombre</b></h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Producto.ID)
+
+
+
+            @* <div class="form-group">
+            @Html.LabelFor(model => model.MarcaID, "MarcaID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("MarcaID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.MarcaID, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+            @*<div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.MarcaID, "MarcaID", htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.DropDownList("MarcaID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Producto.MarcaID, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.MarcaID, "MarcaID", htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                  
+                    @Html.DropDownListFor(model => model.Producto.MarcaID, ViewBag.MarcaID as SelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Producto.MarcaID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+           
+            @* <div class="form-group">
+            @Html.LabelFor(model => model.CategoriaID, "CategoriaID", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoriaID, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.CategoriaID, "CategoriaID", htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @*@Html.DropDownList("CategoriaID", null, htmlAttributes: new { @class = "form-control" })*@
+                    @Html.DropDownListFor(model => model.Producto.CategoriaID, ViewBag.CategoriaID as SelectList, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Producto.CategoriaID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+        <div class="col-25">
+            @Html.LabelFor(model => model.Producto.CategoriaID, htmlAttributes: new { @class = "control-label col-md-2" })
+        </div>
+        <div class="col-md-75">
+                @Html.DropDownListFor(model => model.Producto.CategoriaID, null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Producto.CategoriaID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+            @* <div class="form-group">
+            @Html.LabelFor(model => model.CodigoDeProd, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CodigoDeProd, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CodigoDeProd, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.CodigoDeProd, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Producto.CodigoDeProd, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    @Html.ValidationMessageFor(model => model.Producto.CodigoDeProd, "", new { @class = "text-danger" })
+
+                </div>
+            </div>
+
+
+            @* <div class="form-group">
+            @Html.LabelFor(model => model.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nombre, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.Nombre, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Producto.Nombre, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Producto.Nombre, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            @* <div class="form-group">
+            @Html.LabelFor(model => model.DescripcionCorta, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DescripcionCorta, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DescripcionCorta, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.DescripcionCorta, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Producto.DescripcionCorta, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Producto.DescripcionCorta, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            @* <div class="form-group">
+            @Html.LabelFor(model => model.DescripcionLarga, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DescripcionLarga, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DescripcionLarga, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.DescripcionLarga, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Producto.DescripcionLarga, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Producto.DescripcionLarga, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+
+            @*<div class="form-group">
+            @Html.LabelFor(model => model.Caracteristicas, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Caracteristicas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Caracteristicas, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.Caracteristicas, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.TextAreaFor(model => model.Producto.Caracteristicas, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Producto.Caracteristicas, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+            @Html.LabelFor(model => model.Garantia, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Garantia, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Garantia, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.Garantia, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Producto.Garantia, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Producto.Garantia, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            @*-----------------------------------------------/UPLOAD IMAGE TEST/------------------------------------------------------------------------------------------*@
+
+            @* <div class="form-group">
+            @Html.LabelFor(model => model.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" id="filesupload" name="filesupload" data-buttonname="btn-primary" data-input="false" data-buttontext="Find file" multiple>
+            </div>
+        </div> *@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.Imagen, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    <input type="file" id="postedFiles" name="postedFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Find file" multiple>
+                </div>
+            </div>
+            @*-----------------------------------------------/ END UPLOAD IMAGE TEST/------------------------------------------------------------------------------------------*@
+
+            @*-----------------------------------------------/UPLOAD FICHA TECNICA TEST/------------------------------------------------------------------------------------------*@
+
+            @* <div class="form-group">
+            @Html.LabelFor(model => model.FichaTecnica, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FichaTecnica, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FichaTecnica, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.FichaTecnica, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    <input type="file" id="filesuploadtecnica" name="filesuploadtecnica" data-buttonname="btn-primary" data-input="false" data-buttontext="Find file" multiple>
+                </div>
+            </div>
+            @*-----------------------------------------------/END UPLOAD FICHA TECNICA TEST/------------------------------------------------------------------------------------------*@
+
+            @*-----------------------------------------------/UPLOAD IES TEST/------------------------------------------------------------------------------------------*@
+
+            @*<div class="form-group">
+            @Html.LabelFor(model => model.IES, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.IES, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IES, "", new { @class = "text-danger" })
+            </div>
+        </div> *@
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Producto.IES, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+                <div class="col-75">
+                    <input type="file" id="filesuploadies" name="filesuploadies" data-buttonname="btn-primary" data-input="false" data-buttontext="Find file" multiple>
+                </div>
+            </div>
+            @*-----------------------------------------------/UPLOAD IES TEST/------------------------------------------------------------------------------------------*@
+
+            <input id="hiddenField" name="hiddenField" type="hidden" value="@Model.Producto.Imagen">
+
+            <div class="demo">
+
+                <div class="gallery">
+                    <ul id="sortable" class="gallery">
+                        @*@foreach (string item in files)
+                    {
+
+                        <li class=" ui-state-default" data-name="@Path.GetFileName(item)"><img src="~/Images/Productos/@Model.CodProdCorregido/@Path.GetFileName(item)" style="height:160px" alt="1"></li>
+
+                    }*@
+                        @foreach (string item in Model.OrderedImages)
+                {
+
+                    <li class=" ui-state-default" data-name="@Path.GetFileName(item)"><img src="@item" style="height:160px" alt="1"></li>
+
+        }
+
+                    </ul>
+                </div>
+
+            </div><!-- End demo -->
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Guardar cambios" class="btn btn-success" />
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+
+</div>
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script>
+
+
+
+
+    $(function () {
+
+        //var uploadField = document.getElementById("postedFiles");
+
+        //uploadField.onchange = function () {
+        //    if (this.files[0].size > 10485760) {
+        //        alert("File is too big!");
+        //        this.value = "";
+        //    };
+        //};
+
+        var $sortableList = $("#sortable");
+
+
+
+        // Multiple images preview in browser
+        var imagesPreview = function (input, placeToInsertImagePreview) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        var idx = $('li.text-preview').length;
+                        console.log(input.files[idx]);
+                        var p = $('<li class="text-preview ui-state-default" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
+
+                        $('<img height="160" class="img_class">').attr('src', event.target.result).appendTo(p);
+
+                    }
+                    reader.readAsDataURL(input.files[i]);
+
+                }
+
+
+
+            }
+
+        };
+
+
+        var fileCount = 0;
+
+        var showFileCount = function () {
+            $('#file_count').text('# Files selected: ' + fileCount);
+        };
+
+       
+
+        $('#postedFiles').on('change', function () {
+            $(".demo").prepend($('<h4>Arrastrar y soltar para cambiar el orden de las imagenes</h4>'));
+            $(".demo").prepend($('<hr/>'));
+              
+                var files = $('#postedFiles')[0].files;
+                var totalSize = 0;
+
+                for (var i = 0; i < files.length; i++) {
+                    // calculate total size of all files        
+                    totalSize += files[i].size;
+                }
+                //1x10^9 = 1 GB
+                //var sizeInGb = totalSize / 1000000000;
+                if (totalSize < 10485760) {
+                    imagesPreview(this, 'ul.gallery');
+                } else {
+                    
+                    alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
+                    window.location.reload(true);
+                }
+               
+              
+
+        });
+
+        $('#filesuploadtecnica').on('change', function () {
+       
+
+            var files = $('#filesuploadtecnica')[0].files;
+            var totalSize = 0;
+
+            for (var i = 0; i < files.length; i++) {
+                // calculate total size of all files        
+                totalSize += files[i].size;
+            }
+            //1x10^9 = 1 GB
+            //var sizeInGb = totalSize / 1000000000;
+            if (totalSize > 10485760) {
+                alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
+                
+            } 
+
+
+        });
+
+
+        $('#filesuploadies').on('change', function () {
+
+
+            var files = $('#filesuploadies')[0].files;
+            var totalSize = 0;
+
+            for (var i = 0; i < files.length; i++) {
+                // calculate total size of all files        
+                totalSize += files[i].size;
+            }
+            //1x10^9 = 1 GB
+            //var sizeInGb = totalSize / 1000000000;
+            if (totalSize > 10485760) {
+                alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
+                
+            }
+
+
+        });
+
+        var listValues = [];
+
+        var sortEventHandler = function (event, ui) {
+
+            console.log("New sort order!");
+
+
+
+            var listElements = $sortableList.children();
+            var listOrder = [];
+
+            console.log(listElements); // [ <li>, <li>, ... ]
+
+            listElements.each(function (index, element) {
+                listValues.push(element.innerText);
+                listOrder.push($(element).data('name'));
+            });
+
+            var myJSON = JSON.stringify(listOrder);
+
+            document.getElementById("hiddenField").value = myJSON;
+
+        };
+
+        $sortableList.sortable({
+            stop: sortEventHandler
+        });
+
+        console.log(listValues); // [ "Item 1", "Item 2", ... ]
+
+
+
+    });
+
+
+</script>

@@ -1,0 +1,107 @@
+﻿@using VonderkCRUD.Models
+@model TrabajoViewModel
+
+@{
+
+
+    ViewBag.Title = "Details";
+}
+
+
+<section class="top-space">
+    <div class="content">
+        <div class="volver"><a href="javascript:window.history.back();">< Volver </a></div>
+        <h1> @Html.DisplayFor(model => Model.Trabajo.Nombre)  </h1>
+    </div>
+    <div class="producto-fotos">
+        <div id="owl-demo-product" class="owl-carousel owl-theme">
+
+
+            @foreach (string item in Model.OrderedImages)
+        {
+
+            <div class="item"><img src="@item" style="height:560px" alt="1"></div>
+
+    }
+
+        </div>
+    </div>
+    <div class="content">
+        <div class="caracteristicas info" data-easy-reveal="fade-in-up">
+            <h2>Descripción</h2>
+            @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Trabajo.Descripcion))
+        </div>
+    </div>
+</section>
+
+
+
+<section class="related-products" data-easy-reveal="fade-in-up">
+    <div class="content">
+        <h1 data-easy-reveal="fade-in-up">Productos</h1>
+
+        <div class="product-list" data-easy-reveal="fade-in-up">
+
+            <ul>
+
+                @foreach (var item in Model.RelatedTrabajos)
+                {
+
+                    string s = item.Imagen;
+                    int index = s.IndexOf(',');
+                    string first = null;
+                    if (index != -1)
+                    {
+                        first = s.Substring(0, index);
+                    }
+                    else
+                    {
+                        first = s;
+                    }
+
+
+                    <li class="@Html.DisplayFor(modelItem => item.Nombre)"><a href="@Url.Action("Details", "Trabajos", new {id= item.ID})"><img src="~/Images/Trabajos/@item.NombreCorregido/@first" width="100" height="100" /><span>@Html.DisplayFor(modelItem => item.Nombre)</span></a></li>
+
+                }
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+
+
+
+        $("#owl-demo-product").owlCarousel({
+
+            dots: false,
+            loop: true,
+            //slideSpeed : 200,
+            //paginationSpeed : 900,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            //autoplayHoverPause:true,
+            autoWidth: true,
+            items: 3,
+            margin: 10,
+
+        });
+
+
+    });
+
+
+
+
+</script>
+
