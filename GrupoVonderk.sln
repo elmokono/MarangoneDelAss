@@ -8,6 +8,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VonderkWEB", "VonderkWEB\VonderkWEB.csproj", "{41306D0C-6516-4FF1-9695-3CD8AE178C1A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{B25AA5F2-E69A-482E-808E-03221B25593B}"
+	ProjectSection(SolutionItems) = preProject
+		dummy.txt = dummy.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
