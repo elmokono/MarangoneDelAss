@@ -12,19 +12,26 @@ namespace VonderkWEB.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Trabajo
+    public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Trabajo()
+        public Product()
         {
-            this.ImagenTrabajoes = new HashSet<ImagenTrabajo>();
+            this.ProductAssets = new HashSet<ProductAsset>();
         }
     
-        public int ID { get; set; }
-        public string Nombre { get; set; }
-        public string Descripcion { get; set; }
+        public int ProductID { get; set; }
+        public int BrandID { get; set; }
+        public int CategoryID { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Features { get; set; }
+        public string ProductCode { get; set; }
+        public bool IsActive { get; set; }
     
+        public virtual Brand Brand { get; set; }
+        public virtual Category Category { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ImagenTrabajo> ImagenTrabajoes { get; set; }
+        public virtual ICollection<ProductAsset> ProductAssets { get; set; }
     }
 }

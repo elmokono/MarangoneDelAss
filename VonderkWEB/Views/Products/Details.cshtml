@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4> @Model.Producto.Nombre</h4>
+    <h4> @Model.Product.Name</h4>
     <hr />
    
 
@@ -22,14 +22,14 @@
     @foreach (var item in Model.OrderedFichas)
     {
 
-        <div class="item">@item.Nombre || @item.Archivo</div>
+        <div class="item">@item.Name || @item.FileName</div>
 
     }
 
     @foreach (var item in Model.OrderedIES)
     {
 
-        <div class="item">@item.Nombre || @item.Archivo</div>
+        <div class="item">@item.Name || @item.FileName</div>
 
     }
 
@@ -37,51 +37,51 @@
 
     @*<dl class="dl-horizontal">
                 <dt>
-                    @Html.DisplayNameFor(model => model.Nombre)
+                    @Html.DisplayNameFor(model => model.Name)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Nombre)
+                    @Html.DisplayFor(model => model.Name)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Descripcion)
+                    @Html.DisplayNameFor(model => model.Description)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Descripcion)
+                    @Html.DisplayFor(model => model.Description)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Caracteristicas)
+                    @Html.DisplayNameFor(model => model.Features)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Caracteristicas)
+                    @Html.DisplayFor(model => model.Features)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.CodigoDeProducto)
+                    @Html.DisplayNameFor(model => model.ProductCode)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.CodigoDeProducto)
+                    @Html.DisplayFor(model => model.ProductCode)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Categoria.Nombre)
+                    @Html.DisplayNameFor(model => model.Category.Name)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Categoria.Nombre)
+                    @Html.DisplayFor(model => model.Category.Name)
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Marca.Nombre)
+                    @Html.DisplayNameFor(model => model.Brand.Name)
                 </dt>
 
                 <dd>
-                    @Html.DisplayFor(model => model.Marca.Nombre)
+                    @Html.DisplayFor(model => model.Brand.Name)
                 </dd>
 
             </dl>
