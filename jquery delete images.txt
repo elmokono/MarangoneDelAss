@@ -1,0 +1,15 @@
+<li class="asset ui-state-default ui-sortable-handle" data-id="1" data-name="3VKNBAGELP.jpg"><img src="/Images/Productos/VKNBAGELP/3VKNBAGELP.jpg" style="height:160px" alt="1"></li>
+
+
+
+
+
+
+
+<button onclick="remove(@item.assetID)" ....>
+
+function remove(assetID)
+{
+$('#hiddenField').val($('#hiddenField').val().replace($('li.asset[data-id=' + assetID + ']').data('name'), ''))
+$('li.asset[data-id=' + assetID + ']').remove();
+}
