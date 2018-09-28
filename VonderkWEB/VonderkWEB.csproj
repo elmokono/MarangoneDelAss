@@ -192,39 +192,27 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ProductosController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\ArchivoExtra.cs">
+    <Compile Include="Models\Brand.cs">
       <DependentUpon>VonderkModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\ArchivoFicha.cs">
-      <DependentUpon>VonderkModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Categoria.cs">
+    <Compile Include="Models\Category.cs">
       <DependentUpon>VonderkModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ImagenProducto.cs">
-      <DependentUpon>VonderkModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ImagenTrabajo.cs">
-      <DependentUpon>VonderkModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Marca.cs">
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>VonderkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductAsset.cs">
       <DependentUpon>VonderkModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductDetailsViewModel.cs" />
-    <Compile Include="Models\Producto.cs">
-      <DependentUpon>VonderkModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Slide.cs">
-      <DependentUpon>VonderkModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Trabajo.cs">
       <DependentUpon>VonderkModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VonderkModel.Context.cs">
@@ -241,6 +229,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VonderkModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Work.cs">
+      <DependentUpon>VonderkModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorkAsset.cs">
+      <DependentUpon>VonderkModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -318,11 +312,11 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Productos\Create.cshtml" />
-    <Content Include="Views\Productos\Delete.cshtml" />
-    <Content Include="Views\Productos\Details.cshtml" />
-    <Content Include="Views\Productos\Edit.cshtml" />
-    <Content Include="Views\Productos\Index.cshtml" />
+    <Content Include="Views\Products\Create.cshtml" />
+    <Content Include="Views\Products\Delete.cshtml" />
+    <Content Include="Views\Products\Details.cshtml" />
+    <Content Include="Views\Products\Edit.cshtml" />
+    <Content Include="Views\Products\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

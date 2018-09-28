@@ -25,14 +25,12 @@ namespace VonderkWEB.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<ArchivoFicha> ArchivoFichas { get; set; }
-        public virtual DbSet<Categoria> Categorias { get; set; }
-        public virtual DbSet<ImagenProducto> ImagenProductoes { get; set; }
-        public virtual DbSet<ImagenTrabajo> ImagenTrabajoes { get; set; }
-        public virtual DbSet<Marca> Marcas { get; set; }
-        public virtual DbSet<Producto> Productoes { get; set; }
+        public virtual DbSet<Brand> Brands { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<ProductAsset> ProductAssets { get; set; }
+        public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Slide> Slides { get; set; }
-        public virtual DbSet<Trabajo> Trabajoes { get; set; }
-        public virtual DbSet<ArchivoExtra> ArchivoExtras { get; set; }
+        public virtual DbSet<WorkAsset> WorkAssets { get; set; }
+        public virtual DbSet<Work> Works { get; set; }
     }
 }

@@ -5,502 +5,384 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="LuminariaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="ArchivoExtra">
+        <EntityType Name="Brands">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="BrandID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductId" Type="int" />
-          <Property Name="Orden" Type="int" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="150" />
-          <Property Name="Archivo" Type="nvarchar" MaxLength="150" />
+          <Property Name="BrandID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="ArchivoFicha">
+        <EntityType Name="Categories">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="CategoryID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductId" Type="int" />
-          <Property Name="Orden" Type="int" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="150" />
-          <Property Name="Archivo" Type="nvarchar" MaxLength="150" />
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Categoria">
+        <EntityType Name="ProductAssets">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="AssetID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="50" />
-          <Property Name="Imagen" Type="varchar" MaxLength="50" />
-          <Property Name="Orden" Type="int" />
+          <Property Name="AssetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="AssetType" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="1024" Nullable="false" />
+          <Property Name="SortOrder" Type="smallint" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="ImagenProducto">
+        <EntityType Name="Products">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductId" Type="int" Nullable="false" />
-          <Property Name="Orden" Type="int" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="150" />
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BrandID" Type="int" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="2000" Nullable="false" />
+          <Property Name="Features" Type="varchar(max)" Nullable="false" />
+          <Property Name="ProductCode" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="ImagenTrabajo">
+        <EntityType Name="Slides">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="SlideID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="TrabajoId" Type="int" Nullable="false" />
-          <Property Name="Orden" Type="int" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="150" />
+          <Property Name="SlideID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="1024" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Marca">
+        <EntityType Name="WorkAssets">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="AssetID" />
           </Key>
-          <Property Name="Nombre" Type="varchar" MaxLength="50" />
-          <Property Name="Imagen" Type="varchar" MaxLength="50" />
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="AssetID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkID" Type="int" Nullable="false" />
+          <Property Name="AssetType" Type="char" MaxLength="3" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="1024" Nullable="false" />
+          <Property Name="SortOrder" Type="smallint" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Producto">
+        <EntityType Name="Works">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="WorkID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="MarcaID" Type="int" Nullable="false" />
-          <Property Name="CategoriaID" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
-          <Property Name="Descripcion" Type="nvarchar" MaxLength="2000" />
-          <Property Name="Caracteristicas" Type="nvarchar(max)" />
-          <Property Name="CodigoDeProducto" Type="nvarchar" MaxLength="150" />
+          <Property Name="WorkID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="Slide">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="Image" Type="nvarchar" MaxLength="150" />
-        </EntityType>
-        <EntityType Name="Trabajo">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
-          <Property Name="Nombre" Type="nvarchar" MaxLength="100" />
-          <Property Name="Descripcion" Type="nvarchar(max)" />
-        </EntityType>
-        <Association Name="FK_ArchivoExtra_ToProducto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
-          <End Role="ArchivoExtra" Type="Self.ArchivoExtra" Multiplicity="*" />
+        <Association Name="FK_ProductAssets_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductAssets" Type="Self.ProductAssets" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="ID" />
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="ArchivoExtra">
-              <PropertyRef Name="ProductId" />
+            <Dependent Role="ProductAssets">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ArchivoFicha_ToProducto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
-          <End Role="ArchivoFicha" Type="Self.ArchivoFicha" Multiplicity="*" />
+        <Association Name="FK_Products_Brands">
+          <End Role="Brands" Type="Self.Brands" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="ID" />
+            <Principal Role="Brands">
+              <PropertyRef Name="BrandID" />
             </Principal>
-            <Dependent Role="ArchivoFicha">
-              <PropertyRef Name="ProductId" />
+            <Dependent Role="Products">
+              <PropertyRef Name="BrandID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ImagenProducto_ToProducto">
-          <End Role="Producto" Type="Self.Producto" Multiplicity="1" />
-          <End Role="ImagenProducto" Type="Self.ImagenProducto" Multiplicity="*" />
+        <Association Name="FK_Products_Categories">
+          <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="ID" />
+            <Principal Role="Categories">
+              <PropertyRef Name="CategoryID" />
             </Principal>
-            <Dependent Role="ImagenProducto">
-              <PropertyRef Name="ProductId" />
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ImagenTrabajo_ToTrabajo">
-          <End Role="Trabajo" Type="Self.Trabajo" Multiplicity="1" />
-          <End Role="ImagenTrabajo" Type="Self.ImagenTrabajo" Multiplicity="*" />
+        <Association Name="FK_WorkAssets_Works">
+          <End Role="Works" Type="Self.Works" Multiplicity="1" />
+          <End Role="WorkAssets" Type="Self.WorkAssets" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Trabajo">
-              <PropertyRef Name="ID" />
+            <Principal Role="Works">
+              <PropertyRef Name="WorkID" />
             </Principal>
-            <Dependent Role="ImagenTrabajo">
-              <PropertyRef Name="TrabajoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductoCategoria">
-          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categoria">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Producto">
-              <PropertyRef Name="CategoriaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductoMarca">
-          <End Role="Marca" Type="Self.Marca" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Marca">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Producto">
-              <PropertyRef Name="MarcaID" />
+            <Dependent Role="WorkAssets">
+              <PropertyRef Name="WorkID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="LuminariaModelStoreContainer">
-          <EntitySet Name="ArchivoExtra" EntityType="Self.ArchivoExtra" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ArchivoFicha" EntityType="Self.ArchivoFicha" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ImagenProducto" EntityType="Self.ImagenProducto" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ImagenTrabajo" EntityType="Self.ImagenTrabajo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Marca" EntityType="Self.Marca" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Slide" EntityType="Self.Slide" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Trabajo" EntityType="Self.Trabajo" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_ArchivoExtra_ToProducto" Association="Self.FK_ArchivoExtra_ToProducto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="ArchivoExtra" EntitySet="ArchivoExtra" />
+          <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductAssets" EntityType="Self.ProductAssets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Slides" EntityType="Self.Slides" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkAssets" EntityType="Self.WorkAssets" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Works" EntityType="Self.Works" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ProductAssets_Products" Association="Self.FK_ProductAssets_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductAssets" EntitySet="ProductAssets" />
           </AssociationSet>
-          <AssociationSet Name="FK_ArchivoFicha_ToProducto" Association="Self.FK_ArchivoFicha_ToProducto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="ArchivoFicha" EntitySet="ArchivoFicha" />
+          <AssociationSet Name="FK_Products_Brands" Association="Self.FK_Products_Brands">
+            <End Role="Brands" EntitySet="Brands" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_ImagenProducto_ToProducto" Association="Self.FK_ImagenProducto_ToProducto">
-            <End Role="Producto" EntitySet="Producto" />
-            <End Role="ImagenProducto" EntitySet="ImagenProducto" />
+          <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
+            <End Role="Categories" EntitySet="Categories" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_ImagenTrabajo_ToTrabajo" Association="Self.FK_ImagenTrabajo_ToTrabajo">
-            <End Role="Trabajo" EntitySet="Trabajo" />
-            <End Role="ImagenTrabajo" EntitySet="ImagenTrabajo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductoCategoria" Association="Self.FK_ProductoCategoria">
-            <End Role="Categoria" EntitySet="Categoria" />
-            <End Role="Producto" EntitySet="Producto" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductoMarca" Association="Self.FK_ProductoMarca">
-            <End Role="Marca" EntitySet="Marca" />
-            <End Role="Producto" EntitySet="Producto" />
+          <AssociationSet Name="FK_WorkAssets_Works" Association="Self.FK_WorkAssets_Works">
+            <End Role="Works" EntitySet="Works" />
+            <End Role="WorkAssets" EntitySet="WorkAssets" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="LuminariaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="ArchivoFicha">
+        <EntityContainer Name="LuminariaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Brands" EntityType="LuminariaModel.Brand" />
+          <EntitySet Name="Categories" EntityType="LuminariaModel.Category" />
+          <EntitySet Name="ProductAssets" EntityType="LuminariaModel.ProductAsset" />
+          <EntitySet Name="Products" EntityType="LuminariaModel.Product" />
+          <EntitySet Name="Slides" EntityType="LuminariaModel.Slide" />
+          <EntitySet Name="WorkAssets" EntityType="LuminariaModel.WorkAsset" />
+          <EntitySet Name="Works" EntityType="LuminariaModel.Work" />
+          <AssociationSet Name="FK_Products_Brands" Association="LuminariaModel.FK_Products_Brands">
+            <End Role="Brand" EntitySet="Brands" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Categories" Association="LuminariaModel.FK_Products_Categories">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductAssets_Products" Association="LuminariaModel.FK_ProductAssets_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductAsset" EntitySet="ProductAssets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkAssets_Works" Association="LuminariaModel.FK_WorkAssets_Works">
+            <End Role="Work" EntitySet="Works" />
+            <End Role="WorkAsset" EntitySet="WorkAssets" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Brand">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="BrandID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="Orden" Type="Int32" />
-          <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Archivo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Producto" Relationship="LuminariaModel.FK_ArchivoFicha_ToProducto" FromRole="ArchivoFicha" ToRole="Producto" />
+          <Property Name="BrandID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="LuminariaModel.FK_Products_Brands" FromRole="Brand" ToRole="Product" />
         </EntityType>
-        <EntityType Name="Categoria">
+        <EntityType Name="Category">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="CategoryID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Imagen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Orden" Type="Int32" />
-          <NavigationProperty Name="Productoes" Relationship="Self.FK_ProductoCategoria" FromRole="Categoria" ToRole="Producto" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="LuminariaModel.FK_Products_Categories" FromRole="Category" ToRole="Product" />
         </EntityType>
-        <EntityType Name="ImagenProducto">
+        <EntityType Name="ProductAsset">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="AssetID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" Nullable="false" />
-          <Property Name="Orden" Type="Int32" />
-          <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Producto" Relationship="LuminariaModel.FK_ImagenProducto_ToProducto" FromRole="ImagenProducto" ToRole="Producto" />
+          <Property Name="AssetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="AssetType" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int16" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="LuminariaModel.FK_ProductAssets_Products" FromRole="ProductAsset" ToRole="Product" />
         </EntityType>
-        <EntityType Name="ImagenTrabajo">
+        <EntityType Name="Product">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="ProductID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Orden" Type="Int32" />
-          <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="TrabajoId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Trabajo" Relationship="LuminariaModel.FK_ImagenTrabajo_ToTrabajo" FromRole="ImagenTrabajo" ToRole="Trabajo" />
-        </EntityType>
-        <EntityType Name="Marca">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Imagen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Productoes" Relationship="Self.FK_ProductoMarca" FromRole="Marca" ToRole="Producto" />
-        </EntityType>
-        <EntityType Name="Producto">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MarcaID" Type="Int32" Nullable="false" />
-          <Property Name="CategoriaID" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Descripcion" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="Caracteristicas" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="CodigoDeProducto" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Categoria" Relationship="Self.FK_ProductoCategoria" FromRole="Producto" ToRole="Categoria" />
-          <NavigationProperty Name="Marca" Relationship="Self.FK_ProductoMarca" FromRole="Producto" ToRole="Marca" />
-          <NavigationProperty Name="ArchivoExtras" Relationship="LuminariaModel.FK_ArchivoExtra_ToProducto" FromRole="Producto" ToRole="ArchivoExtra" />
-          <NavigationProperty Name="ArchivoFichas" Relationship="LuminariaModel.FK_ArchivoFicha_ToProducto" FromRole="Producto" ToRole="ArchivoFicha" />
-          <NavigationProperty Name="ImagenProductoes" Relationship="LuminariaModel.FK_ImagenProducto_ToProducto" FromRole="Producto" ToRole="ImagenProducto" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BrandID" Type="Int32" Nullable="false" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
+          <Property Name="Features" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Brand" Relationship="LuminariaModel.FK_Products_Brands" FromRole="Product" ToRole="Brand" />
+          <NavigationProperty Name="Category" Relationship="LuminariaModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="ProductAssets" Relationship="LuminariaModel.FK_ProductAssets_Products" FromRole="Product" ToRole="ProductAsset" />
         </EntityType>
         <EntityType Name="Slide">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="SlideID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Image" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="SlideID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="Trabajo">
+        <EntityType Name="WorkAsset">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="AssetID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ImagenTrabajoes" Relationship="LuminariaModel.FK_ImagenTrabajo_ToTrabajo" FromRole="Trabajo" ToRole="ImagenTrabajo" />
+          <Property Name="AssetID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkID" Type="Int32" Nullable="false" />
+          <Property Name="AssetType" Type="String" Nullable="false" MaxLength="3" FixedLength="true" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int16" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Work" Relationship="LuminariaModel.FK_WorkAssets_Works" FromRole="WorkAsset" ToRole="Work" />
         </EntityType>
-        <Association Name="FK_ProductoCategoria">
-          <End Role="Categoria" Type="Self.Categoria" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Categoria">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Producto">
-              <PropertyRef Name="CategoriaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductoMarca">
-          <End Role="Marca" Type="Self.Marca" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="Producto" Type="Self.Producto" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Marca">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Producto">
-              <PropertyRef Name="MarcaID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="LuminariaEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="ArchivoFichas" EntityType="Self.ArchivoFicha" />
-          <EntitySet Name="Categorias" EntityType="Self.Categoria" />
-          <EntitySet Name="ImagenProductoes" EntityType="Self.ImagenProducto" />
-          <EntitySet Name="ImagenTrabajoes" EntityType="Self.ImagenTrabajo" />
-          <EntitySet Name="Marcas" EntityType="Self.Marca" />
-          <EntitySet Name="Productoes" EntityType="Self.Producto" />
-          <EntitySet Name="Slides" EntityType="Self.Slide" />
-          <EntitySet Name="Trabajoes" EntityType="Self.Trabajo" />
-          <AssociationSet Name="FK_ProductoCategoria" Association="Self.FK_ProductoCategoria">
-            <End Role="Categoria" EntitySet="Categorias" />
-            <End Role="Producto" EntitySet="Productoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductoMarca" Association="Self.FK_ProductoMarca">
-            <End Role="Marca" EntitySet="Marcas" />
-            <End Role="Producto" EntitySet="Productoes" />
-          </AssociationSet>
-          <EntitySet Name="ArchivoExtras" EntityType="LuminariaModel.ArchivoExtra" />
-          <AssociationSet Name="FK_ArchivoExtra_ToProducto" Association="LuminariaModel.FK_ArchivoExtra_ToProducto">
-            <End Role="Producto" EntitySet="Productoes" />
-            <End Role="ArchivoExtra" EntitySet="ArchivoExtras" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ArchivoFicha_ToProducto" Association="LuminariaModel.FK_ArchivoFicha_ToProducto">
-            <End Role="Producto" EntitySet="Productoes" />
-            <End Role="ArchivoFicha" EntitySet="ArchivoFichas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImagenProducto_ToProducto" Association="LuminariaModel.FK_ImagenProducto_ToProducto">
-            <End Role="Producto" EntitySet="Productoes" />
-            <End Role="ImagenProducto" EntitySet="ImagenProductoes" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImagenTrabajo_ToTrabajo" Association="LuminariaModel.FK_ImagenTrabajo_ToTrabajo">
-            <End Role="Trabajo" EntitySet="Trabajoes" />
-            <End Role="ImagenTrabajo" EntitySet="ImagenTrabajoes" />
-          </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="ArchivoExtra">
+        <EntityType Name="Work">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="WorkID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" />
-          <Property Name="ProductId" Type="Int32" />
-          <Property Name="Orden" Type="Int32" />
-          <Property Name="Nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Archivo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Producto" Relationship="LuminariaModel.FK_ArchivoExtra_ToProducto" FromRole="ArchivoExtra" ToRole="Producto" />
+          <Property Name="WorkID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="WorkAssets" Relationship="LuminariaModel.FK_WorkAssets_Works" FromRole="Work" ToRole="WorkAsset" />
         </EntityType>
-        <Association Name="FK_ArchivoExtra_ToProducto">
-          <End Type="LuminariaModel.Producto" Role="Producto" Multiplicity="0..1" />
-          <End Type="LuminariaModel.ArchivoExtra" Role="ArchivoExtra" Multiplicity="*" />
+        <Association Name="FK_Products_Brands">
+          <End Type="LuminariaModel.Brand" Role="Brand" Multiplicity="1" />
+          <End Type="LuminariaModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="ID" />
+            <Principal Role="Brand">
+              <PropertyRef Name="BrandID" />
             </Principal>
-            <Dependent Role="ArchivoExtra">
-              <PropertyRef Name="ProductId" />
+            <Dependent Role="Product">
+              <PropertyRef Name="BrandID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ArchivoFicha_ToProducto">
-          <End Type="LuminariaModel.Producto" Role="Producto" Multiplicity="0..1" />
-          <End Type="LuminariaModel.ArchivoFicha" Role="ArchivoFicha" Multiplicity="*" />
+        <Association Name="FK_Products_Categories">
+          <End Type="LuminariaModel.Category" Role="Category" Multiplicity="1" />
+          <End Type="LuminariaModel.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="ID" />
+            <Principal Role="Category">
+              <PropertyRef Name="CategoryID" />
             </Principal>
-            <Dependent Role="ArchivoFicha">
-              <PropertyRef Name="ProductId" />
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ImagenProducto_ToProducto">
-          <End Type="LuminariaModel.Producto" Role="Producto" Multiplicity="1" />
-          <End Type="LuminariaModel.ImagenProducto" Role="ImagenProducto" Multiplicity="*" />
+        <Association Name="FK_ProductAssets_Products">
+          <End Type="LuminariaModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="LuminariaModel.ProductAsset" Role="ProductAsset" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Producto">
-              <PropertyRef Name="ID" />
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
             </Principal>
-            <Dependent Role="ImagenProducto">
-              <PropertyRef Name="ProductId" />
+            <Dependent Role="ProductAsset">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ImagenTrabajo_ToTrabajo">
-          <End Type="LuminariaModel.Trabajo" Role="Trabajo" Multiplicity="1" />
-          <End Type="LuminariaModel.ImagenTrabajo" Role="ImagenTrabajo" Multiplicity="*" />
+        <Association Name="FK_WorkAssets_Works">
+          <End Type="LuminariaModel.Work" Role="Work" Multiplicity="1" />
+          <End Type="LuminariaModel.WorkAsset" Role="WorkAsset" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Trabajo">
-              <PropertyRef Name="ID" />
+            <Principal Role="Work">
+              <PropertyRef Name="WorkID" />
             </Principal>
-            <Dependent Role="ImagenTrabajo">
-              <PropertyRef Name="TrabajoId" />
+            <Dependent Role="WorkAsset">
+              <PropertyRef Name="WorkID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="LuminariaModelStoreContainer" CdmEntityContainer="LuminariaEntities">
-          <EntitySetMapping Name="ArchivoFichas">
-            <EntityTypeMapping TypeName="LuminariaModel.ArchivoFicha">
-              <MappingFragment StoreEntitySet="ArchivoFicha">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
+          <EntitySetMapping Name="Brands">
+            <EntityTypeMapping TypeName="LuminariaModel.Brand">
+              <MappingFragment StoreEntitySet="Brands">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Categorias">
-            <EntityTypeMapping TypeName="LuminariaModel.Categoria">
-              <MappingFragment StoreEntitySet="Categoria">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="LuminariaModel.Category">
+              <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ImagenProductoes">
-            <EntityTypeMapping TypeName="LuminariaModel.ImagenProducto">
-              <MappingFragment StoreEntitySet="ImagenProducto">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <EntitySetMapping Name="ProductAssets">
+            <EntityTypeMapping TypeName="LuminariaModel.ProductAsset">
+              <MappingFragment StoreEntitySet="ProductAssets">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AssetType" ColumnName="AssetType" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ImagenTrabajoes">
-            <EntityTypeMapping TypeName="LuminariaModel.ImagenTrabajo">
-              <MappingFragment StoreEntitySet="ImagenTrabajo">
-                <ScalarProperty Name="TrabajoId" ColumnName="TrabajoId" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Marcas">
-            <EntityTypeMapping TypeName="LuminariaModel.Marca">
-              <MappingFragment StoreEntitySet="Marca">
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Productoes">
-            <EntityTypeMapping TypeName="LuminariaModel.Producto">
-              <MappingFragment StoreEntitySet="Producto">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="MarcaID" ColumnName="MarcaID" />
-                <ScalarProperty Name="CategoriaID" ColumnName="CategoriaID" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Caracteristicas" ColumnName="Caracteristicas" />
-                <ScalarProperty Name="CodigoDeProducto" ColumnName="CodigoDeProducto" />
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="LuminariaModel.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="Features" ColumnName="Features" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="BrandID" ColumnName="BrandID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Slides">
             <EntityTypeMapping TypeName="LuminariaModel.Slide">
-              <MappingFragment StoreEntitySet="Slide">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
+              <MappingFragment StoreEntitySet="Slides">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="SlideID" ColumnName="SlideID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Trabajoes">
-            <EntityTypeMapping TypeName="LuminariaModel.Trabajo">
-              <MappingFragment StoreEntitySet="Trabajo">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <EntitySetMapping Name="WorkAssets">
+            <EntityTypeMapping TypeName="LuminariaModel.WorkAsset">
+              <MappingFragment StoreEntitySet="WorkAssets">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="AssetType" ColumnName="AssetType" />
+                <ScalarProperty Name="WorkID" ColumnName="WorkID" />
+                <ScalarProperty Name="AssetID" ColumnName="AssetID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ArchivoExtras">
-            <EntityTypeMapping TypeName="LuminariaModel.ArchivoExtra">
-              <MappingFragment StoreEntitySet="ArchivoExtra">
-                <ScalarProperty Name="Archivo" ColumnName="Archivo" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="Orden" ColumnName="Orden" />
-                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
+          <EntitySetMapping Name="Works">
+            <EntityTypeMapping TypeName="LuminariaModel.Work">
+              <MappingFragment StoreEntitySet="Works">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WorkID" ColumnName="WorkID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

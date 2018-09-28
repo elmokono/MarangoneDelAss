@@ -4,22 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="170022de56e74a18afdc331ed14d5cb6" Name="Diagram1">
-        <EntityTypeShape EntityType="LuminariaModel.ArchivoFicha" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LuminariaModel.Categoria" Width="1.5" PointX="0.75" PointY="1.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="LuminariaModel.ImagenProducto" Width="1.5" PointX="7.375" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="LuminariaModel.ImagenTrabajo" Width="1.5" PointX="6.625" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="LuminariaModel.Marca" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="LuminariaModel.Producto" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="LuminariaModel.Slide" Width="1.5" PointX="9.375" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="LuminariaModel.Trabajo" Width="1.5" PointX="4.75" PointY="1" IsExpanded="true" />
-        <AssociationConnector Association="LuminariaModel.FK_ProductoCategoria" ManuallyRouted="false" />
-        <AssociationConnector Association="LuminariaModel.FK_ProductoMarca" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="LuminariaModel.ArchivoExtra" Width="1.5" PointX="9" PointY="3.75" />
-        <AssociationConnector Association="LuminariaModel.FK_ArchivoExtra_ToProducto" />
-        <AssociationConnector Association="LuminariaModel.FK_ArchivoFicha_ToProducto" />
-        <AssociationConnector Association="LuminariaModel.FK_ImagenProducto_ToProducto" />
-        <AssociationConnector Association="LuminariaModel.FK_ImagenTrabajo_ToTrabajo" />
+      <Diagram DiagramId="170022de56e74a18afdc331ed14d5cb6" Name="Diagram1" ZoomLevel="72">
+        <EntityTypeShape EntityType="LuminariaModel.Brand" Width="1.5" PointX="0.75" PointY="5.625" FillColor="192, 192, 255" />
+        <EntityTypeShape EntityType="LuminariaModel.Category" Width="1.5" PointX="0.75" PointY="1.625" FillColor="192, 192, 255" />
+        <EntityTypeShape EntityType="LuminariaModel.ProductAsset" Width="1.5" PointX="5.25" PointY="1.25" />
+        <EntityTypeShape EntityType="LuminariaModel.Product" Width="1.5" PointX="3" PointY="1" />
+        <EntityTypeShape EntityType="LuminariaModel.Slide" Width="1.5" PointX="7.75" PointY="0.75" FillColor="192, 255, 192" />
+        <EntityTypeShape EntityType="LuminariaModel.WorkAsset" Width="1.5" PointX="5" PointY="6" FillColor="Yellow" />
+        <EntityTypeShape EntityType="LuminariaModel.Work" Width="1.5" PointX="2.75" PointY="6.25" FillColor="Yellow" />
+        <AssociationConnector Association="LuminariaModel.FK_Products_Brands" />
+        <AssociationConnector Association="LuminariaModel.FK_Products_Categories" />
+        <AssociationConnector Association="LuminariaModel.FK_ProductAssets_Products" />
+        <AssociationConnector Association="LuminariaModel.FK_WorkAssets_Works" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

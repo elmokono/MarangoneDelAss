@@ -12,13 +12,16 @@ namespace VonderkWEB.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ImagenTrabajo
+    public partial class WorkAsset
     {
-        public int ID { get; set; }
-        public Nullable<int> Orden { get; set; }
-        public string Nombre { get; set; }
-        public int TrabajoId { get; set; }
+        public int AssetID { get; set; }
+        public int WorkID { get; set; }
+        public string AssetType { get; set; }
+        public string Name { get; set; }
+        public string FileName { get; set; }
+        public short SortOrder { get; set; }
+        public bool IsActive { get; set; }
     
-        public virtual Trabajo Trabajo { get; set; }
+        public virtual Work Work { get; set; }
     }
 }
