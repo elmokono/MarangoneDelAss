@@ -62,132 +62,22 @@ namespace VonderkWEB.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "ID,BrandID,CategoryID,Nombre,Descripcion,Caracteristicas,ProductCode")] Product Product)
-        public ActionResult Create(Product Product, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
+        public ActionResult Create(Product model, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
 
-            //var pathImagenes = Server.MapPath("~/Images/");
+            var pathAssets = Server.MapPath("~/Products/");
 
             if (ModelState.IsValid)
             {
-
-                try
-                {
-
-                    //validar ProductID
-                    if (db.Products.Any(x => x.Name == Product.Name) || db.Products.Any(x => x.ProductCode == Product.ProductCode))
-                    {
-                        throw new Exception("El Product con ese nombre / código de Product ya existe.");
-                    }
-
-                    //--------------Guardo el Product--------------------------------------------------------
-                    db.Products.Add(Product);
-                    db.SaveChanges();
-                    var guardarID = Product.ProductID;
-
-                    //--------------Chequeo y creo el directorio-----------------------------------------------
-                    string buildPath = "~/Products/" + Product.ProductID + "/";
-                    string pathProduct = Server.MapPath(buildPath);
-                    if (!Directory.Exists(pathProduct))
-                    {
-                        Directory.CreateDirectory(pathProduct);
-                    }
-
-                    //--------------Guardo las imagenes-------------------------------------------------------
-                    foreach (HttpPostedFileBase postedFile in imageFiles)
-                    {
-
-                        var imagen = new ProductAsset
-                        {
-                            ProductID = Product.ProductID,
-                            Name = postedFile.FileName
-
-                        };
-                        db.ProductAssets.Add(imagen);
-                        var pathImagenesProduct = Server.MapPath("~/Products/" + Product.ProductID + "/Imagenes/");
-                        if (!Directory.Exists(pathImagenesProduct))
-                        {
-                            Directory.CreateDirectory(pathImagenesProduct);
-                            postedFile.SaveAs(Path.Combine(pathImagenesProduct, postedFile.FileName));
-                        }
-                        else
-                        {
-                            postedFile.SaveAs(Path.Combine(pathImagenesProduct, postedFile.FileName));
-                        }
-
-                    }
-                    db.SaveChanges();
-
-
-
-                    //--------------Guardo los IES----------------------------------------------------------
-                    foreach (HttpPostedFileBase postedFile in iesFiles)
-                    {
-
-                        var ies = new ProductAsset
-                        {
-                            ProductID = Product.ProductID,
-                            Name = postedFile.FileName,
-                            FileName = postedFile.FileName
-
-                        };
-                        db.ProductAssets.Add(ies);
-                        var pathIesProduct = Server.MapPath("~/Products/" + Product.ProductID + "/IES/");
-                        if (!Directory.Exists(pathIesProduct))
-                        {
-                            Directory.CreateDirectory(pathIesProduct);
-                            postedFile.SaveAs(Path.Combine(pathIesProduct, postedFile.FileName));
-                        }
-                        else
-                        {
-                            postedFile.SaveAs(Path.Combine(pathIesProduct, postedFile.FileName));
-                        }
-
-                    }
-                    db.SaveChanges();
-
-                    //--------------Guardo las fichas-------------------------------------------------------
-                    foreach (HttpPostedFileBase postedFile in fichaFiles)
-                    {
-
-                        var ficha = new ProductAsset
-                        {
-                            ProductID = Product.ProductID,
-                            Name = postedFile.FileName,
-                            FileName = postedFile.FileName
-
-                        };
-                        db.ProductAssets.Add(ficha);
-                        var pathFichasProduct = Server.MapPath("~/Products/" + Product.ProductID + "/Fichas/");
-                        if (!Directory.Exists(pathFichasProduct))
-                        {
-                            Directory.CreateDirectory(pathFichasProduct);
-                            postedFile.SaveAs(Path.Combine(pathFichasProduct, postedFile.FileName));
-                        }
-                        else
-                        {
-                            postedFile.SaveAs(Path.Combine(pathFichasProduct, postedFile.FileName));
-                        }
-
-                    }
-
-
-                    db.SaveChanges();
-                    return RedirectToAction("Index", "Products");
-
-
-                }
-                catch (Exception ex)
-                {
-
-                    ViewBag.Message = ex.Message.ToString();
-                }
-
+                model.IsActive = true;
+                new ProductDetailsViewModel().New(model, pathAssets, imageFiles, fichaFiles, iesFiles);
             }
 
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", Product.CategoryID);
-            ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "Name", Product.BrandID);
-            return View(Product);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", model.CategoryID);
+            ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "Name", model.BrandID);
+
+            return RedirectToAction("Index");
         }
 
         // GET: Products/Edit/5

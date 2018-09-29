@@ -321,6 +321,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Products\1\IES\" />
+    <Folder Include="Products\1\IMG\" />
+    <Folder Include="Products\1\PDF\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

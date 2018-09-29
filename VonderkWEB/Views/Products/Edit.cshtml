@@ -131,7 +131,15 @@
         <div class="demo">
 
             <div class="gallery">
-                <ul id="sortable" class="gallery"></ul>
+                <ul id="sortable" class="gallery">
+                    @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG"))
+                    {
+                        <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                            <img src="@item.FileName" style="height:160px" alt="1">
+                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                        </li>
+                    }
+                </ul>
             </div>
             <div class="fichasgallery">
                 <div id='file-list-display'>
