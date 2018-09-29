@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -33,17 +34,24 @@ namespace VonderkWEB.Models
             this.orderedIES = db.ProductAssets.Where(x => x.ProductID == ProductID && x.AssetType == "IES").OrderBy(x => x.SortOrder);
         }
 
-        private void SaveAssets(int productID, string rootDir, string type, IEnumerable<HttpPostedFileBase> files)
+        private void SaveAssets(int productID, string rootDir, string type, IEnumerable<HttpPostedFileBase> files, IEnumerable<KeyValuePair<string, string>> labels)
         {
-            foreach (HttpPostedFileBase postedFile in files)
+            //--------------Chequeo y creo el directorio-----------------------------------------------
+            string pathProduct = rootDir + "\\" + productID;
+            if (!Directory.Exists(pathProduct))
+            {
+                Directory.CreateDirectory(pathProduct);
+            }
+
+            foreach (HttpPostedFileBase postedFile in files.Where(x => x != null))
             {
                 ProductAsset asset = new ProductAsset
                 {
                     ProductID = productID,
-                    Name = postedFile.FileName,
+                    Name = labels.First(x => x.Key == postedFile.FileName).Value,
                     AssetType = type,
                     IsActive = true,
-                    FileName = rootDir + "\\" + type + "\\" + postedFile.FileName,
+                    FileName = "~/Products/" + productID + "/" + type + "/" + postedFile.FileName,
                     SortOrder = 0,
                 };
                 db.ProductAssets.Add(asset);
@@ -56,7 +64,29 @@ namespace VonderkWEB.Models
             }
         }
 
-        public void New(Product model, string rootDir, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
+        public void Edit(Product model, string rootDir, string deletedAssets, string labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
+        {
+            db.Entry(model).State = EntityState.Modified;
+            db.SaveChanges();
+
+            var assetIDs = deletedAssets.Split(',').Where(x => x != "").Select(x => int.Parse(x));
+            foreach (var item in assetIDs)
+            {
+                db.ProductAssets.Remove(db.ProductAssets.First(x => x.AssetID == item));
+            }
+
+            var lbls = labeledAssets.Split('|')
+                .Where(x => x != "")
+                .Select(x => new KeyValuePair<string, string>(x.Split('^')[0], x.Split('^')[1]));
+
+            SaveAssets(model.ProductID, rootDir, "IMG", imageFiles, lbls);
+            SaveAssets(model.ProductID, rootDir, "PDF", fichaFiles, lbls);
+            SaveAssets(model.ProductID, rootDir, "IES", iesFiles, lbls);
+
+            db.SaveChanges();
+        }
+
+        public void New(Product model, string rootDir, string labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
             //validar ProductID
             if (db.Products.Any(x => x.Name == model.Name) || db.Products.Any(x => x.ProductCode == model.ProductCode))
@@ -68,20 +98,16 @@ namespace VonderkWEB.Models
             db.Products.Add(model);
             db.SaveChanges();
 
-            //--------------Chequeo y creo el directorio-----------------------------------------------
-            string pathProduct = rootDir + "\\" + model.ProductID;
-            if (!Directory.Exists(pathProduct))
-            {
-                Directory.CreateDirectory(pathProduct);
-            }
+            var lbls = labeledAssets.Split('|')
+                .Where(x => x != "")
+                .Select(x => new KeyValuePair<string, string>(x.Split('^')[0], x.Split('^')[1]));
 
-            SaveAssets(model.ProductID, pathProduct, "IMG", imageFiles);
-            SaveAssets(model.ProductID, pathProduct, "PDF", fichaFiles);
-            SaveAssets(model.ProductID, pathProduct, "IES", iesFiles);
+            SaveAssets(model.ProductID, rootDir, "IMG", imageFiles, lbls);
+            SaveAssets(model.ProductID, rootDir, "PDF", fichaFiles, lbls);
+            SaveAssets(model.ProductID, rootDir, "IES", iesFiles, lbls);
 
             db.SaveChanges();
 
         }
-
     }
 }

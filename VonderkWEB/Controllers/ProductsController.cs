@@ -32,21 +32,7 @@ namespace VonderkWEB.Controllers
             ProductDetailsViewModel model = new ProductDetailsViewModel(id.Value);
 
             return View(model);
-
-            //if (id == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //}
-            //Product Product = db.Products.Find(id);
-
-            //db.ProductAssets.Where(x => x.ProductID == id).OrderBy(x => x.SortOrder).ToList();
-
-            //if (Product == null)
-            //{
-            //    return HttpNotFound();
-            //}
-            //return View(Product);
-        }
+                    }
 
         // GET: Products/Create
         public ActionResult Create()
@@ -62,7 +48,7 @@ namespace VonderkWEB.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "ID,BrandID,CategoryID,Nombre,Descripcion,Caracteristicas,ProductCode")] Product Product)
-        public ActionResult Create(Product model, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
+        public ActionResult Create(Product model, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
 
@@ -71,7 +57,7 @@ namespace VonderkWEB.Controllers
             if (ModelState.IsValid)
             {
                 model.IsActive = true;
-                new ProductDetailsViewModel().New(model, pathAssets, imageFiles, fichaFiles, iesFiles);
+                new ProductDetailsViewModel().New(model, pathAssets, labeledAssets, imageFiles, fichaFiles, iesFiles);
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", model.CategoryID);
@@ -102,17 +88,20 @@ namespace VonderkWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,BrandID,CategoryID,Name,Description,Features,ProductCode")] Product Product)
+        public ActionResult Edit(Product model, String deletedAssets, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(Product).State = EntityState.Modified;
-                db.SaveChanges();
+                var pathAssets = Server.MapPath("~/Products/");
+                new ProductDetailsViewModel().Edit(model, pathAssets, deletedAssets, labeledAssets, imageFiles, fichaFiles, iesFiles);
+                //db.Entry(Product).State = EntityState.Modified;
+                //db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", Product.CategoryID);
-            ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "Name", Product.BrandID);
-            return View(Product);
+
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", model.CategoryID);
+            ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "Name", model.BrandID);
+            return View(model);
         }
 
         // GET: Products/Delete/5

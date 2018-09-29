@@ -68,101 +68,141 @@
 
 <h2>Edit</h2>
 
+<div class="content">
+    <form role="form" name="form1" id="form1" method="post" action="/Products/Edit" enctype="multipart/form-data">
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Product</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.ProductID)
+        <div class="form-horizontal">
+            <h4>Product</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ProductID)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BrandID, "BrandID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("BrandID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BrandID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Features, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Features, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Features, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProductCode, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="demo">
-
-            <div class="gallery">
-                <ul id="sortable" class="gallery">
-                    @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG"))
-                    {
-                        <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                            <img src="@item.FileName" style="height:160px" alt="1">
-                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                        </li>
-                    }
-                </ul>
-            </div>
-            <div class="fichasgallery">
-                <div id='file-list-display'>
-
-                </div>
-            </div>
-            <div class="IESgallery">
-                <div id='ies-list-display'>
-
+            <div class="form-group">
+                @Html.LabelFor(model => model.BrandID, "BrandID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("BrandID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BrandID, "", new { @class = "text-danger" })
                 </div>
             </div>
 
-        </div><!-- End demo -->
+            <div class="form-group">
+                @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Features, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Features, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Features, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ProductCode, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    Imagen
+                </div>
+                <div class="col-75">
+                    <input type="file" multiple="multiple" id="imageFiles" name="imageFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-25">
+                    Ficha
+                </div>
+                <div class="col-75">
+                    <input type="file" multiple="multiple" id="fichaFiles" name="fichaFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
+                </div>
+            </div>
 
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+            <div class="row">
+                <div class="col-25">
+                    IES
+                </div>
+                <div class="col-75">
+                    <input type="file" multiple="multiple" id="iesFiles" name="iesFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
+                </div>
+            </div>
+
+            <div class="demo">
+
+                <div class="gallery">
+                    <ul id="sortable" class="gallery">
+                        @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG"))
+                        {
+                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                <img src="@item.FileName" style="height:160px" alt="1">
+                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="fichasgallery">
+                    <div id='file-list-display'>
+                        @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "PDF"))
+                        {
+                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                <img src="@item.FileName" style="height:160px" alt="1">
+                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                            </li>
+                        }
+                    </div>
+                </div>
+                <div class="IESgallery">
+                    <div id='ies-list-display'>
+                        @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IES"))
+                        {
+                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                <img src="@item.FileName" style="height:160px" alt="1">
+                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                            </li>
+                        }
+                    </div>
+                </div>
+
+            </div><!-- End demo -->
+            @Html.Hidden("deletedAssets")
+            @Html.Hidden("labeledAssets")
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
             </div>
         </div>
-    </div>
-}
-
+    </form>
+</div>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
@@ -179,10 +219,12 @@
     function remove(assetID) {
 
         $('li.asset[data-id=' + assetID + ']').remove();
-
+        o = $('#deletedAssets').val();
+        $('#deletedAssets').val(o + "," + assetID);
     }
-
-    //Delete assets (Fichas & IES) before submit
+    function removeByName(assetName) {
+        $('li.asset[data-name="' + assetName + '"]').remove();
+    }
     function removeAsset(assetID) {
 
         $('p.testing[data-id=' + assetID + ']').remove();
@@ -210,7 +252,7 @@
                         console.log(input.files[idx]);
                         var p = $('<li class="text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
                         $('<img width="100" height="100" class="img_class">').attr('src', event.target.result).appendTo(p);
-                        $('<button onclick="remove(' + input.files[idx].name + ')">Borrar</button>').appendTo(p);
+                        $('<a onclick="removeByName(\'' + input.files[idx].name + '\')">Borrar</a>').appendTo(p);
                     }
                     reader.readAsDataURL(input.files[i]);
 
@@ -299,7 +341,6 @@
 
     });
 
-
     //---------------------------------Multiple product assets (Fichas)---------------------------------
     (function () {
         var fileInput = document.getElementById('fichaFiles');
@@ -322,7 +363,7 @@
                 var fileDisplayEl = document.createElement('p');
                 fileDisplayEl.setAttribute("class", "testing col-25")
                 fileDisplayEl.setAttribute("data-id", file.name)
-                fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" id="selector"><button onclick="removeAsset(' + file.name + ')">Borrar</button>';
+                fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" id="selector"><a onclick="removeByName(\'' + file.name + '\')">Borrar</a>';
                 fileListDisplay.appendChild(fileDisplayEl);
             });
         };
@@ -330,34 +371,59 @@
 
     //---------------------------------Multiple product assets (IES)---------------------------------
     (function () {
-        var fileInput = document.getElementById('iesFiles');
-        var fileListDisplay = document.getElementById('ies-list-display');
+        var iesInput = document.getElementById('iesFiles');
+        var iesListDisplay = document.getElementById('ies-list-display');
 
-        var fileList = [];
-        var renderFileList, sendFile;
+        //var fileList = [];
+        //var renderFileList, sendFile;
 
-        fileInput.addEventListener('change', function (evnt) {
-            fileList = [];
-            for (var i = 0; i < fileInput.files.length; i++) {
-                fileList.push(fileInput.files[i]);
+        iesInput.addEventListener('change', function (evnt) {
+            //fileList = [];
+            $('li.asset[data-new="true"]', $('#ies-list-display')).remove();
+            for (var i = 0; i < iesInput.files.length; i++) {
+
+                var file = iesInput.files[i];
+                var fileDisplayIES = document.createElement('li');
+                fileDisplayIES.setAttribute("class", "testingies asset col-25");
+                fileDisplayIES.setAttribute("data-id", file.name);
+                fileDisplayIES.setAttribute("data-name", file.name);
+                fileDisplayIES.setAttribute("data-new", "true");
+                fileDisplayIES.innerHTML = (i + 1) + ': ' + file.name + '<input type="text" data-name="' + file.name + '" class="iesLabel" id="selector" /><a onclick="removeByName(\'' + file.name + '\')">Borrar</a>';
+                iesListDisplay.appendChild(fileDisplayIES);
+                iesListDisplay.appendChild(fileDisplayIES);
+
             }
-            renderFileList();
+            //renderFileList();
         });
 
-        renderFileList = function () {
-            fileListDisplay.innerHTML = '';
-            fileList.forEach(function (file, index) {
-                var fileDisplayEl = document.createElement('p');
-                fileDisplayEl.setAttribute("class", "testingies col-25")
-                fileDisplayEl.setAttribute("data-id", file.name)
-                fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" id="selector"><button onclick="removeAsset(' + file.name + ')">Borrar</button>';
-                fileListDisplay.appendChild(fileDisplayEl);
-                fileListDisplay.appendChild(fileDisplayEl);
+        //renderFileList = function () {
+        //    fileListDisplay.innerHTML = '';
+        //    fileList.forEach(function (file, index) {
+        //        var fileDisplayEl = document.createElement('li');
+        //        fileDisplayEl.setAttribute("class", "testingies asset col-25")
+        //        fileDisplayEl.setAttribute("data-id", file.name)
+        //        fileDisplayEl.setAttribute("data-name", file.name)
+        //        fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" data-name="' + file.name + '" class="iesLabel" id="selector" /><a onclick="removeByName(\'' + file.name + '\')">Borrar</a>';
+        //        fileListDisplay.appendChild(fileDisplayEl);
+        //        fileListDisplay.appendChild(fileDisplayEl);
 
-            });
-        };
+        //    });
+        //};
     })();
 
+    (function () {
+
+        $('#form1').submit(function () {
+
+            $('input.iesLabel').each(function (i, e) {
+                var o = $('#labeledAssets').val();
+                $('#labeledAssets').val(o + '|' + $(e).data('name') + '^' + $(e).val());
+            });
+
+            return true;
+        });
+
+    })();
 
 
 </script>
