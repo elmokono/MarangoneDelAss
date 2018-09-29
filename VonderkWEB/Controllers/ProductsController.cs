@@ -18,8 +18,10 @@ namespace VonderkWEB.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            var Products = db.Products.Include(p => p.Category).Include(p => p.Brand);
-            return View(Products.ToList());
+            var model = new Models.HomeViewModel().Get();
+            return View(model);
+            //var Products = db.Products.Include(p => p.Category).Include(p => p.Brand);
+            //return View(Products.ToList());
         }
 
         // GET: Products/Details/5

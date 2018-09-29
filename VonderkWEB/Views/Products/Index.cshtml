@@ -47,7 +47,7 @@
 
             <ul>
 
-                @foreach (var item in )
+                @foreach (var item in Model.Products)
                 {
                     <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
                         <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
