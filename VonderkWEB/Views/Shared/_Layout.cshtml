@@ -6,9 +6,9 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    
-    @*<link rel="stylesheet" href="~/Content/owl.carousel.css" />
-        <link rel="stylesheet" href="~/Content/owl.theme.default.css" />*@
+
+    <link rel="stylesheet" href="~/Content/owl.carousel.css" />
+    <link rel="stylesheet" href="~/Content/owl.theme.default.css" />
 
     <link rel="stylesheet" href="~/Content/Site.css" type="text/css">
     @Styles.Render("~/Content/css")
@@ -71,36 +71,117 @@
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+    <header id="header">
+        <div class="content">
+            <div class="logo"><a href="~/"><img src="~/Images/Icons/logo-grupo-vonderk.png" alt="vonderk"></a></div>
+            <div class="cont-nav-social">
+                <nav>
+                    <ul>
+                        <li><a href="~/Home/Empresa">Empresa</a></li>
+                        <li><a href="~/Productos/Index">Productos</a></li>
+                        <li><a href="~/Home/Worldwide">Worldwide</a></li>
+                        <li><a href="~/Home/Contacto">Contacto</a></li>
+                    </ul>
+
+                </nav>
+
+                <div class="social">
+                    <ul>
+                        <li><a href="#"><img src="~/Images/Icons/ico-fb.png" alt="Facebook" /></a></li>
+                        <li><a href="#"><img src="~/Images/Icons/ico-tw.png" alt="Twitter" /></a></li>
+                        <li><a href="#"><img src="~/Images/Icons/ico-ig.png" alt="Instagram" /></a></li>
+                    </ul>
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+
+                    //<li><a href="~/SlidePrincipals/Create">-SlidePrincipals-</a></li>
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">Admin</button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="#home">Productos</a>
+                            <a href="#about">Categorias</a>
+                            <a href="#contact">Marcas</a>
+                            <a href="#contact">Slides</a>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                                    //<button type="button" onclick="javascript:document.getElementById('logoutForm').submit()">Log off</button>
+
+                                }
+
+
+
+                            }
+                        </div>
+                    </div>
+
+
+                }
+
+
+
+
             </div>
         </div>
-    </div>
+    </header>
+
     <div class="container body-content">
         @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        <footer class="footer">
+
+            <div class="content">
+                <div class="logo"><a href="~/Home/Index"><img src="~/Images/Icons/logo-grupo-vonderk.png" alt="vonderk"></a></div>
+                <address>
+                    Esteban Echeverría 531 - Villa Martelli<br />
+                    Buenos Aires (B1603CXK) Argentina<br />
+                    <strong>Tel:</strong> 54 11 6091-8780 <span>Copyright 2018 - All rights reserved</span>
+                    <!-- firma -->
+                    <div id="firma" style="
+                                margin: 0;
+                                padding: 0;
+                                 width: 50%;
+                                float: right; text-align:right; ">
+                        <a href="http://www.bendito.la" target="_blank" style="font-family:Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; color:#333; ">SITE BY BENDITO.LA</a>
+                    </div>
+
+                    <!-- fin firma -->
+                </address>
+            </div>
+
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jquery")*@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.dropbtn')) {
+
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+
+
 </body>
 </html>

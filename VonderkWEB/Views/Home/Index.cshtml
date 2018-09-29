@@ -1,31 +1,158 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using VonderkWEB.Models
+@model HomeViewModel
+@{
+    ViewBag.Title = "Vonderk - Inicio";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+
+<style>
+    .filterDiv {
+        float: left;
+        line-height: 100px;
+        text-align: center;
+        display: none;
+    }
+
+    .show {
+        display: block;
+    }
+
+    .container {
+        overflow: hidden;
+    }
+</style>
+
+
+<div id="owl-demo" class="owl-carousel owl-theme">
+    @foreach (var item in Model.Slides)
+    {
+        <div class="item"><img src="@item.FileName" style="height:700px" alt="1"></div>
+
+    }
+
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+
+<section id="productos">
+    <div class="content">
+        <h1 data-easy-reveal="fade-in-up">Productos</h1>
+
+
+        <div class="categorias" id="myBtnContainer" data-easy-reveal="fade-in-up">
+            <ul>
+                <li class="active" onclick="filterSelection('all')">Todos</li>
+
+
+                @foreach (var item in Model.Categories)
+                {
+                    <li onclick="filterSelection('@Html.DisplayFor(modelItem => item.Name)')">@Html.DisplayFor(modelItem => item.Name)</li>
+
+                }
+
+            </ul>
+        </div>
+
+
+        <div class="product-list" data-easy-reveal="fade-in-up">
+
+            <ul>
+
+                @foreach (var item in Model.Products)
+                {
+                    <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
+                        <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
+                            <img src="@(item.ProductAssets.OrderBy(x => x.SortOrder).First().FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+
+
+        </div>
+
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+</section>
+
+
+<script type="text/javascript">
+
+    filterSelection("all")
+    function filterSelection(c) {
+        var x, i;
+        x = document.getElementsByClassName("filterDiv");
+        if (c == "all") c = "";
+        // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+        for (i = 0; i < x.length; i++) {
+            w3RemoveClass(x[i], "show");
+            if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+        }
+    }
+
+    // Show filtered elements
+    function w3AddClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+            if (arr1.indexOf(arr2[i]) == -1) {
+                element.className += " " + arr2[i];
+            }
+        }
+    }
+
+    // Hide elements that are not selected
+    function w3RemoveClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+            while (arr1.indexOf(arr2[i]) > -1) {
+                arr1.splice(arr1.indexOf(arr2[i]), 1);
+            }
+        }
+        element.className = arr1.join(" ");
+    }
+
+    // Add active class to the current control button (highlight it)
+    var btnContainer = document.getElementById("myBtnContainer");
+    var btns = btnContainer.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+        });
+    }
+
+</script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#owl-demo").owlCarousel({
+
+            navigation: true, // Show next and prev buttons
+            loop: true,
+            //slideSpeed : 200,
+            //paginationSpeed : 900,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            //autoplayHoverPause:true,
+            animateOut: 'fadeOut',
+            items: 1,
+
+
+        });
+
+
+
+
+    });
+
+
+
+
+</script>

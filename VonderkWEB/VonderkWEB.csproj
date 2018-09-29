@@ -203,6 +203,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>VonderkModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Product.cs">

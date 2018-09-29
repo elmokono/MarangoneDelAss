@@ -1,63 +1,121 @@
-﻿@model IEnumerable<VonderkWEB.Models.Product>
-
+﻿@using VonderkWEB.Models
+@model HomeViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Productos";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Features)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductCode)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Brand.Name)
-        </th>
-        <th></th>
-    </tr>
+<style>
+    .filterDiv {
+        float: left;
+        line-height: 100px;
+        text-align: center;
+        display: none;
+    }
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Features)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductCode)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Category.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Brand.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductID })
-        </td>
-    </tr>
-}
+    .show {
+        display: block;
+    }
 
-</table>
+    .container {
+        overflow: hidden;
+    }
+</style>
+
+
+
+<section id="productos">
+    <div class="content">
+        <h1 data-easy-reveal="fade-in-up">Productos</h1>
+
+        <div class="categorias" id="myBtnContainer" data-easy-reveal="fade-in-up">
+            <ul>
+                <li class="active" onclick="filterSelection('all')">Todos</li>
+
+
+                @foreach (var item in Model.Categories)
+                {
+                    <li onclick="filterSelection('@Html.DisplayFor(modelItem => item.Name)')">@Html.DisplayFor(modelItem => item.Name)</li>
+
+                }
+
+            </ul>
+        </div>
+
+
+        <div class="product-list" data-easy-reveal="fade-in-up">
+
+            <ul>
+
+                @foreach (var item in )
+                {
+                    <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
+                        <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
+                            <img src="@(item.ProductAssets.OrderBy(x => x.SortOrder).First().FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+
+
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+<script type="text/javascript">
+
+    filterSelection("all")
+    function filterSelection(c) {
+        var x, i;
+        x = document.getElementsByClassName("filterDiv");
+        if (c == "all") c = "";
+        // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+        for (i = 0; i < x.length; i++) {
+            w3RemoveClass(x[i], "show");
+            if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+        }
+    }
+
+    // Show filtered elements
+    function w3AddClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+            if (arr1.indexOf(arr2[i]) == -1) {
+                element.className += " " + arr2[i];
+            }
+        }
+    }
+
+    // Hide elements that are not selected
+    function w3RemoveClass(element, name) {
+        var i, arr1, arr2;
+        arr1 = element.className.split(" ");
+        arr2 = name.split(" ");
+        for (i = 0; i < arr2.length; i++) {
+            while (arr1.indexOf(arr2[i]) > -1) {
+                arr1.splice(arr1.indexOf(arr2[i]), 1);
+            }
+        }
+        element.className = arr1.join(" ");
+    }
+
+    // Add active class to the current control button (highlight it)
+    var btnContainer = document.getElementById("myBtnContainer");
+    var btns = btnContainer.getElementsByClassName("btn");
+    for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function () {
+            var current = document.getElementsByClassName("active");
+            current[0].className = current[0].className.replace(" active", "");
+            this.className += " active";
+        });
+    }
+
+</script>

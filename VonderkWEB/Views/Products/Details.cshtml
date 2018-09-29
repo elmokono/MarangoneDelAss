@@ -4,89 +4,104 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4> @Model.Product.Name</h4>
-    <hr />
-   
+<section class="top-space">
+    <div class="content">
+        <div class="volver"><a href="javascript:window.history.back();">< Volver </a></div>
+        <div class="categoria-min"><a href="#"> @Html.DisplayFor(model => Model.Product.Category.Name) </a></div>
 
-    @foreach (string item in Model.OrderedImages)
-    {
+        <h1> @Model.Product.Name </h1>
 
-        <div class="item"><img src="/Images/@item" style="height:160px" alt="1"></div>
+        <div class="producto-fotos">
 
-    }
+            <div id="owl-demo-product" class="owl-carousel owl-theme">
 
 
-    @foreach (var item in Model.OrderedFichas)
-    {
+                @foreach (var item in Model.OrderedImages)
+                {
 
-        <div class="item">@item.Name || @item.FileName</div>
+                    <div class="item"><img src="@item" style="height:560px" alt="1"></div>
 
-    }
+                }
 
-    @foreach (var item in Model.OrderedIES)
-    {
+            </div>
 
-        <div class="item">@item.Name || @item.FileName</div>
-
-    }
-
-
-
-    @*<dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Name)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Name)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Description)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Description)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Features)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Features)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.ProductCode)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.ProductCode)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Category.Name)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Category.Name)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Brand.Name)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Brand.Name)
-                </dd>
-
-            </dl>
         </div>
-        <p>
-            @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
-            @Html.ActionLink("Back to List", "Index")
-        </p>*@
+        <div class="descripcion info" data-easy-reveal="fade-in-up">
+            <p>
+                @Html.DisplayFor(model => Model.Product.Description)<br />
+                <strong>CÓDIGO:</strong> @Html.DisplayFor(model => Model.Product.ProductCode)
+            </p>
+        </div>
+        <div class="caracteristicas info" data-easy-reveal="fade-in-up">
+            <h2>Características</h2>
+            @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Product.Features))
+        </div>
+    </div>
+</section>
+<section class="bk-grey" data-easy-reveal="fade-in-up">
+    <div class="content">
+        <div class="docs info">
+
+            @foreach (var item in Model.OrderedFichas)
+            {
+
+                <div class="item">@item.Name || @item.FileName</div>
+
+            }
+
+            @foreach (var item in Model.OrderedIES)
+            {
+
+                <div class="item">@item.Name || @item.FileName</div>
+
+            }
+
+
+        </div>
+    </div>
+</section>
+<section class="related-products" data-easy-reveal="fade-in-up">
+    <div class="content">
+        <h1 data-easy-reveal="fade-in-up">Productos</h1>
+
+        <div class="product-list" data-easy-reveal="fade-in-up">
+
+            <ul>
+
+                @foreach (var item in Model.RelatedProducts)
+                {
+                    <li class="@Html.DisplayFor(modelItem => item.Category.Name)">
+                        <a href="@Url.Action("Details", "Productos", new {id= item.ProductID})">
+                            <img src="@(item.ProductAssets.OrderBy(x => x.SortOrder).First().FileName)" width="100" height="100" />
+                            <span>@Html.DisplayFor(modelItem => item.Name)</span>
+                        </a>
+                    </li>
+                }
+
+            </ul>
+
+        </div>
+
+    </div>
+</section>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#owl-demo-product").owlCarousel({
+            dots: false,
+            loop: true,
+            //slideSpeed : 200,
+            //paginationSpeed : 900,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            //autoplayHoverPause:true,
+            autoWidth: true,
+            items: 3,
+            margin: 10,
+        });
+    });
+</script>
+
