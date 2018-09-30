@@ -20,7 +20,7 @@ namespace VonderkWEB.Controllers
         public ActionResult FirstAjax(string[] listValues)
         {
 
-            int cont = 0;
+            short cont = 0;
 
             foreach (var item in listValues)
             {

@@ -28,6 +28,7 @@ namespace VonderkWEB.Models
         public string Features { get; set; }
         public string ProductCode { get; set; }
         public bool IsActive { get; set; }
+        public short SortOrder { get; set; }
     
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }
