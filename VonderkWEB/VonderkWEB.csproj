@@ -193,6 +193,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\SlidesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,6 +204,7 @@
     <Compile Include="Models\Category.cs">
       <DependentUpon>VonderkModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -257,10 +259,6 @@
     <Content Include="Images\inspiracion\i2.jpg" />
     <Content Include="Images\inspiracion\i3.jpg" />
     <Content Include="Images\inspiracion\i4.png" />
-    <Content Include="Images\Slides\1.jpg" />
-    <Content Include="Images\Slides\2.jpg" />
-    <Content Include="Images\Slides\3.jpg" />
-    <Content Include="Images\Slides\4.jpg" />
     <Content Include="Models\VonderkModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>VonderkModel.edmx</DependentUpon>
@@ -308,8 +306,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <None Include="Views\Home\Empresa.cshtml" />
+    <Content Include="Views\Home\Contacto.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -336,9 +334,15 @@
     <Content Include="Views\Products\Details.cshtml" />
     <Content Include="Views\Products\Edit.cshtml" />
     <Content Include="Views\Products\Index.cshtml" />
+    <Content Include="Views\Slides\Create.cshtml" />
+    <Content Include="Views\Slides\Delete.cshtml" />
+    <Content Include="Views\Slides\Details.cshtml" />
+    <Content Include="Views\Slides\Edit.cshtml" />
+    <Content Include="Views\Slides\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\Slides\" />
     <Folder Include="Products\1\IES\" />
     <Folder Include="Products\1\IMG\" />
     <Folder Include="Products\1\PDF\" />
