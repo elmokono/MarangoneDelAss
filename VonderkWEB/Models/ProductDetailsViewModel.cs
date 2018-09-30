@@ -48,7 +48,7 @@ namespace VonderkWEB.Models
                 ProductAsset asset = new ProductAsset
                 {
                     ProductID = productID,
-                    Name = labels.First(x => x.Key == postedFile.FileName).Value,
+                    Name = labels.FirstOrDefault(x => x.Key == postedFile.FileName).Value,
                     AssetType = type,
                     IsActive = true,
                     FileName = "~/Products/" + productID + "/" + type + "/" + postedFile.FileName,
