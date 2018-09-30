@@ -15,8 +15,6 @@
 
 <style>
 
-
-
     #sortable {
         list-style-type: none;
         margin: 0;
@@ -62,6 +60,25 @@
     .demo {
         width: 100%;
     }
+
+    .asset {
+        max-width: 300px;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-wrap: nowrap;
+    
+    }
+
+        .flex-container .box {
+            background-color: #f1f1f1;
+            width: 100%;
+            margin: 10px;
+            text-align: center;
+            display: block;
+            overflow: auto;
+        }
 </style>
 
 <div class="content">
@@ -169,24 +186,26 @@
 
 
 
+            <div class="flex-container">
+                <div class="demo">
 
-            <div class="demo">
-
-                <div class="gallery">
-                    <ul id="sortable" class="gallery"></ul>
-                </div>
-                <div class="fichasgallery">
-                    <div id='file-list-display'>
-
+                    <div class="box gallery">
+                        <ul id="sortable" class="gallery"></ul>
                     </div>
-                </div>
-                <div class="IESgallery">
-                    <div id='ies-list-display'>
+                    <div class="box fichasgallery">
+                        <div id='file-list-display'>
 
+                        </div>
                     </div>
-                </div>
+                    <div class="box IESgallery">
+                        <div id='ies-list-display'>
 
-            </div><!-- End demo -->
+                        </div>
+                    </div>
+
+                </div><!-- End demo -->
+            </div>
+
             @Html.Hidden("deletedAssets")
             @Html.Hidden("labeledAssets")
 
@@ -342,27 +361,22 @@
         var fileInput = document.getElementById('fichaFiles');
         var fileListDisplay = document.getElementById('file-list-display');
 
-        var fileList = [];
-        var renderFileList, sendFile;
-
         fileInput.addEventListener('change', function (evnt) {
-            fileList = [];
+
             for (var i = 0; i < fileInput.files.length; i++) {
-                fileList.push(fileInput.files[i]);
+
+                var file = fileInput.files[i];
+                var fileDisplayEl = document.createElement('li');
+                fileDisplayEl.setAttribute("class", "testing asset col-25")
+                fileDisplayEl.setAttribute("data-id", file.name)
+                fileDisplayEl.setAttribute("data-name", file.name)
+                fileDisplayEl.setAttribute("data-new", "true")
+                fileDisplayEl.innerHTML = (i + 1) + ': ' + file.name + '<input type="text" data-name="' + file.name + '" class="fileLabel"  id="selector"><a onclick="removeByName(\'' + file.name + '\')">Borrar</a>';
+                fileListDisplay.appendChild(fileDisplayEl);
             }
-            renderFileList();
+
         });
 
-        renderFileList = function () {
-            fileListDisplay.innerHTML = '';
-            fileList.forEach(function (file, index) {
-                var fileDisplayEl = document.createElement('p');
-                fileDisplayEl.setAttribute("class", "testing col-25")
-                fileDisplayEl.setAttribute("data-id", file.name)
-                fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" id="selector"><a onclick="removeByName(\'' + file.name + '\')">Borrar</a>';
-                fileListDisplay.appendChild(fileDisplayEl);
-            });
-        };
     })();
 
     //---------------------------------Multiple product assets (IES)---------------------------------
@@ -394,6 +408,12 @@
     (function () {
 
         $('#form1').submit(function () {
+
+
+            $('input.fileLabel').each(function (i, e) {
+                var o = $('#labeledAssets').val();
+                $('#labeledAssets').val(o + '|' + $(e).data('name') + '^' + $(e).val());
+            });
 
             $('input.iesLabel').each(function (i, e) {
                 var o = $('#labeledAssets').val();

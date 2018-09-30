@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -55,7 +56,10 @@ namespace VonderkWEB.Models
                     SortOrder = 0,
                 };
                 db.ProductAssets.Add(asset);
-                var pathImagenesProduct = rootDir + "\\" + type + "\\";
+
+                //No guarda dentro de la carpeta del producto
+                //var pathImagenesProduct = rootDir + "\\" + type + "\\";
+                var pathImagenesProduct = pathProduct + "\\" + type + "\\";
                 if (!Directory.Exists(pathImagenesProduct))
                 {
                     Directory.CreateDirectory(pathImagenesProduct);
@@ -83,7 +87,24 @@ namespace VonderkWEB.Models
             SaveAssets(model.ProductID, rootDir, "PDF", fichaFiles, lbls);
             SaveAssets(model.ProductID, rootDir, "IES", iesFiles, lbls);
 
-            db.SaveChanges();
+            //db.SaveChanges();
+
+            try
+            {
+              
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        System.Console.WriteLine("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+            }
+
         }
 
         public void New(Product model, string rootDir, string labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
