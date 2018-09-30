@@ -10,7 +10,8 @@ namespace VonderkWEB.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = new Models.HomeViewModel().Get();
+            return View(model);
         }
 
         public ActionResult About()
