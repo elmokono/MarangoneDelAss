@@ -70,6 +70,7 @@ namespace VonderkWEB.Models
 
         public void Edit(Product model, string rootDir, string deletedAssets, string labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
+            model.IsActive = true;
             db.Entry(model).State = EntityState.Modified;
             db.SaveChanges();
 

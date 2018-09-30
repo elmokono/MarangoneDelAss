@@ -49,11 +49,16 @@
 
                 @foreach (var item in Model.Products)
                 {
-                    <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
-                        <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
-                            <img src="@(item.ProductAssets.OrderBy(x => x.SortOrder).First().FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
-                        </a>
-                    </li>
+
+                    if (item.ProductAssets.Count > 0)
+                    {
+                        <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
+                            <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
+                                <img src="@(item.ProductAssets.OrderBy(x => x.SortOrder).First().FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
+                            </a>
+                        </li>
+                    }
+
                 }
 
             </ul>

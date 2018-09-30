@@ -15,8 +15,36 @@ namespace VonderkWEB.Controllers
     {
         private LuminariaEntities db = new LuminariaEntities();
 
+
+        [HttpPost]
+        public ActionResult FirstAjax(string[] listValues)
+        {
+
+            int cont = 0;
+
+            foreach (var item in listValues)
+            {
+                var m = db.Products.SingleOrDefault(x => x.Name == item);
+                m.SortOrder = cont;
+                cont++;
+            }
+            db.SaveChanges();
+
+            return Json("Se cambio el orden correctamente", JsonRequestBehavior.AllowGet);
+        }
+
+
         // GET: Products
         public ActionResult Index()
+        {
+            var model = new Models.HomeViewModel().Get();
+            return View(model);
+            //var Products = db.Products.Include(p => p.Category).Include(p => p.Brand);
+            //return View(Products.ToList());
+        }
+
+        // GET: Products
+        public ActionResult AdminIndex()
         {
             var model = new Models.HomeViewModel().Get();
             return View(model);
@@ -96,7 +124,7 @@ namespace VonderkWEB.Controllers
                 new ProductDetailsViewModel().Edit(model, pathAssets, deletedAssets, labeledAssets, imageFiles, fichaFiles, iesFiles);
                 //db.Entry(Product).State = EntityState.Modified;
                 //db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Products");
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", model.CategoryID);

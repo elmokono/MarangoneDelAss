@@ -201,7 +201,7 @@
                             <ul id="sortable" class="imageGallery">
                                 @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG"))
                                 {
-                                    <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                    <li class="asset onlyImage ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
                                         <img src="@item.FileName" width="200" height="200" alt="1">
                                         <a href="javascript:remove(@item.AssetID);">Borrar</a>
                                     </li>
@@ -303,7 +303,7 @@
                     reader.onload = function (event) {
                         var idx = $('li.text-preview').length;
                         console.log(input.files[idx]);
-                        var p = $('<li class="asset text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
+                        var p = $('<li class="asset onlyImage text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
                         $('<img width="100" height="100" class="img_class">').attr('src', event.target.result).appendTo(p);
                         $('<a onclick="removeByName(\'' + input.files[idx].name + '\')">Borrar</a>').appendTo(p);
                     }
@@ -446,6 +446,11 @@
     (function () {
 
         $('#form1').submit(function () {
+
+            $('li.onlyImage').each(function (i, e) {
+                var o = $('#labeledAssets').val();
+                $('#labeledAssets').val(o + '|' + $(e).data('name') + '^' + $(e).data('name'));
+            });
 
             $('input.fileLabel').each(function (i, e) {
                 var o = $('#labeledAssets').val();

@@ -267,7 +267,7 @@
                     reader.onload = function (event) {
                         var idx = $('li.text-preview').length;
                         console.log(input.files[idx]);
-                        var p = $('<li class="asset text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
+                        var p = $('<li class="asset onlyImage text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
                         $('<img width="100" height="100" class="img_class">').attr('src', event.target.result).appendTo(p);
                         $('<a onclick="removeByName(\'' + input.files[idx].name + '\')">Borrar</a>').appendTo(p);
                     }
@@ -409,6 +409,11 @@
 
         $('#form1').submit(function () {
 
+
+            $('li.onlyImage').each(function (i, e) {
+                var o = $('#labeledAssets').val();
+                $('#labeledAssets').val(o + '|' + $(e).data('name') + '^' + $(e).data('name'));
+            });
 
             $('input.fileLabel').each(function (i, e) {
                 var o = $('#labeledAssets').val();

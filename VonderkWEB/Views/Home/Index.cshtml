@@ -47,15 +47,7 @@
 
         <div class="categorias" id="myBtnContainer" data-easy-reveal="fade-in-up">
             <ul>
-                <li class="active" onclick="filterSelection('all')">
-                
-                
-                
-                
-                
-                
-                s</li>
-
+                <li class="active" onclick="filterSelection('all')">Todos</li>
 
                 @foreach (var item in Model.Categories)
                 {
@@ -73,11 +65,16 @@
 
                 @foreach (var item in Model.Products)
                 {
-                    <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
-                        <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
-                            <img src="@(item.ProductAssets.OrderBy(x => x.SortOrder).First().FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
-                        </a>
-                    </li>
+                    if (item.ProductAssets.Count > 0)
+                    {
+                        <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
+                            <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
+                                <img src="@(item.ProductAssets.OrderBy(x => x.SortOrder).First().FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
+                            </a>
+                        </li>
+                    }
+
+
                 }
 
             </ul>
