@@ -52,6 +52,7 @@
         margin: 20px;
         border: solid brown 1px;
     }
+
     .testingies {
         padding: 20px;
         margin: 20px;
@@ -63,13 +64,9 @@
     }
 </style>
 
-
-
-
-
 <div class="content">
     <h2>Crear producto</h2>
-    <form role="form" method="post" action="/Products/Create" enctype="multipart/form-data">
+    <form role="form" name="form1" id="form1" method="post" action="/Products/Create" enctype="multipart/form-data">
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
@@ -190,7 +187,8 @@
                 </div>
 
             </div><!-- End demo -->
-
+            @Html.Hidden("deletedAssets")
+            @Html.Hidden("labeledAssets")
 
             <div class="row">
                 <div class="col-md-offset-2 col-75">
@@ -217,14 +215,16 @@
 
     //Delete images before submit
     function remove(assetID) {
-       
+
         $('li.asset[data-id=' + assetID + ']').remove();
-
+        o = $('#deletedAssets').val();
+        $('#deletedAssets').val(o + "," + assetID);
     }
-
-    //Delete assets (Fichas & IES) before submit
+    function removeByName(assetName) {
+        $('li.asset[data-name="' + assetName + '"]').remove();
+    }
     function removeAsset(assetID) {
-       
+
         $('p.testing[data-id=' + assetID + ']').remove();
 
     }
@@ -248,9 +248,9 @@
                     reader.onload = function (event) {
                         var idx = $('li.text-preview').length;
                         console.log(input.files[idx]);
-                        var p = $('<li class="text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
+                        var p = $('<li class="asset text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
                         $('<img width="100" height="100" class="img_class">').attr('src', event.target.result).appendTo(p);
-                        $('<button onclick="remove(' + input.files[idx].name + ')">Borrar</button>').appendTo(p);
+                        $('<a onclick="removeByName(\'' + input.files[idx].name + '\')">Borrar</a>').appendTo(p);
                     }
                     reader.readAsDataURL(input.files[i]);
 
@@ -262,8 +262,6 @@
         };
 
         $('#imageFiles').on('change', function () {
-            $(".demo").prepend($('<h4>Arrastrar y soltar para cambiar el orden de las imagenes</h4>'));
-            $(".demo").prepend($('<hr/>'));
 
             var files = $('#imageFiles')[0].files;
             var totalSize = 0;
@@ -339,7 +337,6 @@
 
     });
 
-
     //---------------------------------Multiple product assets (Fichas)---------------------------------
     (function () {
         var fileInput = document.getElementById('fichaFiles');
@@ -362,7 +359,7 @@
                 var fileDisplayEl = document.createElement('p');
                 fileDisplayEl.setAttribute("class", "testing col-25")
                 fileDisplayEl.setAttribute("data-id", file.name)
-                fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" id="selector"><button onclick="removeAsset(' + file.name + ')">Borrar</button>';
+                fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" id="selector"><a onclick="removeByName(\'' + file.name + '\')">Borrar</a>';
                 fileListDisplay.appendChild(fileDisplayEl);
             });
         };
@@ -370,229 +367,45 @@
 
     //---------------------------------Multiple product assets (IES)---------------------------------
     (function () {
-        var fileInput = document.getElementById('iesFiles');
-        var fileListDisplay = document.getElementById('ies-list-display');
+        var iesInput = document.getElementById('iesFiles');
+        var iesListDisplay = document.getElementById('ies-list-display');
 
-        var fileList = [];
-        var renderFileList, sendFile;
+        iesInput.addEventListener('change', function (evnt) {
 
-        fileInput.addEventListener('change', function (evnt) {
-            fileList = [];
-            for (var i = 0; i < fileInput.files.length; i++) {
-                fileList.push(fileInput.files[i]);
+            $('li.asset[data-new="true"]', $('#ies-list-display')).remove();
+            for (var i = 0; i < iesInput.files.length; i++) {
+
+                var file = iesInput.files[i];
+                var fileDisplayIES = document.createElement('li');
+                fileDisplayIES.setAttribute("class", "testingies asset col-25");
+                fileDisplayIES.setAttribute("data-id", file.name);
+                fileDisplayIES.setAttribute("data-name", file.name);
+                fileDisplayIES.setAttribute("data-new", "true");
+                fileDisplayIES.innerHTML = (i + 1) + ': ' + file.name + '<input type="text" data-name="' + file.name + '" class="iesLabel" id="selector" /><a onclick="removeByName(\'' + file.name + '\')">Borrar</a>';
+                iesListDisplay.appendChild(fileDisplayIES);
+                iesListDisplay.appendChild(fileDisplayIES);
+
             }
-            renderFileList();
+
         });
 
-        renderFileList = function () {
-            fileListDisplay.innerHTML = '';
-            fileList.forEach(function (file, index) {
-                var fileDisplayEl = document.createElement('p');
-                fileDisplayEl.setAttribute("class", "testingies col-25")
-                fileDisplayEl.setAttribute("data-id", file.name)
-                fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" id="selector"><button onclick="removeAsset(' + file.name + ')">Borrar</button>';
-                fileListDisplay.appendChild(fileDisplayEl);
-                fileListDisplay.appendChild(fileDisplayEl);
-
-            });
-        };
     })();
-
- 
-
-</script>
-
-
-@*<script>
-
-
-    function remove(assetID) {
-        //$('#hiddenField').val($('#hiddenField').val().replace($('li.asset[data-id=' + assetID + ']').data('name'), ''))
-        $('li.asset[data-id=' + assetID + ']').remove();
-
-    }
-
-    $(function () {
-
-
-
-        var $sortableList = $("#sortable");
-
-
-        // Multiple images preview in browser
-        var imagesPreview = function (input, placeToInsertImagePreview) {
-
-            if (input.files) {
-                var filesAmount = input.files.length;
-
-                for (i = 0; i < filesAmount; i++) {
-
-                    var reader = new FileReader();
-
-                    reader.onload = function (event) {
-                        var idx = $('li.text-preview').length;
-                        console.log(input.files[idx]);
-                        var p = $('<li class="asset text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
-                        $('<img width="100" height="100" class="img_class">').attr('src', event.target.result).appendTo(p);
-                        $('<button onclick="remove(' + input.files[idx].name + ')">Borrar</button>').appendTo(p);
-
-                    }
-                    reader.readAsDataURL(input.files[i]);
-
-                }
-
-
-            }
-
-        };
-
-        $('#imageFiles').on('change', function () {
-            $(".demo").prepend($('<h4>Arrastrar y soltar para cambiar el orden de las imagenes</h4>'));
-            $(".demo").prepend($('<hr/>'));
-
-            var files = $('#imageFiles')[0].files;
-            var totalSize = 0;
-
-            for (var i = 0; i < files.length; i++) {
-                // calculate total size of all files
-                totalSize += files[i].size;
-            }
-            //1x10^9 = 1 GB
-            //var sizeInGb = totalSize / 1000000000;
-            if (totalSize < 10485760) {
-                imagesPreview(this, 'ul.gallery');
-            } else {
-
-                alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
-                window.location.reload(true);
-            }
-
-
-
-        });
-
-        $('#fichaFiles').on('change', function () {
-
-
-            var files = $('#filesuploadtecnica')[0].files;
-            var totalSize = 0;
-
-            for (var i = 0; i < files.length; i++) {
-                // calculate total size of all files
-                totalSize += files[i].size;
-            }
-            //1x10^9 = 1 GB
-            //var sizeInGb = totalSize / 1000000000;
-            if (totalSize > 10485760) {
-                alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
-
-            }
-
-
-        });
-
-
-        $('#iesFiles').on('change', function () {
-
-            var files = $('#filesuploadies')[0].files;
-            var totalSize = 0;
-
-            for (var i = 0; i < files.length; i++) {
-                // calculate total size of all files
-                totalSize += files[i].size;
-            }
-
-            if (totalSize > 10485760) {
-                alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
-
-            }
-
-        });
-
-
-        //var listValues = [];
-
-        //var sortEventHandler = function (event, ui) {
-
-        //    console.log("New sort order!");
-
-
-
-        //    var listElements = $sortableList.children();
-        //    var listOrder = [];
-
-        //    console.log(listElements); // [ <li>, <li>, ... ]
-
-        //    listElements.each(function (index, element) {
-        //        listValues.push(element.innerText);
-        //        listOrder.push($(element).data('name'));
-        //    });
-
-        //    var myJSON = JSON.stringify(listOrder);
-
-        //    document.getElementById("hiddenField").value = myJSON;
-
-        //};
-
-        //$sortableList.sortable({
-        //    stop: sortEventHandler
-        //});
-
-        //console.log(listValues); // [ "Item 1", "Item 2", ... ]
-
-
-
-    });
-
-
-    //----------------------------------------------------NEW MULTIPLE FICHA TECNICA
-
 
     (function () {
-        //var fileCatcher = document.getElementById('file-catcher');
-        var fileInput = document.getElementById('fichaFiles');
-        var fileListDisplay = document.getElementById('file-list-display');
 
-        var fileList = [];
-        var renderFileList, sendFile;
+        $('#form1').submit(function () {
 
-        //fileCatcher.addEventListener('submit', function (evnt) {
-        //    evnt.preventDefault();
-        //    fileList.forEach(function (file) {
-        //        sendFile(file);
-        //    });
-        //});
-
-
-        fileInput.addEventListener('change', function (evnt) {
-            fileList = [];
-            for (var i = 0; i < fileInput.files.length; i++) {
-                fileList.push(fileInput.files[i]);
-            }
-            renderFileList();
-        });
-
-        renderFileList = function () {
-            fileListDisplay.innerHTML = '';
-            fileList.forEach(function (file, index) {
-                var fileDisplayEl = document.createElement('p');
-                fileDisplayEl.setAttribute("class", "testing col-25")
-                fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" id="selector">';
-                fileListDisplay.appendChild(fileDisplayEl);
+            $('input.iesLabel').each(function (i, e) {
+                var o = $('#labeledAssets').val();
+                $('#labeledAssets').val(o + '|' + $(e).data('name') + '^' + $(e).val());
             });
-        };
 
-
-
-        //#selector.oninput = function () {
-        //    //result.innerHTML = input.value;
-        //    alert(input.value);
-        //};
-
-
-
-
+            return true;
+        });
 
     })();
 
-</script>*@
+
+
+
+</script>
