@@ -24,6 +24,8 @@
 
     <script src="~/Scripts/owl.carousel.js"></script>
 
+    <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,600,700" rel="stylesheet">
+
     <style>
         .dropbtn {
             background-color: #3498DB;
@@ -78,8 +80,8 @@
                 <nav>
                     <ul>
                         <li><a href="~/Home/Empresa">Empresa</a></li>
-                        <li><a href="~/Productos/Index">Productos</a></li>
-                        <li><a href="~/Home/Worldwide">Worldwide</a></li>
+                        <li><a href="~/Products/Index">Productos</a></li>
+                        <li><a href="~/Works/Index">Novedades</a></li>
                         <li><a href="~/Home/Contacto">Contacto</a></li>
                     </ul>
 
@@ -99,23 +101,23 @@
                     <div class="dropdown">
                         <button onclick="myFunction()" class="dropbtn">Admin</button>
                         <div id="myDropdown" class="dropdown-content">
-                            <a href="#home">Productos</a>
-                            <a href="#about">Categorias</a>
-                            <a href="#contact">Marcas</a>
-                            <a href="#contact">Slides</a>
+                            <a href="~/Products/AdminIndex">Productos</a>
+                            <a href="~/Categories/Index">Categorias</a>
+                            <a href="~/Brands/Index">Marcas</a>
+                            <a href="~/Works/AdminIndex">Trabajos</a>
+                            <a href="~/Slides/Index">Slides</a>
                             @if (User.Identity.IsAuthenticated)
-                            {
-                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-                                    //<button type="button" onclick="javascript:document.getElementById('logoutForm').submit()">Log off</button>
+    {
+        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+                        @Html.AntiForgeryToken()
+                        <a href="javascript:document.getElementById('logoutForm').submit()">Cerrar sesión</a>
 
-                                }
-
+}
 
 
-                            }
+
+}
                         </div>
                     </div>
 

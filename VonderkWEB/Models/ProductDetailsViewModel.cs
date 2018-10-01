@@ -52,7 +52,7 @@ namespace VonderkWEB.Models
                     Name = labels.FirstOrDefault(x => x.Key == postedFile.FileName).Value,
                     AssetType = type,
                     IsActive = true,
-                    FileName = "~/Products/" + productID + "/" + type + "/" + postedFile.FileName,
+                    FileName = "/Products/" + productID + "/" + type + "/" + postedFile.FileName,
                     SortOrder = 0,
                 };
                 db.ProductAssets.Add(asset);
@@ -66,6 +66,16 @@ namespace VonderkWEB.Models
                 }
                 postedFile.SaveAs(Path.Combine(pathImagenesProduct, postedFile.FileName));
             }
+
+            List<string> allKeys = (from kvp in labels select kvp.Key).ToList();
+            for (short i = 0; i < allKeys.Count; i++)
+            {
+                var singleKey = allKeys[i];
+                var m = db.ProductAssets.SingleOrDefault(x => x.Name == singleKey);
+                m.SortOrder = i;
+
+            }
+
         }
 
         public void Edit(Product model, string rootDir, string deletedAssets, string labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
@@ -92,7 +102,6 @@ namespace VonderkWEB.Models
 
             try
             {
-              
                 db.SaveChanges();
             }
             catch (DbEntityValidationException dbEx)

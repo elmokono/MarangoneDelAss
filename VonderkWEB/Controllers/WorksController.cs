@@ -21,6 +21,11 @@ namespace VonderkWEB.Controllers
             return View(db.Works.ToList());
         }
 
+        public ActionResult AdminIndex()
+        {
+            return View(db.Works.ToList());
+        }
+
         // GET: Works/Details/5
         public ActionResult Details(int? id)
         {
