@@ -67,18 +67,35 @@ namespace VonderkWEB.Models
                 postedFile.SaveAs(Path.Combine(pathImagenesProduct, postedFile.FileName));
             }
 
-            List<string> allKeys = (from kvp in labels select kvp.Key).ToList();
-            for (short i = 0; i < allKeys.Count; i++)
-            {
-                var singleKey = allKeys[i];
-                var m = db.ProductAssets.SingleOrDefault(x => x.Name == singleKey);
-                m.SortOrder = i;
+            //List<string> allKeys = (from kvp in labels select kvp.Key).ToList();
+            //for (short i = 0; i < allKeys.Count; i++)
+            //{
+            //    var singleKey = allKeys[i];
+            //    var m = db.ProductAssets.SingleOrDefault(x => x.Name == singleKey);
+            //    m.SortOrder = i;
 
-            }
+            //}
 
         }
 
-        public void Edit(Product model, string rootDir, string deletedAssets, string labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
+        private void SaveImagesOrder(string imagesList, Product model) {
+
+            if (imagesList != null) {
+                var img = imagesList.Split('|').Where(x => x != "");
+                short cont = 0;
+                foreach (var item in img)
+                {
+                    var prod = db.ProductAssets.Where(p => p.ProductID == model.ProductID).FirstOrDefault(x => x.Name == item);
+                    prod.SortOrder = cont;
+                    cont++;
+                }
+
+                db.SaveChanges();
+            }
+           
+        }
+
+        public void Edit(Product model, string rootDir, string imagesList, string deletedAssets, string labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
             model.IsActive = true;
             db.Entry(model).State = EntityState.Modified;
@@ -103,6 +120,7 @@ namespace VonderkWEB.Models
             try
             {
                 db.SaveChanges();
+                SaveImagesOrder(imagesList, model);
             }
             catch (DbEntityValidationException dbEx)
             {
@@ -117,7 +135,7 @@ namespace VonderkWEB.Models
 
         }
 
-        public void New(Product model, string rootDir, string labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
+        public void New(Product model, string rootDir,string imagesList, string labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
             //validar ProductID
             if (db.Products.Any(x => x.Name == model.Name) || db.Products.Any(x => x.ProductCode == model.ProductCode))
@@ -136,9 +154,10 @@ namespace VonderkWEB.Models
             SaveAssets(model.ProductID, rootDir, "IMG", imageFiles, lbls);
             SaveAssets(model.ProductID, rootDir, "PDF", fichaFiles, lbls);
             SaveAssets(model.ProductID, rootDir, "IES", iesFiles, lbls);
-
+            
             db.SaveChanges();
 
+            SaveImagesOrder(imagesList, model);
         }
     }
 }

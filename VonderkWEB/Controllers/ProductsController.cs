@@ -76,7 +76,7 @@ namespace VonderkWEB.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "ID,BrandID,CategoryID,Nombre,Descripcion,Caracteristicas,ProductCode")] Product Product)
-        public ActionResult Create(Product model, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
+        public ActionResult Create(Product model,String imagesList, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
 
@@ -85,7 +85,7 @@ namespace VonderkWEB.Controllers
             if (ModelState.IsValid)
             {
                 model.IsActive = true;
-                new ProductDetailsViewModel().New(model, pathAssets, labeledAssets, imageFiles, fichaFiles, iesFiles);
+                new ProductDetailsViewModel().New(model, pathAssets, imagesList, labeledAssets, imageFiles, fichaFiles, iesFiles);
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", model.CategoryID);
@@ -116,12 +116,12 @@ namespace VonderkWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product model, String deletedAssets, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
+        public ActionResult Edit(Product model, String imagesList, String deletedAssets, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
             if (ModelState.IsValid)
             {
                 var pathAssets = Server.MapPath("~/Products/");
-                new ProductDetailsViewModel().Edit(model, pathAssets, deletedAssets, labeledAssets, imageFiles, fichaFiles, iesFiles);
+                new ProductDetailsViewModel().Edit(model, pathAssets, imagesList, deletedAssets, labeledAssets, imageFiles, fichaFiles, iesFiles);
                 //db.Entry(Product).State = EntityState.Modified;
                 //db.SaveChanges();
                 return RedirectToAction("Index","Products");

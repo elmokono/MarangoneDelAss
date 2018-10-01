@@ -208,6 +208,7 @@
 
             @Html.Hidden("deletedAssets")
             @Html.Hidden("labeledAssets")
+            @Html.Hidden("imagesList")
 
             <div class="row">
                 <div class="col-md-offset-2 col-75">
@@ -409,6 +410,10 @@
 
         $('#form1').submit(function () {
 
+            $('li.onlyImage').each(function (i, e) {
+                var o = $('#imagesList').val();
+                $('#imagesList').val(o + '|' + $(e).data('name'));
+            });
 
             $('li.onlyImage').each(function (i, e) {
                 var o = $('#labeledAssets').val();

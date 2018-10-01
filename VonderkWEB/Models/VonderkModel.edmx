@@ -22,6 +22,7 @@
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="FileName" Type="varchar" MaxLength="1024" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="SortOrder" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductAssets">
           <Key>
@@ -199,6 +200,7 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="LuminariaModel.FK_Products_Categories" FromRole="Category" ToRole="Product" />
           <Property Name="FileName" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductAsset">
           <Key>
@@ -328,6 +330,7 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="LuminariaModel.Category">
               <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

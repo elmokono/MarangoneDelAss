@@ -200,12 +200,12 @@
                             <h2>Images Archivos</h2>
                             <ul id="sortable" class="imageGallery">
                                 @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG"))
-                                {
-                                    <li class="asset onlyImage ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                        <img src="@item.FileName" width="200" height="200" alt="1">
-                                        <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                                    </li>
-                                }
+                    {
+                        <li class="asset onlyImage ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                            <img src="@item.FileName" width="200" height="200" alt="1">
+                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                        </li>
+        }
                             </ul>
                         </div>
                         <div class="box fichasgallery">
@@ -213,12 +213,12 @@
                                 <h2>Files Archivos</h2>
                                 <ul class="gallery">
                                     @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "PDF"))
-                                    {
-                                        <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                            <img src="@item.FileName" style="height:160px" alt="1">
-                                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                                        </li>
-                                    }
+                        {
+                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                <img src="@item.FileName" style="height:160px" alt="1">
+                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                            </li>
+            }
                                 </ul>
                             </div>
                         </div>
@@ -228,13 +228,13 @@
                                 <ul class="gallery">
 
                                     @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IES"))
-                                    {
-                                        <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                            <img src="~/Images/Icons/ico-ies.png" style="height:60px" alt="1">
-                                            @item.Name<br /><br />
-                                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                                        </li>
-                                    }
+                        {
+                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                <img src="~/Images/Icons/ico-ies.png" style="height:60px" alt="1">
+                                @item.Name<br /><br />
+                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                            </li>
+            }
                                 </ul>
                             </div>
                         </div>
@@ -244,7 +244,7 @@
                 </div>
                 @Html.Hidden("deletedAssets")
                 @Html.Hidden("labeledAssets")
-
+                @Html.Hidden("imagesList")
                 <div class="form-group">
                     <div class="col-md-offset-2 col-75">
                         <input type="submit" value="Save" class="btn btn-default" />
@@ -446,6 +446,12 @@
     (function () {
 
         $('#form1').submit(function () {
+
+
+            $('li.onlyImage').each(function (i, e) {
+                var o = $('#imagesList').val();
+                $('#imagesList').val(o + '|' + $(e).data('name'));
+            });
 
             $('li.onlyImage').each(function (i, e) {
                 var o = $('#labeledAssets').val();

@@ -24,6 +24,7 @@ namespace VonderkWEB.Models
         public string Name { get; set; }
         public bool IsActive { get; set; }
         public string FileName { get; set; }
+        public short SortOrder { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
