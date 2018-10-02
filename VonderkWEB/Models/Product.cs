@@ -11,7 +11,8 @@ namespace VonderkWEB.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web.Mvc;
+
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -24,6 +25,7 @@ namespace VonderkWEB.Models
         public int BrandID { get; set; }
         public int CategoryID { get; set; }
         public string Name { get; set; }
+        [AllowHtml]
         public string Description { get; set; }
         public string Features { get; set; }
         public string ProductCode { get; set; }

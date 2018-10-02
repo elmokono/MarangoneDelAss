@@ -41,7 +41,7 @@
                 </td>
                 <td>
                     @{
-                        var p = item.WorkAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).First();
+                        var p = item.WorkAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
                         if (p != null)
                         {
                             <img src="~/Images/Works/@item.WorkID/@p.FileName" alt="Photo" width="100" height="100" />

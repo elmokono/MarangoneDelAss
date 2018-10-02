@@ -82,14 +82,14 @@ namespace VonderkWEB.Controllers
                     throw new Exception("You have not specified a Name.");
 
                 }
-
+                trabajo.IsActive = true;
                 db.Works.Add(trabajo);
                 db.SaveChanges();
 
                 if (postedFiles != null)
                 {
 
-                    string buildPath = "~/Images/Trabajos/" + trabajo.WorkID + "/";
+                    string buildPath = "~/Images/Works/" + trabajo.WorkID + "/";
                     string path = Server.MapPath(buildPath);
 
                     if (!Directory.Exists(path))
@@ -97,13 +97,30 @@ namespace VonderkWEB.Controllers
                         Directory.CreateDirectory(path);
                     }
 
+                    short cont = 0;
                     foreach (HttpPostedFileBase postedFile in postedFiles)
                     {
+                        WorkAsset asset = new WorkAsset
+                        {
+                            
+                            FileName = postedFile.FileName,
+                            AssetType = "IMG",
+                            SortOrder = cont,
+                            IsActive = true,
+                            Name = trabajo.Name,
+                            WorkID = trabajo.WorkID
+                           
+                        };
+                        db.WorkAssets.Add(asset);
 
                         var pathFinal = postedFile.FileName;
                         postedFile.SaveAs(path + pathFinal);
 
+                        cont++;
+
                     }
+
+                    db.SaveChanges();
                 }
 
                 return RedirectToAction("Index");

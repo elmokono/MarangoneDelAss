@@ -18,15 +18,18 @@
 
                     @foreach (var item in Model)
                     {
+                        var p = item.WorkAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
+                        if (p != null)
+                        {
+                            <li class="@Html.DisplayFor(modelItem => item.Name)">
+                                <a href="@Url.Action("Details", "Works", new {id= item.WorkID})">
+                                    <img src="~/Images/Works/@item.WorkID/@p.FileName" width="100" height="100" />
+                                    <span>@Html.DisplayFor(modelItem => item.Name)</span>
+                                </a>
+                            </li>
+                        }
 
-             
 
-                        <li class="@Html.DisplayFor(modelItem => item.Name)">
-                            <a href="@Url.Action("Details", "Works", new {id= item.WorkID})">
-                                <img src="~/Images/Works/@item.WorkID/@item.WorkAssets.OrderBy(x => x.SortOrder).First().FileName" width="100" height="100" />
-                                <span>@Html.DisplayFor(modelItem => item.Name)</span>
-                            </a>
-                        </li>
 
                     }
 
