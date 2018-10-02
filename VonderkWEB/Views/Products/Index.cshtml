@@ -47,16 +47,17 @@
 
             <ul>
 
-                @foreach (var item in Model.Products)
+                @foreach (var item in Model.Products.OrderBy(x => x.SortOrder))
                 {
-
-                    if (item.ProductAssets.Count > 0)
+                    var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).First();
+                    if (p != null)
                     {
-                        <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
-                            <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
-                                <img src="@(item.ProductAssets.OrderBy(x => x.SortOrder).First().FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
-                            </a>
-                        </li>
+                <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
+                    <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
+                        <img src="@(p.FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
+                    </a>
+                    <div class="categoria-min" onclick="filterSelection('@Html.DisplayFor(modelItem => item.Category.Name)')"><a>@item.Category.Name</a></div>
+                </li>
                     }
 
                 }

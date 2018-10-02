@@ -75,7 +75,7 @@
                     if (item.ProductAssets.Count > 0)
                     {
                         <li class="@Html.DisplayFor(modelItem => item.Category.Name)">
-                            <a href="@Url.Action("Details", "Productos", new {id= item.ProductID})">
+                            <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
                                 <img src="@(item.ProductAssets.OrderBy(x => x.SortOrder).First().FileName)" width="100" height="100" />
                                 <span>@Html.DisplayFor(modelItem => item.Name)</span>
                             </a>

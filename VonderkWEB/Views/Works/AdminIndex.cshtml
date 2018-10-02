@@ -7,8 +7,11 @@
 
     <h2>Index</h2>
 
+
     <p>
-        @Html.ActionLink("Create New", "Create")
+        <span class="crear-nuevo-producto">
+            @Html.ActionLink("Crear Novedad", "Create")
+        </span>
     </p>
     <table class="table">
         <tr>
@@ -26,17 +29,25 @@
 
         @foreach (var item in Model)
         {
-            
+
 
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
+                    @Html.Raw(System.Web.HttpUtility.HtmlDecode(item.Description))
+                  
                 </td>
                 <td>
-                    @*<img src="~/Images/Trabajos/@item.NombreCorregido/@first" width="100" height="100" />*@
+                    @{
+                        var p = item.WorkAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).First();
+                        if (p != null)
+                        {
+                            <img src="~/Images/Works/@item.WorkID/@p.FileName" alt="Photo" width="100" height="100" />
+                        }
+                    }
+                   
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.WorkID }) |

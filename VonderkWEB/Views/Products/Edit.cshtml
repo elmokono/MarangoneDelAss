@@ -69,7 +69,6 @@
     .flex-container {
         display: flex;
         flex-wrap: nowrap;
-
     }
 
         .flex-container .box {
@@ -77,7 +76,6 @@
             width: 100%;
             margin: 10px;
             text-align: center;
-
             display: block;
             overflow: auto;
         }
@@ -200,12 +198,12 @@
                             <h2>Images Archivos</h2>
                             <ul id="sortable" class="imageGallery">
                                 @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG"))
-                    {
-                        <li class="asset onlyImage ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                            <img src="@item.FileName" width="200" height="200" alt="1">
-                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                        </li>
-        }
+                                {
+                                    <li class="asset onlyImage ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                        <img src="@item.FileName" width="200" height="200" alt="1">
+                                        <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                         <div class="box fichasgallery">
@@ -213,12 +211,13 @@
                                 <h2>Files Archivos</h2>
                                 <ul class="gallery">
                                     @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "PDF"))
-                        {
-                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                <img src="@item.FileName" style="height:160px" alt="1">
-                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                            </li>
-            }
+                                    {
+                                        <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                            <img src="~/Images/Icons/ico-ficha.png" style="height:60px" alt="1">
+                                            @item.Name<br /><br />
+                                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                         </div>
@@ -228,13 +227,13 @@
                                 <ul class="gallery">
 
                                     @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IES"))
-                        {
-                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                <img src="~/Images/Icons/ico-ies.png" style="height:60px" alt="1">
-                                @item.Name<br /><br />
-                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                            </li>
-            }
+                                    {
+                                        <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                            <img src="~/Images/Icons/ico-ies.png" style="height:60px" alt="1">
+                                            @item.Name<br /><br />
+                                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                                        </li>
+                                    }
                                 </ul>
                             </div>
                         </div>

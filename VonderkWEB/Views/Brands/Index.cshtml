@@ -4,7 +4,48 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="content">
+
+    <h2>Indice</h2>
+
+    <p>
+        <span class="crear-nuevo-producto">
+            @Html.ActionLink("Crear nueva Marca", "Create")
+        </span>
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                Imagen
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+
+                    <img src="~/Images/Brands/@item.FileName" alt="Photo" style="width: 160px; height: 160px;" />
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.BrandID }) |
+                    @Html.ActionLink("Ver", "Details", new { id = item.BrandID }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.BrandID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+@*<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -36,4 +77,4 @@
     </tr>
 }
 
-</table>
+</table>*@
