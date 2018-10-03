@@ -11,6 +11,7 @@ using VonderkWEB.Models;
 
 namespace VonderkWEB.Controllers
 {
+    [Authorize]
     public class SlidesController : Controller
     {
         private LuminariaEntities db = new LuminariaEntities();

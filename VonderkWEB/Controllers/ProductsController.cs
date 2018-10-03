@@ -11,6 +11,7 @@ using VonderkWEB.Models;
 
 namespace VonderkWEB.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private LuminariaEntities db = new LuminariaEntities();
@@ -35,6 +36,7 @@ namespace VonderkWEB.Controllers
 
 
         // GET: Products
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var model = new Models.HomeViewModel().Get();
@@ -53,6 +55,7 @@ namespace VonderkWEB.Controllers
         }
 
         // GET: Products/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
 

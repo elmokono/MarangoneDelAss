@@ -11,11 +11,13 @@ using VonderkWEB.Models;
 
 namespace VonderkWEB.Controllers
 {
+    [Authorize]
     public class WorksController : Controller
     {
         private LuminariaEntities db = new LuminariaEntities();
 
         // GET: Works
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return View(db.Works.ToList());
@@ -27,6 +29,7 @@ namespace VonderkWEB.Controllers
         }
 
         // GET: Works/Details/5
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)
