@@ -123,20 +123,20 @@ namespace VonderkWEB.Controllers
         //    return View(slide);
         //}
 
-        //// GET: Slides/Delete/5
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    Slide slide = db.Slides.Find(id);
-        //    if (slide == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(slide);
-        //}
+        // GET: Slides/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Slide slide = db.Slides.Find(id);
+            if (slide == null)
+            {
+                return HttpNotFound();
+            }
+            return View(slide);
+        }
 
         // POST: Slides/Delete/5
         [HttpPost, ActionName("Delete")]

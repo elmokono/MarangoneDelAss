@@ -44,22 +44,22 @@
         <div class="docs info">
 
             @foreach (var item in Model.OrderedFichas)
-    {
-        
-        <div class="item col-docs"><h2>ficha técnica</h2><a href="@item.FileName"><img src="~/Images/Icons/ico-ficha.png" alt="Ficha" />@item.Name</a></div>
+            {
 
-}
+                <div class="item col-docs"><h2>ficha técnica</h2><a href="@item.FileName"><img src="~/Images/Icons/ico-ficha.png" alt="Ficha" />@item.Name</a></div>
+
+            }
 
 
             @foreach (var item in Model.OrderedIES)
-    {
-        
-        <div class="item col-docs"><h2>IES</h2><a href="@item.FileName"><img src="~/Images/Icons/ico-ies.png" alt="IES" />@item.Name</a></div>
+            {
 
-}
+                <div class="item col-docs"><h2>IES</h2><a href="@item.FileName"><img src="~/Images/Icons/ico-ies.png" alt="IES" />@item.Name</a></div>
+
+            }
 
         </div>
-   
+
     </div>
 </section>
 <section class="related-products" data-easy-reveal="fade-in-up">
@@ -72,15 +72,21 @@
 
                 @foreach (var item in Model.RelatedProducts)
                 {
-                    if (item.ProductAssets.Count > 0)
+
+                    var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
+                    if (p != null)
                     {
-                        <li class="@Html.DisplayFor(modelItem => item.Category.Name)">
-                            <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
-                                <img src="@(item.ProductAssets.OrderBy(x => x.SortOrder).First().FileName)" width="100" height="100" />
-                                <span>@Html.DisplayFor(modelItem => item.Name)</span>
-                            </a>
-                        </li>
+                       
+                            <li class="@Html.DisplayFor(modelItem => item.Category.Name)">
+                                <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
+                                    <img src="@(p.FileName)" width="100" height="100" />
+                                    <span>@Html.DisplayFor(modelItem => item.Name)</span>
+                                </a>
+                            </li>
+                      
                     }
+
+
 
                 }
 
