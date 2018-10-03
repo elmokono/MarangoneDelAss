@@ -133,14 +133,31 @@ namespace VonderkWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "BrandID,Name,IsActive")] Brand brand)
+        public ActionResult Edit(Brand brand, HttpPostedFileBase imageFile)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(brand).State = EntityState.Modified;
-                db.SaveChanges();
+                if (imageFile != null)
+                {
+                    brand.FileName = imageFile.FileName;
+                    db.SaveChanges();
+                    var pathAssets = Server.MapPath("~/Images/Brands/");
+                    imageFile.SaveAs(Path.Combine(pathAssets, imageFile.FileName));
+                }
+                else
+                {
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
+            //if (ModelState.IsValid)
+            //{
+            //    db.Entry(brand).State = EntityState.Modified;
+            //    db.SaveChanges();
+            //    return RedirectToAction("Index");
+            //}
             return View(brand);
         }
 

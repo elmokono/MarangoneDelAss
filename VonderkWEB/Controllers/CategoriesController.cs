@@ -130,6 +130,8 @@ namespace VonderkWEB.Controllers
                 {
                     category.FileName = imageFile.FileName;
                     db.SaveChanges();
+                    var pathAssets = Server.MapPath("~/Images/Categories/");
+                    imageFile.SaveAs(Path.Combine(pathAssets, imageFile.FileName));
                 }
                 else
                 {
