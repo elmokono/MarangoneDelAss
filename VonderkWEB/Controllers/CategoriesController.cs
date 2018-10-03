@@ -69,7 +69,8 @@ namespace VonderkWEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                Category cat = new Category {
+                Category cat = new Category
+                {
 
                     FileName = imageFile.FileName,
                     IsActive = true,
@@ -81,10 +82,11 @@ namespace VonderkWEB.Controllers
                 db.SaveChanges();
 
 
-                if (imageFile != null) {
+                if (imageFile != null)
+                {
 
                     var pathAssets = Server.MapPath("~/Images/Categories/");
-                   
+
                     if (!Directory.Exists(pathAssets))
                     {
                         Directory.CreateDirectory(pathAssets);
@@ -119,12 +121,21 @@ namespace VonderkWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CategoryID,Name,IsActive")] Category category)
+        public ActionResult Edit(Category category, HttpPostedFileBase imageFile)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(category).State = EntityState.Modified;
-                db.SaveChanges();
+                if (imageFile != null)
+                {
+                    category.FileName = imageFile.FileName;
+                    db.SaveChanges();
+                }
+                else
+                {
+                    db.SaveChanges();
+                }
+
                 return RedirectToAction("Index");
             }
             return View(category);

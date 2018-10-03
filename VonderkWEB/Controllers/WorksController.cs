@@ -180,6 +180,15 @@ namespace VonderkWEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+
+            var findImages = db.WorkAssets.Where(x => x.WorkID == id);
+            foreach (var item in findImages)
+            {
+                db.WorkAssets.Remove(item);
+            }
+
+            db.SaveChanges();
+
             Work work = db.Works.Find(id);
             db.Works.Remove(work);
             db.SaveChanges();
