@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -64,15 +65,38 @@ namespace VonderkWEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Brand brand)
+        public ActionResult Create(Brand brand, HttpPostedFileBase imageFile)
         {
             if (ModelState.IsValid)
             {
 
                 try
                 {
-                    db.Brands.Add(brand);
+                    Brand brn = new Brand
+                    {
+
+                        FileName = imageFile.FileName,
+                        IsActive = true,
+                        Name = brand.Name                      
+                    };
+
+                    db.Brands.Add(brn);
                     db.SaveChanges();
+
+
+                    if (imageFile != null)
+                    {
+
+                        var pathAssets = Server.MapPath("~/Images/Brands/");
+
+                        if (!Directory.Exists(pathAssets))
+                        {
+                            Directory.CreateDirectory(pathAssets);
+                        }
+                        imageFile.SaveAs(Path.Combine(pathAssets, imageFile.FileName));
+
+                    }
+
                     return RedirectToAction("Index", "Brands");
 
                 }

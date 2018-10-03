@@ -92,7 +92,7 @@
 
                 <td>
                     @{
-                        var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).First();
+                        var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
                         if (p != null)
                         {
                             <img src="@p.FileName" alt="Photo" width="100" height="100" />
@@ -115,7 +115,7 @@
         <ul id="sortable">
             @foreach (var item in Model.Products.OrderBy(x => x.SortOrder))
             {
-                var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).First();
+                var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
                 if (p != null)
                 {
                     <li class="ui-state-default"><img src="@p.FileName" alt="Photo" width="100" height="100" class="img_class"> @Html.DisplayFor(modelItem => item.Name)</li>

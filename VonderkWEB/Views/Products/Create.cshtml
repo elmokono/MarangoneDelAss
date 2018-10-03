@@ -140,7 +140,7 @@
                 </div>
 
                 <div class="col-75">
-                    @Html.EditorFor(model => model.Features, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.TextAreaFor(model => model.Features, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(model => model.Features, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -212,18 +212,18 @@
 
             <div class="row">
                 <div class="col-md-offset-2 col-75">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Crear" class="btn btn-default" />
                 </div>
             </div>
         </div>
     </form>
-
+    <div>
+        @Html.ActionLink("Volver al listado", "Index")
+    </div>
 </div>
 
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

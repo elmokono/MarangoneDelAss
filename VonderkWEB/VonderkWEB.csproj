@@ -349,8 +349,6 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Slides\Create.cshtml" />
     <Content Include="Views\Slides\Delete.cshtml" />
-    <Content Include="Views\Slides\Details.cshtml" />
-    <Content Include="Views\Slides\Edit.cshtml" />
     <Content Include="Views\Slides\Index.cshtml" />
     <Content Include="Views\Works\Create.cshtml" />
     <Content Include="Views\Works\Delete.cshtml" />

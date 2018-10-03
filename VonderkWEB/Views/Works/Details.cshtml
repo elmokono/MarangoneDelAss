@@ -1,7 +1,7 @@
 ﻿@model VonderkWEB.Models.Work
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.Name;
 }
 
 <div class="content">
@@ -34,12 +34,12 @@
 
     <section class="related-products" data-easy-reveal="fade-in-up">
         <div class="content">
-            <h1 data-easy-reveal="fade-in-up">Productos</h1>
+            <h1 data-easy-reveal="fade-in-up">Otras novedades</h1>
 
             <div class="product-list" data-easy-reveal="fade-in-up">
 
                 <ul>
-                    
+                  
                     @*@foreach (var item in Model)
                     {
 

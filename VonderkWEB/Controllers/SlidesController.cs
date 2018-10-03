@@ -21,20 +21,20 @@ namespace VonderkWEB.Controllers
             return View(db.Slides.ToList());
         }
 
-        // GET: Slides/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Slide slide = db.Slides.Find(id);
-            if (slide == null)
-            {
-                return HttpNotFound();
-            }
-            return View(slide);
-        }
+        //// GET: Slides/Details/5
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Slide slide = db.Slides.Find(id);
+        //    if (slide == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(slide);
+        //}
 
         // GET: Slides/Create
         public ActionResult Create()
@@ -92,51 +92,51 @@ namespace VonderkWEB.Controllers
             return View(slide);
         }
 
-        // GET: Slides/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Slide slide = db.Slides.Find(id);
-            if (slide == null)
-            {
-                return HttpNotFound();
-            }
-            return View(slide);
-        }
+        //// GET: Slides/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Slide slide = db.Slides.Find(id);
+        //    if (slide == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(slide);
+        //}
 
-        // POST: Slides/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SlideID,FileName,IsActive")] Slide slide)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(slide).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(slide);
-        }
+        //// POST: Slides/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "SlideID,FileName,IsActive")] Slide slide)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(slide).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View(slide);
+        //}
 
-        // GET: Slides/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Slide slide = db.Slides.Find(id);
-            if (slide == null)
-            {
-                return HttpNotFound();
-            }
-            return View(slide);
-        }
+        //// GET: Slides/Delete/5
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Slide slide = db.Slides.Find(id);
+        //    if (slide == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(slide);
+        //}
 
         // POST: Slides/Delete/5
         [HttpPost, ActionName("Delete")]

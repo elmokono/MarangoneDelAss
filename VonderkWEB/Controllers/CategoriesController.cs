@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -64,12 +65,34 @@ namespace VonderkWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryID,Name,IsActive")] Category category)
+        public ActionResult Create(Category category, HttpPostedFileBase imageFile)
         {
             if (ModelState.IsValid)
             {
-                db.Categories.Add(category);
+                Category cat = new Category {
+
+                    FileName = imageFile.FileName,
+                    IsActive = true,
+                    Name = category.Name,
+                    SortOrder = 0,
+                };
+
+                db.Categories.Add(cat);
                 db.SaveChanges();
+
+
+                if (imageFile != null) {
+
+                    var pathAssets = Server.MapPath("~/Images/Categories/");
+                   
+                    if (!Directory.Exists(pathAssets))
+                    {
+                        Directory.CreateDirectory(pathAssets);
+                    }
+                    imageFile.SaveAs(Path.Combine(pathAssets, imageFile.FileName));
+
+                }
+
                 return RedirectToAction("Index");
             }
 
