@@ -1,7 +1,7 @@
-﻿@model VonderkWEB.Models.Work
+﻿@model VonderkWEB.Models.WorkDetailsViewModel
 
 @{
-    ViewBag.Title = Model.Name;
+    ViewBag.Title = Model.Work.Name;
 }
 
 <div class="content">
@@ -9,16 +9,16 @@
     <section class="top-space">
         <div class="content">
             <div class="volver"><a href="javascript:window.history.back();">< Volver </a></div>
-            <h1> @Html.DisplayFor(model => model.Name)  </h1>
+            <h1> @Html.DisplayFor(model => model.Work.Name)  </h1>
         </div>
         <div class="producto-fotos">
             <div id="owl-demo-product" class="owl-carousel owl-theme">
 
 
-                @foreach (var item in Model.WorkAssets)
+                @foreach (var item in Model.Work.WorkAssets)
                 {
 
-                    <div class="item"><img src="~/Images/Works/@Model.WorkID/@item.FileName" style="height:560px" alt="1"></div>
+                    <div class="item"><img src="~/Images/Works/@Model.Work.WorkID/@item.FileName" style="height:560px" alt="1"></div>
 
                 }
 
@@ -27,7 +27,7 @@
         <div class="content">
             <div class="caracteristicas info" data-easy-reveal="fade-in-up">
                 <h2>Descripción</h2>
-                @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Description))
+                @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Work.Description))
             </div>
         </div>
     </section>
@@ -39,13 +39,14 @@
             <div class="product-list" data-easy-reveal="fade-in-up">
 
                 <ul>
-                  
-                    @*@foreach (var item in Model)
+
+                    @foreach (var item in Model.RelatedWorks)
                     {
+                  
+                            <li class="@Html.DisplayFor(modelItem => item.Name)"><a href="@Url.Action("Details", "Works", new {id= item.WorkID})"><img src='~/Images/Works/@item.WorkID/@((item.WorkAssets.FirstOrDefault() ?? new VonderkWEB.Models.WorkAsset { FileName = "no-image.jpg" }).FileName)' width="100" height="100" /><span>@Html.DisplayFor(modelItem => item.Name)</span></a></li>
 
-                        <li class="@Html.DisplayFor(modelItem => item.Nombre)"><a href="@Url.Action("Details", "Trabajos", new {id= item.ID})"><img src="~/Images/Trabajos/@item.NombreCorregido/@first" width="100" height="100" /><span>@Html.DisplayFor(modelItem => item.Nombre)</span></a></li>
+                    }
 
-                    }*@
 
                 </ul>
 

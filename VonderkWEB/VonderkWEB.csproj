@@ -242,6 +242,7 @@
     <Compile Include="Models\WorkAsset.cs">
       <DependentUpon>VonderkModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WorkDetailsViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
