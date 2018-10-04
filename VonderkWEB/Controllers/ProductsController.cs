@@ -94,7 +94,7 @@ namespace VonderkWEB.Controllers
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", model.CategoryID);
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "Name", model.BrandID);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex", "Products");
         }
 
         // GET: Products/Edit/5
@@ -127,7 +127,7 @@ namespace VonderkWEB.Controllers
                 new ProductDetailsViewModel().Edit(model, pathAssets, imagesList, deletedAssets, labeledAssets, imageFiles, fichaFiles, iesFiles);
                 //db.Entry(Product).State = EntityState.Modified;
                 //db.SaveChanges();
-                return RedirectToAction("Index","Products");
+                return RedirectToAction("AdminIndex","Products");
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", model.CategoryID);
@@ -177,7 +177,7 @@ namespace VonderkWEB.Controllers
             Product Product = db.Products.Find(id);
             db.Products.Remove(Product);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex", "Products");
         }
 
         protected override void Dispose(bool disposing)

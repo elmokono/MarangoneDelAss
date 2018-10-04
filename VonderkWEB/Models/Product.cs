@@ -25,8 +25,9 @@ namespace VonderkWEB.Models
         public int BrandID { get; set; }
         public int CategoryID { get; set; }
         public string Name { get; set; }
-        [AllowHtml]
+        
         public string Description { get; set; }
+        [AllowHtml]
         public string Features { get; set; }
         public string ProductCode { get; set; }
         public bool IsActive { get; set; }

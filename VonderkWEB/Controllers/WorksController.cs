@@ -133,7 +133,7 @@ namespace VonderkWEB.Controllers
                 db.SaveChanges();
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex", "Works");
         }
 
         return View(trabajo);
@@ -165,7 +165,7 @@ namespace VonderkWEB.Controllers
         {
             db.Entry(work).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex", "Works");
         }
         return View(work);
     }
@@ -202,7 +202,7 @@ namespace VonderkWEB.Controllers
         Work work = db.Works.Find(id);
         db.Works.Remove(work);
         db.SaveChanges();
-        return RedirectToAction("Index");
+        return RedirectToAction("AdminIndex","Works");
     }
 
     protected override void Dispose(bool disposing)
