@@ -11,6 +11,7 @@ namespace VonderkWEB.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
 
     public partial class Product
@@ -24,11 +25,14 @@ namespace VonderkWEB.Models
         public int ProductID { get; set; }
         public int BrandID { get; set; }
         public int CategoryID { get; set; }
+        [Required(ErrorMessage = "Por favor, complete el nombre del Producto.")]
         public string Name { get; set; }
-        
+        [Required(ErrorMessage = "Por favor, complete la descripcion del Producto.")]
         public string Description { get; set; }
         [AllowHtml]
+        [Required(ErrorMessage = "Por favor, complete las características del Producto.")]
         public string Features { get; set; }
+        [Required(ErrorMessage = "Por favor, complete el código del Producto.")]
         public string ProductCode { get; set; }
         public bool IsActive { get; set; }
         public short SortOrder { get; set; }
