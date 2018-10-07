@@ -195,7 +195,7 @@
                         <div class="box gallery">
                             <h2>Images Archivos</h2>
                             <ul id="sortable" class="imageGallery">
-                                @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG"))
+                                @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(m => m.SortOrder))
                                 {
                                     <li class="asset onlyImage ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
                                         <img src="@item.FileName" width="200" height="200" alt="1">
@@ -251,7 +251,7 @@
         </form>
     </div>
     <div>
-        @Html.ActionLink("Volver al listado", "Index")
+        @Html.ActionLink("Volver al listado", "AdminIndex")
     </div>
 
     @section Scripts {

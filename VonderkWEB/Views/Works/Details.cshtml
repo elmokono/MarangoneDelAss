@@ -18,7 +18,7 @@
                 @foreach (var item in Model.Work.WorkAssets)
                 {
 
-                    <div class="item"><img src="~/Images/Works/@Model.Work.WorkID/@item.FileName" style="height:560px" alt="1"></div>
+                    <div class="item"><img src="@item.FileName" style="height:560px" alt="1"></div>
 
                 }
 

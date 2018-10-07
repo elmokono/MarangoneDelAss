@@ -159,13 +159,16 @@ namespace VonderkWEB.Controllers
     // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Edit([Bind(Include = "WorkID,Name,Description,IsActive")] Work work)
+    public ActionResult Edit(Work work, String imagesList, String deletedAssets, List<HttpPostedFileBase> imageFiles)
+
     {
         if (ModelState.IsValid)
         {
-            db.Entry(work).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("AdminIndex", "Works");
+                var pathAssets = Server.MapPath("~/Images/Works/");
+                new WorkDetailsViewModel().Edit(work, pathAssets, imagesList, deletedAssets,imageFiles);
+                //db.Entry(work).State = EntityState.Modified;
+                //db.SaveChanges();
+                return RedirectToAction("AdminIndex", "Works");
         }
         return View(work);
     }
