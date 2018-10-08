@@ -77,7 +77,7 @@
                     if (p != null)
                     {
                         <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
-                            <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
+                            <a href="@Url.Action("Details", "Products", new {id= item.Name})">
                                 <img src="@(p.FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
                             </a>
                             <div class="categoria-min" onclick="filterSelection('@Html.DisplayFor(modelItem => item.Category.Name)')"><a>@item.Category.Name</a></div>

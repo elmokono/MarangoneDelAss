@@ -35,6 +35,16 @@ namespace VonderkWEB.Models
             this.orderedIES = db.ProductAssets.Where(x => x.ProductID == ProductID && x.AssetType == "IES").OrderBy(x => x.SortOrder);
         }
 
+        public ProductDetailsViewModel(string ProductName)
+        {
+            var ProductID = db.Products.First(x => x.Name == ProductName).ProductID;
+            this.product = db.Products.First(x => x.ProductID == ProductID);
+            this.relatedProducts = db.Products.Where(x => x.CategoryID == db.Products.FirstOrDefault(m => m.ProductID == ProductID).CategoryID);
+            this.orderedImages = db.ProductAssets.Where(x => x.ProductID == ProductID && x.AssetType == "IMG").OrderBy(x => x.SortOrder);
+            this.orderedFichas = db.ProductAssets.Where(x => x.ProductID == ProductID && x.AssetType == "PDF").OrderBy(x => x.SortOrder);
+            this.orderedIES = db.ProductAssets.Where(x => x.ProductID == ProductID && x.AssetType == "IES").OrderBy(x => x.SortOrder);
+        }
+
         private void SaveAssets(int productID, string rootDir, string type, IEnumerable<HttpPostedFileBase> files, IEnumerable<KeyValuePair<string, string>> labels)
         {
             //--------------Chequeo y creo el directorio-----------------------------------------------

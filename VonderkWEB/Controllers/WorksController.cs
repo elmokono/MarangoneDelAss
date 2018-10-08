@@ -30,12 +30,22 @@ namespace VonderkWEB.Controllers
 
         // GET: Works/Details/5
         [AllowAnonymous]
-        public ActionResult Details(int? id)
+        [Route("Works/Details/{name}")]
+        public ActionResult Details(string name)
         {
+            int id = 0;
+            WorkDetailsViewModel model = null;
 
-            if (!id.HasValue) { return HttpNotFound(); }
-            WorkDetailsViewModel model = new WorkDetailsViewModel(id.Value);
+            if (int.TryParse(name, out id))
+            {
+                model = new WorkDetailsViewModel(id);
+            }
+            else
+            {
+                model = new WorkDetailsViewModel(name);
+            }
 
+           
             return View(model);
         }
 

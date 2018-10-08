@@ -70,17 +70,17 @@
 
             <ul>
 
-                @foreach (var item in Model.RelatedProducts)
+                @foreach (var relatedItem in Model.RelatedProducts)
                 {
 
-                    var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
+                    var p = relatedItem.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
                     if (p != null)
                     {
                        
-                            <li class="@Html.DisplayFor(modelItem => item.Category.Name)">
-                                <a href="@Url.Action("Details", "Products", new {id= item.ProductID})">
+                            <li class="@Html.DisplayFor(modelItem => relatedItem.Category.Name)">
+                                <a href="@Url.Action("Details", "Products", new {name= relatedItem.Name})">
                                     <img src="@(p.FileName)" width="100" height="100" />
-                                    <span>@Html.DisplayFor(modelItem => item.Name)</span>
+                                    <span>@Html.DisplayFor(modelItem => relatedItem.Name)</span>
                                 </a>
                             </li>
                       

@@ -27,6 +27,14 @@ namespace VonderkWEB.Models
 
         }
 
+        public WorkDetailsViewModel(string WorkName)
+        {
+            var WorkID = db.Works.First(x => x.Name == WorkName).WorkID;
+            this.work = db.Works.First(x => x.WorkID == WorkID);
+            this.relatedWorks = db.Works.Where(x => x.IsActive == true);
+
+        }
+
         public void Edit(Work model, string rootDir, string imagesList, string deletedAssets, List<HttpPostedFileBase> imageFiles)
         {
             model.IsActive = true;

@@ -54,16 +54,36 @@ namespace VonderkWEB.Controllers
             //return View(Products.ToList());
         }
 
-        // GET: Products/Details/5
-        [AllowAnonymous]
-        public ActionResult Details(int? id)
-        {
+        //// GET: Products/Details/5
+        //[AllowAnonymous]
+        //public ActionResult Details(int? id)
+        //{
 
-            if (!id.HasValue) { return HttpNotFound(); }
-            ProductDetailsViewModel model = new ProductDetailsViewModel(id.Value);
+        //    if (!id.HasValue) { return HttpNotFound(); }
+        //    ProductDetailsViewModel model = new ProductDetailsViewModel(id.Value);
+
+        //    return View(model);
+        //            }
+
+        [AllowAnonymous]
+        [Route("Products/Details/{name}")]
+        public ActionResult Details(string name)
+        {
+            int id = 0;
+            ProductDetailsViewModel model = null;
+
+            if (int.TryParse(name, out id))
+            {
+                model = new ProductDetailsViewModel(id);
+            }
+            else
+            {
+                model = new ProductDetailsViewModel(name);
+            }
+            //if (!id.HasValue) { return HttpNotFound(); }
 
             return View(model);
-                    }
+        }
 
         // GET: Products/Create
         public ActionResult Create()
