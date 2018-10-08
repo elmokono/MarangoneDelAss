@@ -210,11 +210,13 @@
                                 <ul class="gallery">
                                     @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "PDF"))
                                     {
-                                        <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                            <img src="~/Images/Icons/ico-ficha.png" style="height:60px" alt="1">
-                                            @item.Name<br /><br />
-                                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                                        </li>
+                                    <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                        <img src="~/Images/Icons/ico-ficha.png" style="height:60px" alt="1">
+                                        @item.FileName
+                                        <input type="text" data-name="@item.FileName" data-id="@item.AssetID" value="@item.Name" class="fileLabel"/>
+                                        @*@item.Name*@<br /><br />
+                                        <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                                    </li>
                                     }
                                 </ul>
                             </div>

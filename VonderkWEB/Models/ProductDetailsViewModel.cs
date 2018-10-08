@@ -67,6 +67,16 @@ namespace VonderkWEB.Models
                 postedFile.SaveAs(Path.Combine(pathImagenesProduct, postedFile.FileName));
             }
 
+            foreach (var item in labels)
+            {
+                ProductAsset prd = db.ProductAssets.Where(x => x.FileName == item.Key).FirstOrDefault();
+                if (prd != null) {
+
+                    prd.Name = item.Value;
+
+                }
+            }
+
             //List<string> allKeys = (from kvp in labels select kvp.Key).ToList();
             //for (short i = 0; i < allKeys.Count; i++)
             //{
