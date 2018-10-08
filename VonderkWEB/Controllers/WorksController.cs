@@ -79,7 +79,7 @@ namespace VonderkWEB.Controllers
     // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create(Work trabajo, String imagesList, List<HttpPostedFileBase> postedFiles)
+    public ActionResult Create(Work trabajo, String imagesList, List<HttpPostedFileBase> imageFiles)
     {
 
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
@@ -89,7 +89,7 @@ namespace VonderkWEB.Controllers
             if (ModelState.IsValid)
             {
                 trabajo.IsActive = true;
-                new WorkDetailsViewModel().New(trabajo, pathAssets, imagesList, postedFiles);
+                new WorkDetailsViewModel().New(trabajo, pathAssets, imagesList, imageFiles);
                 return RedirectToAction("AdminIndex", "Works");
             }
 

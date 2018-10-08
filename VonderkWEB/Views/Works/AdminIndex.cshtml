@@ -44,15 +44,15 @@
                         var p = item.WorkAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
                         if (p != null)
                         {
-                            <img src="~/Images/Works/@item.WorkID/@p.FileName" alt="Photo" width="100" height="100" />
+                            <img src="@p.FileName" alt="Photo" width="100" height="100" />
                         }
                     }
                    
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.WorkID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.WorkID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.WorkID })
+                    @Html.ActionLink("Editar", "Edit", new { id = item.WorkID }) |
+                    @Html.ActionLink("Ver", "Details", new { id = item.WorkID }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.WorkID })
                 </td>
             </tr>
         }
