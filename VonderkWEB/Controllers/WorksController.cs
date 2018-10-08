@@ -79,62 +79,75 @@ namespace VonderkWEB.Controllers
     // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public ActionResult Create(Work trabajo, List<HttpPostedFileBase> postedFiles)
+    public ActionResult Create(Work trabajo, String imagesList, List<HttpPostedFileBase> postedFiles)
     {
 
-        var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
+            var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
 
-        if (ModelState.IsValid)
-        {
+            var pathAssets = Server.MapPath("~/Images/Works/");
 
-            if (trabajo.Name == null)
+            if (ModelState.IsValid)
             {
-                throw new Exception("You have not specified a Name.");
-
-            }
-            trabajo.IsActive = true;
-            db.Works.Add(trabajo);
-            db.SaveChanges();
-
-            if (postedFiles != null)
-            {
-
-                string buildPath = "~/Images/Works/" + trabajo.WorkID + "/";
-                string path = Server.MapPath(buildPath);
-
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-
-                short cont = 0;
-                foreach (HttpPostedFileBase postedFile in postedFiles)
-                {
-                    WorkAsset asset = new WorkAsset
-                    {
-
-                        FileName = postedFile.FileName,
-                        AssetType = "IMG",
-                        SortOrder = cont,
-                        IsActive = true,
-                        Name = trabajo.Name,
-                        WorkID = trabajo.WorkID
-
-                    };
-                    db.WorkAssets.Add(asset);
-
-                    var pathFinal = postedFile.FileName;
-                    postedFile.SaveAs(path + pathFinal);
-
-                    cont++;
-
-                }
-
-                db.SaveChanges();
+                trabajo.IsActive = true;
+                new WorkDetailsViewModel().New(trabajo, pathAssets, imagesList, postedFiles);
+                return RedirectToAction("AdminIndex", "Works");
             }
 
-            return RedirectToAction("AdminIndex", "Works");
-        }
+
+
+
+          
+        //if (ModelState.IsValid)
+        //{
+
+        //    if (trabajo.Name == null)
+        //    {
+        //        throw new Exception("You have not specified a Name.");
+
+        //    }
+        //    trabajo.IsActive = true;
+        //    db.Works.Add(trabajo);
+        //    db.SaveChanges();
+
+        //    if (postedFiles != null)
+        //    {
+
+        //        string buildPath = "~/Images/Works/" + trabajo.WorkID + "/";
+        //        string path = Server.MapPath(buildPath);
+
+        //        if (!Directory.Exists(path))
+        //        {
+        //            Directory.CreateDirectory(path);
+        //        }
+
+        //        short cont = 0;
+        //        foreach (HttpPostedFileBase postedFile in postedFiles)
+        //        {
+        //            WorkAsset asset = new WorkAsset
+        //            {
+
+        //                FileName = postedFile.FileName,
+        //                AssetType = "IMG",
+        //                SortOrder = cont,
+        //                IsActive = true,
+        //                Name = trabajo.Name,
+        //                WorkID = trabajo.WorkID
+
+        //            };
+        //            db.WorkAssets.Add(asset);
+
+        //            var pathFinal = postedFile.FileName;
+        //            postedFile.SaveAs(path + pathFinal);
+
+        //            cont++;
+
+        //        }
+
+        //        db.SaveChanges();
+        //    }
+
+        //    return RedirectToAction("AdminIndex", "Works");
+        //}
 
         return View(trabajo);
     }

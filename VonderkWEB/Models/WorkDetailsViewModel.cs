@@ -113,5 +113,20 @@ namespace VonderkWEB.Models
 
         }
 
+        public void New(Work model, string rootDir, string imagesList, List<HttpPostedFileBase> imageFiles)
+        {
+            
+
+            //--------------Guardo el Product--------------------------------------------------------
+            db.Works.Add(model);
+            db.SaveChanges();
+
+            SaveAssets(model.WorkID, rootDir, "IMG", imageFiles);
+         
+            db.SaveChanges();
+
+            SaveImagesOrder(imagesList, model);
+        }
+
     }
 }
