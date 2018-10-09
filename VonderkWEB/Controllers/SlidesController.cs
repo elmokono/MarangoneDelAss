@@ -35,18 +35,30 @@ namespace VonderkWEB.Controllers
             var pathAssets = Server.MapPath("~/Images/inspiracion/");
 
             if (firstImage != null) {
+                string extension = Path.GetExtension(firstImage.FileName);
+                var nameFirst = "i1" + extension;
+                firstImage.SaveAs(Path.Combine(pathAssets, nameFirst));
             }
             if (secondImage != null)
             {
+                string extension = Path.GetExtension(secondImage.FileName);
+                var nameSecond = "i2" + extension;
+                secondImage.SaveAs(Path.Combine(pathAssets, nameSecond));
             }
             if (thirdImage != null)
             {
+                string extension = Path.GetExtension(thirdImage.FileName);
+                var nameThird = "i3" + extension;
+                thirdImage.SaveAs(Path.Combine(pathAssets, nameThird));
             }
             if (fourthImage != null)
             {
+                string extension = Path.GetExtension(fourthImage.FileName);
+                var nameFourth = "i4" + extension;
+                fourthImage.SaveAs(Path.Combine(pathAssets, nameFourth));
             }
 
-            return View();
+            return RedirectToAction("Index","Home");
         }
 
         //// GET: Slides/Details/5
