@@ -114,7 +114,7 @@
                         @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group">
+                @*<div class="form-group">
                     <div class="col-25">
                         <label class="control-label col-md-2" for="ProductCode">Código de Producto</label>
                     </div>
@@ -124,7 +124,7 @@
                         @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>*@
                 <div class="form-group">
 
                     <div class="col-25">
@@ -156,6 +156,20 @@
                     <div class="col-75">
                         @Html.TextAreaFor(model => model.Features, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.Features, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        <label class="control-label col-md-2" for="IsOutstanding">Destacado</label>
+                    </div>
+
+                    <div class="col-75">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.IsOutstanding)
+                            @Html.ValidationMessageFor(model => model.IsOutstanding, "", new { @class = "text-danger" })
+                        </div>
+
                     </div>
                 </div>
 
@@ -196,12 +210,12 @@
                             <h2>Images Archivos</h2>
                             <ul id="sortable" class="imageGallery">
                                 @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(m => m.SortOrder))
-                                {
-                                    <li class="asset onlyImage ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                        <img src="@item.FileName" width="200" height="200" alt="1">
-                                        <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                                    </li>
-                                }
+                    {
+                        <li class="asset onlyImage ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                            <img src="@item.FileName" width="200" height="200" alt="1">
+                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                        </li>
+        }
                             </ul>
                         </div>
                         <div class="box fichasgallery">
@@ -209,15 +223,15 @@
                                 <h2>Files Archivos</h2>
                                 <ul class="gallery">
                                     @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "PDF"))
-                                    {
-                                    <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                        <img src="~/Images/Icons/ico-ficha.png" style="height:60px" alt="1">
-                                        @item.FileName
-                                        <input type="text" data-name="@item.FileName" data-id="@item.AssetID" value="@item.Name" class="fileLabel"/>
-                                        @*@item.Name*@<br /><br />
-                                        <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                                    </li>
-                                    }
+                        {
+                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                <img src="~/Images/Icons/ico-ficha.png" style="height:60px" alt="1">
+                                @item.FileName
+                                <input type="text" data-name="@item.FileName" data-id="@item.AssetID" value="@item.Name" class="fileLabel" />
+                                @*@item.Name*@<br /><br />
+                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                            </li>
+            }
                                 </ul>
                             </div>
                         </div>
@@ -227,14 +241,14 @@
                                 <ul class="gallery">
 
                                     @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IES"))
-                                    {
-                                    <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                        <img src="~/Images/Icons/ico-ies.png" style="height:60px" alt="1">
-                                        <input type="text" data-name="@item.FileName" data-id="@item.AssetID" value="@item.Name" class="fileLabel" />
-                                        @*@item.Name*@<br /><br />
-                                        <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                                    </li>
-                                    }
+                        {
+                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                <img src="~/Images/Icons/ico-ies.png" style="height:60px" alt="1">
+                                <input type="text" data-name="@item.FileName" data-id="@item.AssetID" value="@item.Name" class="fileLabel" />
+                                @*@item.Name*@<br /><br />
+                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                            </li>
+            }
                                 </ul>
                             </div>
                         </div>

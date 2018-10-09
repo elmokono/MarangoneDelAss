@@ -158,7 +158,7 @@ namespace VonderkWEB.Models
         public void New(Product model, string rootDir,string imagesList, string labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
             //validar ProductID
-            if (db.Products.Any(x => x.Name == model.Name) || db.Products.Any(x => x.ProductCode == model.ProductCode))
+            if (db.Products.Any(x => x.Name == model.Name))
             {
                 throw new Exception("El Product con ese nombre / código de Product ya existe.");
             }

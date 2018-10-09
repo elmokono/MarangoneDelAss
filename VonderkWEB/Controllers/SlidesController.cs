@@ -22,6 +22,33 @@ namespace VonderkWEB.Controllers
             return View(db.Slides.ToList());
         }
 
+        public ActionResult InspiracionIndex()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult InspiracionIndex(HttpPostedFileBase firstImage, HttpPostedFileBase secondImage, HttpPostedFileBase thirdImage, HttpPostedFileBase fourthImage)
+        {
+
+            var pathAssets = Server.MapPath("~/Images/inspiracion/");
+
+            if (firstImage != null) {
+            }
+            if (secondImage != null)
+            {
+            }
+            if (thirdImage != null)
+            {
+            }
+            if (fourthImage != null)
+            {
+            }
+
+            return View();
+        }
+
         //// GET: Slides/Details/5
         //public ActionResult Details(int? id)
         //{

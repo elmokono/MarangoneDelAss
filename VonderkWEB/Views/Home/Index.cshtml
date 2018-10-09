@@ -72,11 +72,17 @@
 
                 @foreach (var item in Model.Products.OrderBy(x => x.SortOrder))
                 {
+                    String destacado;
+                    if (item.IsOutstanding)
+                    {
+                        destacado = "destacado";
+                    }
+                    else { destacado = ""; };
 
                     var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
                     if (p != null)
                     {
-                        <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
+                        <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name) @(destacado)">
                             <a href="@Url.Action("Details", "Products", new {id= item.Name})">
                                 <img src="@(p.FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
                             </a>
