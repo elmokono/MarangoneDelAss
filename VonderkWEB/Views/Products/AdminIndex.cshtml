@@ -70,7 +70,9 @@
             <th>
                 Nombre
             </th>
-
+            <th>
+                Destacado
+            </th>
             <th>
                 Imagen
             </th>
@@ -87,7 +89,13 @@
                     @Html.DisplayFor(modelItem => item.Brand.Name)
                 </td>
                 <td>
+
                     @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (item.IsOutstanding)
+                    {<img src="~/Images/Icons/Outstanding.png" alt="Destacado" />}
+
                 </td>
 
                 <td>
