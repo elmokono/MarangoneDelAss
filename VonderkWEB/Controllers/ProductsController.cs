@@ -105,6 +105,11 @@ namespace VonderkWEB.Controllers
 
             var pathAssets = Server.MapPath("~/Products/");
 
+            if (model.Features == null)
+            {
+                model.Features = "";
+            }
+
             if (ModelState.IsValid)
             {
                 model.IsActive = true;
@@ -141,6 +146,11 @@ namespace VonderkWEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Product model, String imagesList, String deletedAssets, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
+
+            if (model.Features == null) {
+                model.Features = "";
+            }
+
             if (ModelState.IsValid)
             {
                 var pathAssets = Server.MapPath("~/Products/");
@@ -152,6 +162,7 @@ namespace VonderkWEB.Controllers
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", model.CategoryID);
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "Name", model.BrandID);
+            
             return View(model);
         }
 

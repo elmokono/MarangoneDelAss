@@ -154,7 +154,8 @@
                     </div>
 
                     <div class="col-75">
-                        @Html.TextAreaFor(model => model.Features, new { htmlAttributes = new { @class = "form-control" } })
+                        <textarea  data-val="true" data-val-required="Complete las caracteristicas del producto" id="Features" name="Features" rows="2" style="height: 106px;" class="valid" aria-invalid="false">@Model.Features</textarea>
+                        @*@Html.TextAreaFor(model => model.Features, new { htmlAttributes = new { @class = "form-control", required = "required" } })*@
                         @Html.ValidationMessageFor(model => model.Features, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -459,8 +460,9 @@
 
     (function () {
 
-        $('#form1').submit(function () {
+  
 
+        $('#form1').submit(function () {
 
             $('li.onlyImage').each(function (i, e) {
                 var o = $('#imagesList').val();
@@ -486,6 +488,8 @@
         });
 
     })();
+
+  
 
 
 </script>

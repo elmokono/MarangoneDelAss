@@ -35,13 +35,14 @@ label {
 }
 
 input[type=submit] {
-    background-color: #4CAF50;
-    color: white;
-    padding: 12px 20px;
+    background-color: #4caf50;
+    color: #fff;
+    padding: 16px 28px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
     float: right;
+    font-size: 16px;
 }
 
     input[type=submit]:hover {
@@ -135,6 +136,7 @@ table, td, th {
 table {
     border-collapse: collapse;
     width: 100%;
+    margin-bottom: 60px !important;
 }
 
 th, td {
@@ -157,6 +159,7 @@ img {
 a {
     cursor: pointer;
     text-decoration: none;
+    color: #000;
 }
 
 
@@ -217,8 +220,15 @@ header {
 
 .logo {
     float: left;
-    margin: 27px 0 0 0;
+    margin: 22px 0 0 0;
+    width: 300px;
 }
+
+    .logo img {
+        display: block;
+        width: 100%;
+        height: auto;
+    }
 
 nav {
     display: inline-block;
@@ -347,13 +357,16 @@ section {
 }
 
     .product-list ul {
-        list-style: none;
-        margin: 0;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(12, 1fr);
+        grid-gap: 15px;
+        height: 100vh;
     }
 
         .product-list ul li {
-            float: left;
-            width: 23%;
+            /* float: left; */
+            /* width: 23%; */
             height: 320px;
             margin: 0 2% 20px 0;
         }
@@ -448,7 +461,7 @@ section {
             }
 
 .info {
-    padding: 60px 0;
+    padding: 60px 0 20px;
     width: 100%;
     clear: both;
     display: inline-block;
@@ -471,6 +484,7 @@ section {
 .col-docs {
     float: left;
     margin: 0 60px 0 0;
+    text-transform: uppercase;
 }
 
     .col-docs h2 {
@@ -483,9 +497,14 @@ section {
         margin: 0 auto;
     }
 
+    .col-docs span {
+        padding: 20px;
+        display: block;
+    }
+
 footer {
     clear: both;
-    padding: 60px 0;
+    padding: 100px 0;
 }
 
     footer .logo {
@@ -697,12 +716,14 @@ table td a {
 
 .form-horizontal .form-control {
     padding: 20px 10px !important;
-
+    font-size: 14px !important;
+    font-weight: 100 !important;
 }
 
 #sortable li img {
     display: block;
-
+    width: 100% !important;
+    height: auto !important;
 }
 
 .form-group {
@@ -734,3 +755,62 @@ table td a {
     background-color: #404040 !important;
 }
 /************ fin admin ***************/
+.tit-arrastrar {
+    margin-top: 80px;
+}
+
+.btn-ordena-grilla {
+    padding: 14px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 20px 0;
+}
+
+.flex-container .box {
+    background-color: #fff !important;
+    width: 100% !important;
+    margin: 20px 0 !important;
+    text-align: center !important;
+    display: block !important;
+    overflow: auto !important;
+    padding: 40px 0 !important;
+}
+
+.asset {
+    max-width: 200px !important;
+    padding: 20px !important;
+    background-color: #fff !important;
+    float: left !important;
+    width: 200px !important;
+    margin: 0 20px 0 0 !important;
+    list-style: none !important;
+    font-weight: bold !important;
+}
+
+    .asset img {
+        margin-bottom: 20px !important;
+    }
+
+.related-products {
+    padding-top: 20px !important;
+    margin-top: 80px !important;
+}
+
+    .related-products .content {
+        border-top: solid 2px #ccc !important;
+    }
+
+    .related-products h1 {
+        font-size: 40px !important;
+    }
+
+.destacado {
+    height: 650px !important;
+    grid-column-end: span 2;
+    grid-row-end: span 2;
+}
+
+    .destacado img {
+        height: 619px !important;
+    }

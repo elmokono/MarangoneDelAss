@@ -29,8 +29,6 @@ namespace VonderkWEB.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "Complete la descripción del producto")]
         public string Description { get; set; }
-        [AllowHtml]
-        [Required(ErrorMessage = "Complete las características del producto")]
         public string Features { get; set; }
         public bool IsActive { get; set; }
         public short SortOrder { get; set; }

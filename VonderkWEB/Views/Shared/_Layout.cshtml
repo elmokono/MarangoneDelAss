@@ -5,26 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>@ViewBag.Title</title>
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,600,700" rel="stylesheet">
-
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
     <link rel="stylesheet" href="~/Content/owl.carousel.css" />
     <link rel="stylesheet" href="~/Content/owl.theme.default.css" />
-
     <link rel="stylesheet" href="~/Content/Site.css" type="text/css">
     @Styles.Render("~/Content/css")
-
 
     <link rel="stylesheet" href="~/Content/Responsive.css" type="text/css">
     <!-- menu responsivo -->
     <link rel="stylesheet" href="~/Content/sidr-2.2.1/jquery.sidr.light.css">
     <!-- fin menu responsivo -->
 
-
     <script src="~/scripts/tinymce/tinymce.min.js"></script>
-    <!-- Script to wire up your TinyMCE editor -->
+
+   
     <script type="text/javascript">
         // Initialize your tinyMCE Editor with your preferred options
         tinyMCE.init({
@@ -46,7 +42,6 @@
         });
     </script>
 
-
     <!-- sticky-->
     <script type="text/javascript" src="~/Scripts/jquery.sticky.js"></script>
     <script>
@@ -55,12 +50,10 @@
         });
     </script>
     <!-- fin sticky -->
-
     <script src="~/Scripts/owl.carousel.js"></script>
 
-
-
     <style>
+
         .dropbtn {
             background-color: #3498DB;
             color: white;
@@ -107,27 +100,25 @@
         }
     </style>
 </head>
-
 <body>
     <header id="header">
         <div class="content">
             <div class="logo"><a href="~/"><img src="~/Images/Icons/logo-grupo-vonderk.png" alt="vonderk"></a></div>
+            <a id="simple-menu" class="menu-button" href="#sidr">Menu Mobile</a>
             <div class="cont-nav-social">
-                <nav>
+                <nav id="sidr">
                     <ul>
                         <li><a href="~/Home/Empresa">Empresa</a></li>
                         <li><a href="~/Products/Index">Productos</a></li>
                         <li><a href="~/Works/Index">Novedades</a></li>
                         <li><a href="~/Home/Contacto">Contacto</a></li>
                     </ul>
-
+                    <div class="cierra-menu-button" id="cierra-simple-menu"></div>
                 </nav>
-
                 <div class="social">
                     <ul>
-                        <li><a href="#"><img src="~/Images/Icons/ico-fb.png" alt="Facebook" /></a></li>
-                        <li><a href="#"><img src="~/Images/Icons/ico-tw.png" alt="Twitter" /></a></li>
-                        <li><a href="#"><img src="~/Images/Icons/ico-ig.png" alt="Instagram" /></a></li>
+                        <li><a href="https://www.facebook.com/vonderk/" target="_blank"><img src="~/Images/Icons/ico-fb.png" alt="Facebook" /></a></li>
+                        <li><a href="https://www.instagram.com/grupovonderk/" target="_blank"><img src="~/Images/Icons/ico-ig.png" alt="Instagram" /></a></li>
                     </ul>
                 </div>
                 @if (User.Identity.IsAuthenticated)
@@ -142,6 +133,7 @@
                             <a href="~/Brands/Index">Marcas</a>
                             <a href="~/Works/AdminIndex">Trabajos</a>
                             <a href="~/Slides/Index">Slides</a>
+                            <a href="~/Slides/InspiracionIndex">Inspiracion</a>
                             @if (User.Identity.IsAuthenticated)
                             {
                                 using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -161,16 +153,12 @@
                 }
 
 
-
-
             </div>
         </div>
     </header>
-
     <div class="container body-content">
         @RenderBody()
         <footer class="footer">
-
             <div class="content">
                 <div class="logo"><a href="~/Home/Index"><img src="~/Images/Icons/logo-grupo-vonderk.png" alt="vonderk"></a></div>
                 <address>
@@ -183,20 +171,16 @@
                                 padding: 0;
                                  width: 50%;
                                 float: right; text-align:right; ">
-                        <a href="http://www.bendito.la" target="_blank" style="font-family:Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; color:#333; ">SITE BY BENDITO.LA</a>
+                        <a href="https://www.bendito.la" target="_blank" style="font-family:Arial, Helvetica, sans-serif; font-size:10px; font-weight:bold; color:#333; ">SITE BY BENDITO.LA</a>
                     </div>
-
                     <!-- fin firma -->
                 </address>
             </div>
-
         </footer>
     </div>
-
-    @*@Scripts.Render("~/bundles/jquery")*@
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
     <script>
         /* When the user clicks on the button,
         toggle between hiding and showing the dropdown content */
@@ -219,11 +203,9 @@
             }
         }
     </script>
-
     <!-- <script type="text/javascript" src="~/Scripts/jquery.easy-reveal.js"></script>-->
     <!-- menu responsivo -->
     <script src="~/Scripts/jquery.sidr.js"></script>
-
     <!-- Your code -->
     <script>
 
@@ -249,8 +231,8 @@
             });
         });
     </script>
-
     <style>
+
         #cierra-simple-menu {
             bottom: 0 !important;
         }
