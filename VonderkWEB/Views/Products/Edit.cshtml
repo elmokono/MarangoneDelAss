@@ -464,6 +464,10 @@
 
         $('#form1').submit(function () {
 
+            //make sure hidden fields are empty before submit
+            $('#imagesList').val('');
+            $('#labeledAssets').val('');
+
             $('li.onlyImage').each(function (i, e) {
                 var o = $('#imagesList').val();
                 $('#imagesList').val(o + '|' + $(e).data('name'));
