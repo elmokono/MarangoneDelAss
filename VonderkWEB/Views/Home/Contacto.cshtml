@@ -55,7 +55,7 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.Message, new { @class = "col-md-2 control-label" })
                     <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Message, new { @class = "form-control" })
+                        @Html.TextAreaFor(m => m.Message, new { @class = "myTextEditor form-control" })
                         @Html.ValidationMessageFor(m => m.Message)
                     </div>
                 </div>
@@ -70,3 +70,11 @@
     </div>
 </section>
 
+@*<script type="text/javascript">
+    tinyMCE.init({
+        //mode : "textareas",
+        mode : "specific_textareas",
+        editor_selector : "myTextEditor",
+        theme : "simple"
+    });
+</script>*@

@@ -23,17 +23,16 @@
 </style>
 
 
-
 <section id="productos">
     <div class="content">
         <h1 data-easy-reveal="fade-in-up">Productos</h1>
+
 
         <div class="categorias" id="myBtnContainer" data-easy-reveal="fade-in-up">
             <ul>
                 <li class="active" onclick="filterSelection('all')">Todos</li>
 
-
-                @foreach (var item in Model.Categories)
+                @foreach (var item in Model.Categories.OrderBy(x => x.SortOrder))
                 {
                     <li onclick="filterSelection('@Html.DisplayFor(modelItem => item.Name)')">@Html.DisplayFor(modelItem => item.Name)</li>
 
@@ -49,16 +48,26 @@
 
                 @foreach (var item in Model.Products.OrderBy(x => x.SortOrder))
                 {
+                    String destacado;
+                    if (item.IsOutstanding)
+                    {
+                        destacado = "destacado";
+                    }
+                    else { destacado = ""; };
+
                     var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
                     if (p != null)
                     {
-                <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
-                    <a href="@Url.Action("Details", "Products", new {name= item.Name})">
-                        <img src="@(p.FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
-                    </a>
-                    <div class="categoria-min" onclick="filterSelection('@Html.DisplayFor(modelItem => item.Category.Name)')"><a>@item.Category.Name</a></div>
-                </li>
+                        <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name) @(destacado)">
+                            <a href="@Url.Action("Details", "Products", new {id= item.Name})">
+                                <img src="@(p.FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
+                            </a>
+                            <div class="categoria-min" onclick="filterSelection('@Html.DisplayFor(modelItem => item.Category.Name)')"><a>@item.Category.Name</a></div>
+                        </li>
+
+
                     }
+
 
                 }
 
@@ -69,6 +78,52 @@
 
     </div>
 </section>
+
+@*<section id="productos">
+        <div class="content">
+            <h1 data-easy-reveal="fade-in-up">Productos</h1>
+
+            <div class="categorias" id="myBtnContainer" data-easy-reveal="fade-in-up">
+                <ul>
+                    <li class="active" onclick="filterSelection('all')">Todos</li>
+
+
+                    @foreach (var item in Model.Categories)
+                    {
+                        <li onclick="filterSelection('@Html.DisplayFor(modelItem => item.Name)')">@Html.DisplayFor(modelItem => item.Name)</li>
+
+                    }
+
+                </ul>
+            </div>
+
+
+            <div class="product-list" data-easy-reveal="fade-in-up">
+
+                <ul>
+
+                    @foreach (var item in Model.Products.OrderBy(x => x.SortOrder))
+                    {
+                        var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
+                        if (p != null)
+                        {
+                    <li class="filterDiv @Html.DisplayFor(modelItem => item.Category.Name)">
+                        <a href="@Url.Action("Details", "Products", new {name= item.Name})">
+                            <img src="@(p.FileName)" width="200" height="200" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
+                        </a>
+                        <div class="categoria-min" onclick="filterSelection('@Html.DisplayFor(modelItem => item.Category.Name)')"><a>@item.Category.Name</a></div>
+                    </li>
+                        }
+
+                    }
+
+                </ul>
+
+
+            </div>
+
+        </div>
+    </section>*@
 
 
 
