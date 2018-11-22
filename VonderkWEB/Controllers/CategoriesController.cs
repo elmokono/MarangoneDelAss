@@ -68,14 +68,17 @@ namespace VonderkWEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category, HttpPostedFileBase imageFile)
         {
+            if (category == null) {
 
+                throw new Exception("Completar los datos");
+
+            }
             if (imageFile == null)
             {
-
                 Category cat1 = new Category
                 {
                     
-                    FileName = "asd",
+                    FileName = "",
                     IsActive = true,
                     Name = category.Name,
                     SortOrder = 0,

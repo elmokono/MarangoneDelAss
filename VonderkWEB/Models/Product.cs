@@ -28,6 +28,7 @@ namespace VonderkWEB.Models
         [Required(ErrorMessage = "Complete el nombre del producto")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Complete la descripción del producto")]
+        [AllowHtml]
         public string Description { get; set; }
         [AllowHtml]
         public string Features { get; set; }
