@@ -68,12 +68,14 @@ namespace VonderkWEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category, HttpPostedFileBase imageFile)
         {
-            if (ModelState.IsValid)
+
+            if (imageFile == null)
             {
+
                 Category cat = new Category
                 {
 
-                    FileName = imageFile.FileName,
+                    FileName = "",
                     IsActive = true,
                     Name = category.Name,
                     SortOrder = 0,
@@ -82,9 +84,28 @@ namespace VonderkWEB.Controllers
                 db.Categories.Add(cat);
                 db.SaveChanges();
 
+                return RedirectToAction("Index");
 
-                if (imageFile != null)
+            }
+            else
+            {
+
+                if (ModelState.IsValid)
                 {
+                    Category cat = new Category
+                    {
+
+                        FileName = imageFile.FileName,
+                        IsActive = true,
+                        Name = category.Name,
+                        SortOrder = 0,
+                    };
+
+                    db.Categories.Add(cat);
+                    db.SaveChanges();
+
+
+
 
                     var pathAssets = Server.MapPath("~/Images/Categories/");
 
@@ -94,10 +115,13 @@ namespace VonderkWEB.Controllers
                     }
                     imageFile.SaveAs(Path.Combine(pathAssets, imageFile.FileName));
 
+
+
+                    return RedirectToAction("Index");
                 }
 
-                return RedirectToAction("Index");
             }
+
 
             return View(category);
         }
