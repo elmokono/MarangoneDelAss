@@ -72,16 +72,16 @@ namespace VonderkWEB.Controllers
             if (imageFile == null)
             {
 
-                Category cat = new Category
+                Category cat1 = new Category
                 {
-
-                    FileName = "",
+                    
+                    FileName = "asd",
                     IsActive = true,
                     Name = category.Name,
                     SortOrder = 0,
                 };
 
-                db.Categories.Add(cat);
+                db.Categories.Add(cat1);
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
