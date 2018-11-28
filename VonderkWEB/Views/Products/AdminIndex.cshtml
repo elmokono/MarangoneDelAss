@@ -28,6 +28,7 @@
             font-size: 1em;
             text-align: center;
         }
+
             #sortable li.destacadoAdmin {
                 width: 400px;
             }
@@ -48,7 +49,6 @@
             height: 400px !important;
             width: 400px !important;
         }
-
 </style>
 
 <div class="content">
@@ -119,7 +119,7 @@
     </table>
 
     <div class="demo">
-        <h2>Arrastrar y soltar para cambiar el orden de la grilla</h2> <button type="button" onclick="display_array();">Re-ordenar Grilla!</button>
+        <h2>Arrastrar y soltar para cambiar el orden de la grilla</h2> <button type="button" onclick="display_array(true);">Re-ordenar Grilla!</button>
         <ul id="sortable">
             @*@foreach (var item in Model.Products.OrderBy(x => x.SortOrder))
                 {
@@ -146,7 +146,7 @@
                 var p = item.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(d => d.SortOrder).FirstOrDefault();
                 if (p != null)
                 {
-                    <li class="ui-state-default @(destacado)">
+                    <li class="ui-state-default @(destacado) " data-id='@item.ProductID' >
                         <img src="@(p.FileName)" alt="Photo" width="200" height="200" class="img_class" /><span>@Html.DisplayFor(modelItem => item.Name)</span>
 
                     </li>
@@ -166,63 +166,9 @@
 
 <script>
 
-    $(function () {
-
-        //-------------step 1
-        var $sortableList = $("#sortable");
-
-        var sortEventHandler = function (event, ui) {
-            console.log("New sort order!");
-
-        };
-
-        $sortableList.sortable({
-            stop: sortEventHandler
-        });
-
-        // You can also set the event handler on an already existing Sortable widget this way:
-
-        $sortableList.on("sortchange", sortEventHandler);
-
-        //-------------step 2
+    function display_array(showConfirmation) {
 
 
-
-
-        var listElements = $sortableList.children();
-
-        console.log(listElements); // [ <li>, <li>, ... ]
-
-        var listValues = [];
-
-        //$( "li" ).each( function( index, element ){
-        //console.log( $( this ).text() );
-        //listValues.push(element.innerText);
-        //listValues.push($( this ).text());
-        //});
-
-
-        //$( "li" ).each( function( index, element ){
-        //console.log( $( this ).text() );
-        //});
-
-        listElements.each(function (index, element) {
-            //listElements.forEach(function(element){
-            listValues.push(element.innerText);
-        });
-
-        //listElements.each(function(element){
-        //listElements.forEach(function(element){
-        //listValues.push(element.innerText);
-        //});
-
-        console.log(listValues); // [ "Item 1", "Item 2", ... ]
-
-
-    });
-
-
-    function display_array() {
 
         //-------------step 1
         var $sortableList = $("#sortable");
@@ -251,7 +197,7 @@
 
         var listValues = [];
         listElements.each(function (index, element) {
-            listValues.push(element.innerText);
+            listValues.push($(element).data('id'));
         });
 
         console.log(listValues); // [ "Item 1", "Item 2", ... ]
@@ -267,18 +213,61 @@
             error: errorFunc
         });
 
+
+
         function successFunc(data, status) {
-            alert(data);
+            if (showConfirmation) {
+                alert(data);
+            }
+            
         }
 
         function errorFunc() {
-            alert('error');
+             alert('error');
+            
+           
         }
 
     }
 
 
+    $(function () {
+
+        display_array(false);
+
+        //    //-------------step 1
+        //    var $sortableList = $("#sortable");
+
+        //    var sortEventHandler = function (event, ui) {
+        //        console.log("New sort order!");
+
+        //    };
+
+        //    $sortableList.sortable({
+        //        stop: sortEventHandler
+        //    });
+
+        //    // You can also set the event handler on an already existing Sortable widget this way:
+
+        //    $sortableList.on("sortchange", sortEventHandler);
+
+        //    //-------------step 2
+
+        //    var listElements = $sortableList.children();
+        //    console.log(listElements); // [ <li>, <li>, ... ]
+        //    var listValues = [];
+
+        //    listElements.each(function (index, element) {
+        //        listValues.push(element.innerText);
+        //    });
+
+        //    console.log(listValues); // [ "Item 1", "Item 2", ... ]
 
 
+        });
+
+
+
+    
 
 </script>

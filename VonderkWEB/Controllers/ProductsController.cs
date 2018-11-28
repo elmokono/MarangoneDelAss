@@ -18,14 +18,14 @@ namespace VonderkWEB.Controllers
 
 
         [HttpPost]
-        public ActionResult FirstAjax(string[] listValues)
+        public ActionResult FirstAjax(int[] listValues)
         {
 
             short cont = 0;
 
             foreach (var item in listValues)
             {
-                var m = db.Products.SingleOrDefault(x => x.Name == item);
+                var m = db.Products.SingleOrDefault(x => x.ProductID == item);
                 m.SortOrder = cont;
                 cont++;
             }
