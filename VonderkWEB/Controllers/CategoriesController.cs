@@ -151,23 +151,46 @@ namespace VonderkWEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Category category, HttpPostedFileBase imageFile)
         {
-            if (ModelState.IsValid)
+
+            if (imageFile == null)
             {
-                db.Entry(category).State = EntityState.Modified;
-                if (imageFile != null)
-                {
-                    category.FileName = imageFile.FileName;
-                    db.SaveChanges();
-                    var pathAssets = Server.MapPath("~/Images/Categories/");
-                    imageFile.SaveAs(Path.Combine(pathAssets, imageFile.FileName));
-                }
-                else
-                {
-                    db.SaveChanges();
-                }
+                var p = db.Categories.Where(x => x.CategoryID == category.CategoryID).FirstOrDefault();
+
+
+
+                p.FileName = "";
+                p.IsActive = true;
+                p.Name = category.Name;
+                p.SortOrder = category.SortOrder;
+
+                db.SaveChanges();
 
                 return RedirectToAction("Index");
+
             }
+            else {
+
+                if (ModelState.IsValid)
+                {
+                    db.Entry(category).State = EntityState.Modified;
+                    if (imageFile != null)
+                    {
+                        category.FileName = imageFile.FileName;
+                        db.SaveChanges();
+                        var pathAssets = Server.MapPath("~/Images/Categories/");
+                        imageFile.SaveAs(Path.Combine(pathAssets, imageFile.FileName));
+                    }
+                    else
+                    {
+                        db.SaveChanges();
+                    }
+
+                    return RedirectToAction("Index");
+                }
+
+            }
+
+           
             return View(category);
         }
 
