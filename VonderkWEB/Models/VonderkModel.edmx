@@ -11,6 +11,7 @@
           </Key>
           <Property Name="BrandID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="1024" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Categories">
@@ -19,7 +20,9 @@
           </Key>
           <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="1024" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="SortOrder" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductAssets">
           <Key>
@@ -43,8 +46,9 @@
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="2000" Nullable="false" />
           <Property Name="Features" Type="varchar(max)" Nullable="false" />
-          <Property Name="ProductCode" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="SortOrder" Type="smallint" Nullable="false" />
+          <Property Name="IsOutstanding" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Slides">
           <Key>
@@ -185,6 +189,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="LuminariaModel.FK_Products_Brands" FromRole="Brand" ToRole="Product" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -194,6 +199,8 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="LuminariaModel.FK_Products_Categories" FromRole="Category" ToRole="Product" />
+          <Property Name="FileName" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="SortOrder" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductAsset">
           <Key>
@@ -218,11 +225,12 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="false" />
           <Property Name="Features" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Brand" Relationship="LuminariaModel.FK_Products_Brands" FromRole="Product" ToRole="Brand" />
           <NavigationProperty Name="Category" Relationship="LuminariaModel.FK_Products_Categories" FromRole="Product" ToRole="Category" />
           <NavigationProperty Name="ProductAssets" Relationship="LuminariaModel.FK_ProductAssets_Products" FromRole="Product" ToRole="ProductAsset" />
+          <Property Name="SortOrder" Type="Int16" Nullable="false" />
+          <Property Name="IsOutstanding" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Slide">
           <Key>
@@ -312,6 +320,7 @@
           <EntitySetMapping Name="Brands">
             <EntityTypeMapping TypeName="LuminariaModel.Brand">
               <MappingFragment StoreEntitySet="Brands">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="BrandID" ColumnName="BrandID" />
@@ -321,6 +330,8 @@
           <EntitySetMapping Name="Categories">
             <EntityTypeMapping TypeName="LuminariaModel.Category">
               <MappingFragment StoreEntitySet="Categories">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
@@ -343,8 +354,9 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="LuminariaModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="IsOutstanding" ColumnName="IsOutstanding" />
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
                 <ScalarProperty Name="Features" ColumnName="Features" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />

@@ -11,11 +11,32 @@ using VonderkWEB.Models;
 
 namespace VonderkWEB.Controllers
 {
+    [Authorize]
     public class ProductsController : Controller
     {
         private LuminariaEntities db = new LuminariaEntities();
 
+
+        [HttpPost]
+        public ActionResult FirstAjax(int[] listValues)
+        {
+
+            short cont = 0;
+
+            foreach (var item in listValues)
+            {
+                var m = db.Products.SingleOrDefault(x => x.ProductID == item);
+                m.SortOrder = cont;
+                cont++;
+            }
+            db.SaveChanges();
+
+            return Json("Se cambio el orden correctamente", JsonRequestBehavior.AllowGet);
+        }
+
+
         // GET: Products
+        [AllowAnonymous]
         public ActionResult Index()
         {
             var model = new Models.HomeViewModel().Get();
@@ -24,15 +45,45 @@ namespace VonderkWEB.Controllers
             //return View(Products.ToList());
         }
 
-        // GET: Products/Details/5
-        public ActionResult Details(int? id)
+        // GET: Products
+        public ActionResult AdminIndex()
         {
+            var model = new Models.HomeViewModel().Get();
+            return View(model);
+            //var Products = db.Products.Include(p => p.Category).Include(p => p.Brand);
+            //return View(Products.ToList());
+        }
 
-            if (!id.HasValue) { return HttpNotFound(); }
-            ProductDetailsViewModel model = new ProductDetailsViewModel(id.Value);
+        //// GET: Products/Details/5
+        //[AllowAnonymous]
+        //public ActionResult Details(int? id)
+        //{
+
+        //    if (!id.HasValue) { return HttpNotFound(); }
+        //    ProductDetailsViewModel model = new ProductDetailsViewModel(id.Value);
+
+        //    return View(model);
+        //            }
+
+        [AllowAnonymous]
+        [Route("Products/Details/{name}")]
+        public ActionResult Details(string name)
+        {
+            int id = 0;
+            ProductDetailsViewModel model = null;
+
+            if (int.TryParse(name, out id))
+            {
+                model = new ProductDetailsViewModel(id);
+            }
+            else
+            {
+                model = new ProductDetailsViewModel(name);
+            }
+            //if (!id.HasValue) { return HttpNotFound(); }
 
             return View(model);
-                    }
+        }
 
         // GET: Products/Create
         public ActionResult Create()
@@ -48,22 +99,27 @@ namespace VonderkWEB.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         //public ActionResult Create([Bind(Include = "ID,BrandID,CategoryID,Nombre,Descripcion,Caracteristicas,ProductCode")] Product Product)
-        public ActionResult Create(Product model, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
+        public ActionResult Create(Product model,String imagesList, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
             var errors = ModelState.Where(x => x.Value.Errors.Count > 0).Select(x => new { x.Key, x.Value.Errors }).ToArray();
 
             var pathAssets = Server.MapPath("~/Products/");
 
+            if (model.Features == null)
+            {
+                model.Features = "";
+            }
+
             if (ModelState.IsValid)
             {
                 model.IsActive = true;
-                new ProductDetailsViewModel().New(model, pathAssets, labeledAssets, imageFiles, fichaFiles, iesFiles);
+                new ProductDetailsViewModel().New(model, pathAssets, imagesList, labeledAssets, imageFiles, fichaFiles, iesFiles);
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", model.CategoryID);
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "Name", model.BrandID);
 
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex", "Products");
         }
 
         // GET: Products/Edit/5
@@ -88,19 +144,25 @@ namespace VonderkWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Product model, String deletedAssets, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
+        public ActionResult Edit(Product model, String imagesList, String deletedAssets, String labeledAssets, List<HttpPostedFileBase> imageFiles, List<HttpPostedFileBase> fichaFiles, List<HttpPostedFileBase> iesFiles)
         {
+
+            if (model.Features == null) {
+                model.Features = "";
+            }
+
             if (ModelState.IsValid)
             {
                 var pathAssets = Server.MapPath("~/Products/");
-                new ProductDetailsViewModel().Edit(model, pathAssets, deletedAssets, labeledAssets, imageFiles, fichaFiles, iesFiles);
+                new ProductDetailsViewModel().Edit(model, pathAssets, imagesList, deletedAssets, labeledAssets, imageFiles, fichaFiles, iesFiles);
                 //db.Entry(Product).State = EntityState.Modified;
                 //db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("AdminIndex","Products");
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", model.CategoryID);
             ViewBag.BrandID = new SelectList(db.Brands, "BrandID", "Name", model.BrandID);
+            
             return View(model);
         }
 
@@ -146,7 +208,7 @@ namespace VonderkWEB.Controllers
             Product Product = db.Products.Find(id);
             db.Products.Remove(Product);
             db.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("AdminIndex", "Products");
         }
 
         protected override void Dispose(bool disposing)

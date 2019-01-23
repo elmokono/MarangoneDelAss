@@ -1,10 +1,7 @@
-﻿@model VonderkWEB.Models.Product
-
+﻿﻿@model VonderkWEB.Models.Product
 @{
-    ViewBag.Title = "Edasdait";
+    ViewBag.Title = "Editar producto";
 }
-
-
 
 <script>
     $(function () {
@@ -13,9 +10,7 @@
         $("#sortable").disableSelection();
     });
 </script>
-
 <style>
-
 
 
     #sortable {
@@ -63,155 +58,187 @@
     .demo {
         width: 100%;
     }
+
+    .asset {
+        max-width: 300px;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+        .flex-container .box {
+            background-color: #f1f1f1;
+            width: 100%;
+            margin: 10px;
+            text-align: center;
+            display: block;
+            overflow: auto;
+        }
 </style>
-
-
-<h2>Edit</h2>
-
 <div class="content">
-    <form role="form" name="form1" id="form1" method="post" action="/Products/Edit" enctype="multipart/form-data">
-
-        @Html.AntiForgeryToken()
-
-        <div class="form-horizontal">
-            <h4>Product</h4>
-            <hr />
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.HiddenFor(model => model.ProductID)
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.BrandID, "BrandID", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("BrandID", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.BrandID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.CategoryID, "CategoryID", htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.Features, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.Features, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Features, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ProductCode, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ProductCode, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.ProductCode, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-25">
-                    Imagen
-                </div>
-                <div class="col-75">
-                    <input type="file" multiple="multiple" id="imageFiles" name="imageFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-25">
-                    Ficha
-                </div>
-                <div class="col-75">
-                    <input type="file" multiple="multiple" id="fichaFiles" name="fichaFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-25">
-                    IES
-                </div>
-                <div class="col-75">
-                    <input type="file" multiple="multiple" id="iesFiles" name="iesFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
-                </div>
-            </div>
-
-            <div class="demo">
-
-                <div class="gallery">
-                    <ul id="sortable" class="gallery">
-                        @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG"))
-                        {
-                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                <img src="@item.FileName" style="height:160px" alt="1">
-                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-                <div class="fichasgallery">
-                    <div id='file-list-display'>
-                        @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "PDF"))
-                        {
-                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                <img src="@item.FileName" style="height:160px" alt="1">
-                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                            </li>
-                        }
+    <div class="content">
+        <form role="form" name="form1" id="form1" method="post" action="/Products/Edit" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <h4>Editar producto</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ProductID)
+                @Html.HiddenFor(model => model.SortOrder)
+                <div class="form-group">
+                    <div class="col-25">
+                        <label class="control-label col-md-2" for="BrandID">Marca</label>
+                    </div>
+                    <div class="col-75">
+                        @Html.DropDownList("BrandID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.BrandID, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="IESgallery">
-                    <div id='ies-list-display'>
-                        @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IES"))
-                        {
-                            <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
-                                <img src="@item.FileName" style="height:160px" alt="1">
-                                <a href="javascript:remove(@item.AssetID);">Borrar</a>
-                            </li>
-                        }
+                <div class="form-group">
+                    <div class="col-25">
+                        <label class="control-label col-md-2" for="CategoryID">Categoría</label>
+                    </div>
+                    <div class="col-75">
+                        @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-            </div><!-- End demo -->
-            @Html.Hidden("deletedAssets")
-            @Html.Hidden("labeledAssets")
+                <div class="form-group">
+                    <div class="col-25">
+                        <label class="control-label col-md-2" for="Name">Nombre</label>
+                    </div>
+                    <div class="col-75">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-25">
+                        <label class="control-label col-md-2" for="Description">Descripción</label>
+                    </div>
+                    <div class="col-75">
+                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-25">
+                        <label class="control-label col-md-2" for="Features">Características</label>
+                    </div>
+                    <div class="col-75">
+                        @Html.TextAreaFor(model => model.Features, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Features, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label class="control-label col-md-2" for="IsOutstanding">Destacado</label><br /><span style="font-size:14px; font-weight:900; margin-top: -10px;
+    display: block;">Tamaño: 540px x 620px</span>
+                    </div>
+                    <div class="col-75">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(model => model.IsOutstanding)
+                            @Html.ValidationMessageFor(model => model.IsOutstanding, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-default" />
+                <div class="row">
+                    <div class="col-25">
+                        Imagen
+                    </div>
+                    <div class="col-75">
+                        <input type="file" multiple="multiple" id="imageFiles" name="imageFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        Ficha
+                    </div>
+                    <div class="col-75">
+                        <input type="file" multiple="multiple" id="fichaFiles" name="fichaFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
+                        IES
+                    </div>
+                    <div class="col-75">
+                        <input type="file" multiple="multiple" id="iesFiles" name="iesFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
+                    </div>
+                </div>
+                <div class="flex-container">
+                    <div class="demo">
+                        <div class="box gallery">
+                            <h2>Images Archivos</h2>
+                            <ul id="sortable" class="imageGallery">
+                                @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IMG").OrderBy(m => m.SortOrder))
+                                {
+                                    <li class="asset onlyImage ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                        <img src="@item.FileName" width="200" height="200" alt="1">
+                                        <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                        <div class="box fichasgallery">
+                            <div id='file-list-display'>
+                                <h2>Files Archivos</h2>
+                                <ul class="gallery">
+                                    @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "PDF"))
+                                    {
+                                        <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                            <img src="~/Images/Icons/ico-ficha.png" style="height:60px" alt="1">
+                                            @item.FileName
+                                            <input type="text" data-name="@item.FileName" data-id="@item.AssetID" value="@item.Name" class="fileLabel" />
+                                            @*@item.Name*@<br /><br />
+                                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="box IESgallery">
+                            <div id='ies-list-display'>
+                                <h2>IES Archivos</h2>
+                                <ul class="gallery">
+                                    @foreach (var item in Model.ProductAssets.Where(x => x.AssetType == "IES"))
+                                    {
+                                        <li class="asset ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                            <img src="~/Images/Icons/ico-ies.png" style="height:60px" alt="1">
+                                            <input type="text" data-name="@item.FileName" data-id="@item.AssetID" value="@item.Name" class="fileLabel" />
+                                            @*@item.Name*@<br /><br />
+                                            <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div><!-- End demo -->
+                </div>
+                @Html.Hidden("deletedAssets")
+                @Html.Hidden("labeledAssets")
+                @Html.Hidden("imagesList")
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-75">
+                        <input type="submit" value="Guardar" class="btn btn-default" />
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    </div>
+    <div>
+        @Html.ActionLink("Volver al listado", "AdminIndex")
+    </div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
 </div>
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-
 
 <script>
 
@@ -250,7 +277,7 @@
                     reader.onload = function (event) {
                         var idx = $('li.text-preview').length;
                         console.log(input.files[idx]);
-                        var p = $('<li class="text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
+                        var p = $('<li class="asset onlyImage text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
                         $('<img width="100" height="100" class="img_class">').attr('src', event.target.result).appendTo(p);
                         $('<a onclick="removeByName(\'' + input.files[idx].name + '\')">Borrar</a>').appendTo(p);
                     }
@@ -264,8 +291,7 @@
         };
 
         $('#imageFiles').on('change', function () {
-            $(".demo").prepend($('<h4>Arrastrar y soltar para cambiar el orden de las imagenes</h4>'));
-            $(".demo").prepend($('<hr/>'));
+
 
             var files = $('#imageFiles')[0].files;
             var totalSize = 0;
@@ -274,7 +300,7 @@
                 totalSize += files[i].size;
             }
             if (totalSize < 10485760) {
-                imagesPreview(this, 'ul.gallery');
+                imagesPreview(this, 'ul.imageGallery');
             } else {
                 alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
                 window.location.reload(true);
@@ -346,39 +372,32 @@
         var fileInput = document.getElementById('fichaFiles');
         var fileListDisplay = document.getElementById('file-list-display');
 
-        var fileList = [];
-        var renderFileList, sendFile;
-
         fileInput.addEventListener('change', function (evnt) {
-            fileList = [];
+
             for (var i = 0; i < fileInput.files.length; i++) {
-                fileList.push(fileInput.files[i]);
+
+                var file = fileInput.files[i];
+                var fileDisplayEl = document.createElement('li');
+                fileDisplayEl.setAttribute("class", "testing asset col-25")
+                fileDisplayEl.setAttribute("data-id", file.name)
+                fileDisplayEl.setAttribute("data-name", file.name)
+                fileDisplayEl.setAttribute("data-new", "true")
+                fileDisplayEl.innerHTML = (i + 1) + ': ' + file.name + '<input type="text" data-name="' + file.name + '" class="fileLabel"  id="selector"><a onclick="removeByName(\'' + file.name + '\')">Borrar</a>';
+                fileListDisplay.appendChild(fileDisplayEl);
             }
-            renderFileList();
+
         });
 
-        renderFileList = function () {
-            fileListDisplay.innerHTML = '';
-            fileList.forEach(function (file, index) {
-                var fileDisplayEl = document.createElement('p');
-                fileDisplayEl.setAttribute("class", "testing col-25")
-                fileDisplayEl.setAttribute("data-id", file.name)
-                fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" id="selector"><a onclick="removeByName(\'' + file.name + '\')">Borrar</a>';
-                fileListDisplay.appendChild(fileDisplayEl);
-            });
-        };
     })();
+
 
     //---------------------------------Multiple product assets (IES)---------------------------------
     (function () {
         var iesInput = document.getElementById('iesFiles');
         var iesListDisplay = document.getElementById('ies-list-display');
 
-        //var fileList = [];
-        //var renderFileList, sendFile;
-
         iesInput.addEventListener('change', function (evnt) {
-            //fileList = [];
+
             $('li.asset[data-new="true"]', $('#ies-list-display')).remove();
             for (var i = 0; i < iesInput.files.length; i++) {
 
@@ -393,27 +412,33 @@
                 iesListDisplay.appendChild(fileDisplayIES);
 
             }
-            //renderFileList();
+
         });
 
-        //renderFileList = function () {
-        //    fileListDisplay.innerHTML = '';
-        //    fileList.forEach(function (file, index) {
-        //        var fileDisplayEl = document.createElement('li');
-        //        fileDisplayEl.setAttribute("class", "testingies asset col-25")
-        //        fileDisplayEl.setAttribute("data-id", file.name)
-        //        fileDisplayEl.setAttribute("data-name", file.name)
-        //        fileDisplayEl.innerHTML = (index + 1) + ': ' + file.name + '<input type="text" data-name="' + file.name + '" class="iesLabel" id="selector" /><a onclick="removeByName(\'' + file.name + '\')">Borrar</a>';
-        //        fileListDisplay.appendChild(fileDisplayEl);
-        //        fileListDisplay.appendChild(fileDisplayEl);
-
-        //    });
-        //};
     })();
 
     (function () {
 
         $('#form1').submit(function () {
+
+            //make sure hidden fields are empty before submit
+            $('#imagesList').val('');
+            $('#labeledAssets').val('');
+
+            $('li.onlyImage').each(function (i, e) {
+                var o = $('#imagesList').val();
+                $('#imagesList').val(o + '|' + $(e).data('name'));
+            });
+
+            $('li.onlyImage').each(function (i, e) {
+                var o = $('#labeledAssets').val();
+                $('#labeledAssets').val(o + '|' + $(e).data('name') + '^' + $(e).data('name'));
+            });
+
+            $('input.fileLabel').each(function (i, e) {
+                var o = $('#labeledAssets').val();
+                $('#labeledAssets').val(o + '|' + $(e).data('name') + '^' + $(e).val());
+            });
 
             $('input.iesLabel').each(function (i, e) {
                 var o = $('#labeledAssets').val();

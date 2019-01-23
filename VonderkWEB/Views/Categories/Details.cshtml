@@ -1,0 +1,36 @@
+﻿@model VonderkWEB.Models.Category
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="content">
+
+    <div>
+
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+
+            <dt>
+                Imagen
+            </dt>
+
+            <dd>
+                <img src="~/Images/Categories/@Model.FileName" />
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.CategoryID }) |
+        @Html.ActionLink("Volver al listado", "Index")
+    </p>
+
+
+</div>

@@ -1,0 +1,302 @@
+﻿﻿@model VonderkWEB.Models.Work
+
+@{
+    ViewBag.Title = "Editar";
+}
+
+
+<style>
+
+    #sortable {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        width: 800px;
+    }
+
+        #sortable li {
+            margin: 3px 3px 3px 0;
+            padding: 1px;
+            float: left;
+            width: 200px;
+            font-size: 1em;
+            text-align: center;
+        }
+
+            #sortable li span {
+                position: absolute;
+                margin-left: -1.3em;
+            }
+
+    .gallery {
+        margin-left: 100px;
+        width: 100%;
+    }
+
+    .fichasgallery {
+        width: 100%;
+    }
+
+    .testing {
+        padding: 20px;
+        margin: 20px;
+        border: solid brown 1px;
+    }
+
+    .testingies {
+        padding: 20px;
+        margin: 20px;
+        border: solid green 1px;
+    }
+
+    .demo {
+        width: 100%;
+    }
+
+    .asset {
+        max-width: 300px;
+    }
+
+    .flex-container {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+        .flex-container .box {
+            background-color: #f1f1f1;
+            width: 100%;
+            margin: 10px;
+            text-align: center;
+            display: block;
+            overflow: auto;
+        }
+</style>
+
+<div class="content">
+
+    <h2>Editar trabajo</h2>
+
+
+    <form role="form" name="form1" id="form1" method="post" action="/Works/Edit" enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.WorkID)
+
+            <div class="form-group">
+                <div class="col-25">
+                    <label class="control-label col-md-2" for="Name">Nombre</label>
+                </div>
+
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-25">
+                    <label class="control-label col-md-2" for="Description">Descripción</label>
+                </div>
+
+                <div class="col-75">
+                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*<div class="form-group">
+                    <div class="col-25">
+                        <label class="control-label col-md-2" for="IsActive">Está activo?</label>
+                    </div>
+
+                    <div class="col-75">
+                        <div class="checkbox">
+                            @Html.EditorFor(model => model.IsActive)
+                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>*@
+
+            <div class="row">
+                <div class="col-25">
+                    Imagen
+                </div>
+                <div class="col-75">
+                    <input type="file" multiple="multiple" id="imageFiles" name="imageFiles" data-buttonname="btn-primary" data-input="false" data-buttontext="Buscar">
+                </div>
+            </div>
+
+            <div class="flex-container">
+                <div class="demo">
+
+                    <div class="box gallery">
+                        <h2>Images Archivos</h2>
+                        <ul id="sortable" class="imageGallery">
+                            @foreach (var item in Model.WorkAssets.Where(x => x.AssetType == "IMG").OrderBy(m => m.SortOrder))
+                            {
+                                <li class="asset onlyImage ui-state-default" data-name="@item.Name" data-id="@item.AssetID">
+                                    <img src="@item.FileName" width="200" height="200" alt="1">
+                                    <a href="javascript:remove(@item.AssetID);">Borrar</a>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
+
+                </div><!-- End demo -->
+
+            </div>
+
+
+            @Html.Hidden("deletedAssets")
+            @Html.Hidden("labeledAssets")
+            @Html.Hidden("imagesList")
+            <div class="form-group">
+                <div class="col-md-offset-2 col-75">
+                    <input class="btn-ordena-grilla" type="submit" value="Guardar" />
+                </div>
+            </div>
+        </div>
+        </form>
+
+        <div>
+            @Html.ActionLink("Volver al listado", "Index")
+        </div>
+
+
+
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+<script>
+
+    //Delete images before submit
+    function remove(assetID) {
+
+        $('li.asset[data-id=' + assetID + ']').remove();
+        o = $('#deletedAssets').val();
+        $('#deletedAssets').val(o + "," + assetID);
+    }
+    function removeByName(assetName) {
+        $('li.asset[data-name="' + assetName + '"]').remove();
+    }
+    function removeAsset(assetID) {
+
+        $('p.testing[data-id=' + assetID + ']').remove();
+
+    }
+
+    $(function () {
+
+
+        var $sortableList = $("#sortable");
+
+
+        // Multiple images preview in browser
+        var imagesPreview = function (input, placeToInsertImagePreview) {
+
+            if (input.files) {
+                var filesAmount = input.files.length;
+
+                for (i = 0; i < filesAmount; i++) {
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (event) {
+                        var idx = $('li.text-preview').length;
+                        console.log(input.files[idx]);
+                        var p = $('<li class="asset onlyImage text-preview ui-state-default" data-id="' + input.files[idx].name + '" data-name="' + input.files[idx].name + '">' + '</li>').appendTo(placeToInsertImagePreview);
+                        $('<img width="100" height="100" class="img_class">').attr('src', event.target.result).appendTo(p);
+                        $('<a onclick="removeByName(\'' + input.files[idx].name + '\')">Borrar</a>').appendTo(p);
+                    }
+                    reader.readAsDataURL(input.files[i]);
+
+                }
+
+
+            }
+
+        };
+
+        $('#imageFiles').on('change', function () {
+
+
+            var files = $('#imageFiles')[0].files;
+            var totalSize = 0;
+
+            for (var i = 0; i < files.length; i++) {
+                totalSize += files[i].size;
+            }
+            if (totalSize < 10485760) {
+                imagesPreview(this, 'ul.imageGallery');
+            } else {
+                alert("A superado el limite máximo de subida (10MB). Por favor, intente nuevamente");
+                window.location.reload(true);
+            }
+        });
+
+      
+        
+
+        var listValues = [];
+
+        var sortEventHandler = function (event, ui) {
+
+            console.log("New sort order!");
+
+            var listElements = $sortableList.children();
+            var listOrder = [];
+
+            console.log(listElements); // [ <li>, <li>, ... ]
+
+            listElements.each(function (index, element) {
+                listValues.push(element.innerText);
+                listOrder.push($(element).data('name'));
+            });
+
+            var myJSON = JSON.stringify(listOrder);
+
+            document.getElementById("hiddenField").value = myJSON;
+
+        };
+
+        $sortableList.sortable({
+            stop: sortEventHandler
+        });
+
+        console.log(listValues); // [ "Item 1", "Item 2", ... ]
+
+
+
+    });
+    
+
+    
+    (function () {
+
+        $('#form1').submit(function () {
+
+
+            $('li.onlyImage').each(function (i, e) {
+                var o = $('#imagesList').val();
+                $('#imagesList').val(o + '|' + $(e).data('name'));
+            });
+
+            $('li.onlyImage').each(function (i, e) {
+                var o = $('#labeledAssets').val();
+                $('#labeledAssets').val(o + '|' + $(e).data('name') + '^' + $(e).data('name'));
+            });
+
+            return true;
+        });
+
+    })();
+
+
+</script>

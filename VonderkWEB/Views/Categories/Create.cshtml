@@ -1,0 +1,64 @@
+﻿@model VonderkWEB.Models.Category
+
+@{
+    ViewBag.Title = "Crear categoría";
+}
+
+<div class="content">
+
+    <h2>Crear nueva categoría</h2>
+
+    <form role="form" method="post" action="/Categories/Create" enctype="multipart/form-data">
+
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+          
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+               
+                <div class="col-75">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            @*-----------------------------------------------/UPLOAD IMAGE TEST/------------------------------------------------------------------------------------------*@
+            <div class="row">
+                <div class="col-25">
+                    @Html.LabelFor(model => model.FileName, htmlAttributes: new { @class = "control-label col-md-2" })
+                </div>
+               
+                <div class="col-75">
+                    <input type="file" id="imageFile" name="imageFile" data-buttonname="btn-primary" data-input="false" data-buttontext="Find file" multiple>
+                </div>
+            </div>
+
+
+            @*------------------------------------------------/END UPLOAD IMAGE TEST/-----------------------------------------------------------------------------------------*@
+
+
+            <div class="row">
+                <div class="col-md-offset-2 col-75">
+                    <input type="submit" value="Crear" class="btn btn-success" />
+                </div>
+            </div>
+
+        </div>
+
+    </form>
+
+
+    <div>
+        @Html.ActionLink("Volver al listado", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+</div>

@@ -11,7 +11,8 @@ namespace VonderkWEB.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web.Mvc;
+
     public partial class Work
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,6 +23,7 @@ namespace VonderkWEB.Models
     
         public int WorkID { get; set; }
         public string Name { get; set; }
+        [AllowHtml]
         public string Description { get; set; }
         public bool IsActive { get; set; }
     

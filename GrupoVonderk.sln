@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VonderkCRUD", "VonderkCRUD\VonderkCRUD.csproj", "{04509CB4-DC74-4210-93A8-104C7277E345}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VonderkWEB", "VonderkWEB\VonderkWEB.csproj", "{41306D0C-6516-4FF1-9695-3CD8AE178C1A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{B25AA5F2-E69A-482E-808E-03221B25593B}"
@@ -18,10 +16,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{04509CB4-DC74-4210-93A8-104C7277E345}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04509CB4-DC74-4210-93A8-104C7277E345}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04509CB4-DC74-4210-93A8-104C7277E345}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04509CB4-DC74-4210-93A8-104C7277E345}.Release|Any CPU.Build.0 = Release|Any CPU
 		{41306D0C-6516-4FF1-9695-3CD8AE178C1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41306D0C-6516-4FF1-9695-3CD8AE178C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41306D0C-6516-4FF1-9695-3CD8AE178C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU

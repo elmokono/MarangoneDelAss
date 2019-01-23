@@ -1,0 +1,42 @@
+﻿@model IEnumerable<VonderkWEB.Models.Slide>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div class="content">
+    <h2>Slides de Página principal</h2>
+
+
+    <p>
+        <span class="crear-nuevo-producto">
+            @Html.ActionLink("Cargar nueva slide", "Create")
+        </span>
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+               Imagen
+            </th>
+
+            <th>Acciones</th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    <img src="~/Images/Slides/@item.FileName" style="height:100px" alt="1">
+                </td>
+                <td>
+
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.SlideID })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
