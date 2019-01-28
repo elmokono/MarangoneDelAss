@@ -1,0 +1,147 @@
+﻿@*<script>
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), { zoom: 8, center: { lat: -34.397, lng: 150.644 } });
+        var geocoder = new google.maps.Geocoder(); document.getElementById('submit').addEventListener('click', function () { geocodeAddress(geocoder, map); });
+    }
+</script>*@
+
+<style>
+
+    /* Always set the map height explicitly to define the size of the div * element that contains the map. */ #map {
+        height: 100%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+    }
+</style>
+
+
+<div id="floating-panel">
+    <input id="address" type="textbox" value=""> <input id="submit" type="button" value="Buscar dirección">
+</div>
+<div id="map" class="card" style="width: 100%; height: 400px"></div>
+
+
+<script>
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), { zoom: 8, center: { lat: -34.397, lng: 150.644 } });
+        var geocoder = new google.maps.Geocoder(); document.getElementById('submit').addEventListener('click', function () { geocodeAddress(geocoder, map); });
+    }
+    function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value; geocoder.geocode({ 'address': address },
+            function (results, status) {
+                if (status === 'OK') {
+                    resultsMap.setCenter(results[0].geometry.location);
+                    var marker = new google.maps.Marker({ map: resultsMap, position: results[0].geometry.location });
+                } else { alert('Geocode was not successful for the following reason: ' + status); }
+                //console.log(results[0].address_components.)
+                var arrAddress = results[0].address_components;
+                                
+                var itemStreet_address = '';
+                var itemRoute = '';
+                var itemPolitical = '';
+                var itemCountry = '';
+                var itemAdministrative_area_level_1 = '';
+                var itemAdministrative_area_level_2 = '';
+                var itemAdministrative_area_level_3 = '';
+                var itemAdministrative_area_level_4 = '';
+                var itemAdministrative_area_level_5 = '';
+                var itemLocality = '';
+                var itemPc = '';
+                var itemStreet_number = '';
+
+                // iterate through address_component array
+                $.each(arrAddress, function (i, address_component) {
+                    console.log('address_component:' + i);
+
+                    if (address_component.types[0] == "street_address") {
+                        console.log("street_address:" + address_component.long_name);
+                        itemStreet_address = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "street_number") {
+                        console.log("street_number:" + address_component.long_name);
+                        itemStreet_number = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "route") {
+                        console.log(i + ": route:" + address_component.long_name);
+                        itemRoute = address_component.long_name;
+                    }
+
+
+                    if (address_component.types[0] == "political") {
+                        console.log("political:" + address_component.long_name);
+                        itemPolitical = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "country") {
+                        console.log("country:" + address_component.long_name);
+                        itemCountry = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "administrative_area_level_1") {
+                        console.log(i + ": admin lvl 1:" + address_component.long_name);
+                        itemAdministrative_area_level_1 = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "administrative_area_level_2") {
+                        console.log(i + ": admin lvl 2:" + address_component.long_name);
+                        itemAdministrative_area_level_2 = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "administrative_area_level_3") {
+                        console.log(i + ": admin lvl 3:" + address_component.long_name);
+                        itemAdministrative_area_level_3 = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "administrative_area_level_4") {
+                        console.log(i + ": admin lvl 4:" + address_component.long_name);
+                        itemAdministrative_area_level_4 = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "administrative_area_level_5") {
+                        console.log(i + ": admin lvl 5:" + address_component.long_name);
+                        itemAdministrative_area_level_5 = address_component.long_name;
+                    }
+
+                    if (address_component.types[0] == "locality") {
+                        console.log("locality:" + address_component.long_name);
+                        itemLocality = address_component.long_name;
+                    }
+
+                  
+
+                    if (address_component.types[0] == "postal_code_prefix") {
+                        console.log("pc:" + address_component.long_name);
+                        itemPc = address_component.long_name;
+                    }
+
+                   
+                    //return false; // break the loop   
+                });
+            });
+            
+    }
+
+</script>

@@ -11,9 +11,7 @@ namespace VonderkWEB.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
-
+    
     public partial class Product
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -25,16 +23,13 @@ namespace VonderkWEB.Models
         public int ProductID { get; set; }
         public int BrandID { get; set; }
         public int CategoryID { get; set; }
-        [Required(ErrorMessage = "Complete el nombre del producto")]
         public string Name { get; set; }
-        [Required(ErrorMessage = "Complete la descripción del producto")]
-        [AllowHtml]
         public string Description { get; set; }
-        [AllowHtml]
         public string Features { get; set; }
         public bool IsActive { get; set; }
         public short SortOrder { get; set; }
         public bool IsOutstanding { get; set; }
+        public string ProductCode { get; set; }
     
         public virtual Brand Brand { get; set; }
         public virtual Category Category { get; set; }

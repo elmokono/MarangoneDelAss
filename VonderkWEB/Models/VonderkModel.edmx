@@ -11,8 +11,8 @@
           </Key>
           <Property Name="BrandID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="FileName" Type="varchar" MaxLength="1024" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="1024" />
         </EntityType>
         <EntityType Name="Categories">
           <Key>
@@ -20,9 +20,19 @@
           </Key>
           <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="FileName" Type="varchar" MaxLength="1024" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="SortOrder" Type="smallint" Nullable="false" />
+          <Property Name="FileName" Type="varchar" MaxLength="1024" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GoogleMaps">
+          <Key>
+            <PropertyRef Name="MapID" />
+          </Key>
+          <Property Name="MapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Latitude" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Longitude" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Description" Type="nvarchar" MaxLength="150" />
         </EntityType>
         <EntityType Name="ProductAssets">
           <Key>
@@ -46,6 +56,7 @@
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar" MaxLength="2000" Nullable="false" />
           <Property Name="Features" Type="varchar(max)" Nullable="false" />
+          <Property Name="ProductCode" Type="varchar" MaxLength="150" Nullable="false" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="SortOrder" Type="smallint" Nullable="false" />
           <Property Name="IsOutstanding" Type="bit" Nullable="false" />
@@ -78,6 +89,7 @@
           <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="SortOrder" Type="smallint" Nullable="false" />
         </EntityType>
         <Association Name="FK_ProductAssets_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
@@ -130,6 +142,7 @@
         <EntityContainer Name="LuminariaModelStoreContainer">
           <EntitySet Name="Brands" EntityType="Self.Brands" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GoogleMaps" EntityType="Self.GoogleMaps" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductAssets" EntityType="Self.ProductAssets" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Slides" EntityType="Self.Slides" Schema="dbo" store:Type="Tables" />
@@ -180,6 +193,7 @@
             <End Role="Work" EntitySet="Works" />
             <End Role="WorkAsset" EntitySet="WorkAssets" />
           </AssociationSet>
+          <EntitySet Name="GoogleMaps" EntityType="LuminariaModel.GoogleMap" />
         </EntityContainer>
         <EntityType Name="Brand">
           <Key>
@@ -189,7 +203,7 @@
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="LuminariaModel.FK_Products_Brands" FromRole="Brand" ToRole="Product" />
-          <Property Name="FileName" Type="String" Nullable="false" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="FileName" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -231,6 +245,7 @@
           <NavigationProperty Name="ProductAssets" Relationship="LuminariaModel.FK_ProductAssets_Products" FromRole="Product" ToRole="ProductAsset" />
           <Property Name="SortOrder" Type="Int16" Nullable="false" />
           <Property Name="IsOutstanding" Type="Boolean" Nullable="false" />
+          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Slide">
           <Key>
@@ -262,6 +277,7 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="WorkAssets" Relationship="LuminariaModel.FK_WorkAssets_Works" FromRole="Work" ToRole="WorkAsset" />
+          <Property Name="SortOrder" Type="Int16" Nullable="false" />
         </EntityType>
         <Association Name="FK_Products_Brands">
           <End Type="LuminariaModel.Brand" Role="Brand" Multiplicity="1" />
@@ -311,6 +327,16 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="GoogleMap">
+          <Key>
+            <PropertyRef Name="MapID" />
+          </Key>
+          <Property Name="MapID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -354,6 +380,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="LuminariaModel.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
                 <ScalarProperty Name="IsOutstanding" ColumnName="IsOutstanding" />
                 <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
@@ -391,10 +418,22 @@
           <EntitySetMapping Name="Works">
             <EntityTypeMapping TypeName="LuminariaModel.Work">
               <MappingFragment StoreEntitySet="Works">
+                <ScalarProperty Name="SortOrder" ColumnName="SortOrder" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="WorkID" ColumnName="WorkID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GoogleMaps">
+            <EntityTypeMapping TypeName="LuminariaModel.GoogleMap">
+              <MappingFragment StoreEntitySet="GoogleMaps">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="MapID" ColumnName="MapID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

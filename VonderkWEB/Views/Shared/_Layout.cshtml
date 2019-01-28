@@ -4,6 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <title>@ViewBag.Title</title>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDD8K0Gztviz-FFDGwDD4-4_fE6HQqmD5c&callback=initMap" type="text/javascript"></script>
+
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500,600,700" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -19,8 +21,7 @@
     <!-- fin menu responsivo -->
 
     <script src="~/scripts/tinymce/tinymce.min.js"></script>
-
-   
+    <!-- Script to wire up your TinyMCE editor -->
     <script type="text/javascript">
         // Initialize your tinyMCE Editor with your preferred options
         tinyMCE.init({
@@ -28,6 +29,7 @@
             //mode: "textareas",
             mode: "specific_textareas",
             editor_deselector: "myTextEditor",
+            paste_data_images: true,
             theme: "modern",
             // Theme options
             theme_advanced_buttons1: "save,newdocument,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,|,styleselect,formatselect,fontselect,fontsizeselect",
@@ -101,6 +103,58 @@
             display: block;
         }
     </style>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130586051-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-130586051-1');
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130586051-2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-130586051-2');
+    </script>
+
+
+    @*<script type="text/javascript">
+
+                var markers = @Html.Raw(ViewBag.Markers);
+                window.onload = function () {
+                    var mapOptions = {
+                        center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+                        zoom: 4,
+                        mapTypeId: google.maps.MapTypeId.ROADMAP
+                    };
+                    var infoWindow = new google.maps.InfoWindow();
+                    var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+                    for (i = 0; i < markers.length; i++) {
+                        var data = markers[i]
+                        var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+                        var marker = new google.maps.Marker({
+                            position: myLatlng,
+                            map: map,
+                            title: data.title
+                        });
+                        (function (marker, data) {
+                            google.maps.event.addListener(marker, "click", function (e) {
+                                infoWindow.setContent(data.description);
+                                infoWindow.open(map, marker);
+                            });
+                        })(marker, data);
+                    }
+                }
+        </script>*@
+
+
+
 </head>
 <body>
     <header id="header">

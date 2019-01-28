@@ -16,6 +16,24 @@ namespace VonderkWEB.Controllers
     {
         private LuminariaEntities db = new LuminariaEntities();
 
+
+        [HttpPost]
+        public ActionResult FirstAjax(int[] listValues)
+        {
+
+            short cont = 0;
+
+            foreach (var item in listValues)
+            {
+                var m = db.Works.SingleOrDefault(x => x.WorkID == item);
+                m.SortOrder = cont;
+                cont++;
+            }
+            db.SaveChanges();
+
+            return Json("Se cambio el orden correctamente", JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Works
         [AllowAnonymous]
         public ActionResult Index()

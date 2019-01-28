@@ -32,5 +32,6 @@ namespace VonderkWEB.Models
         public virtual DbSet<Slide> Slides { get; set; }
         public virtual DbSet<WorkAsset> WorkAssets { get; set; }
         public virtual DbSet<Work> Works { get; set; }
+        public virtual DbSet<GoogleMap> GoogleMaps { get; set; }
     }
 }

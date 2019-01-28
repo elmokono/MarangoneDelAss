@@ -9,6 +9,9 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
+using System.Data.SqlClient;
+using System.Configuration;
+using System.Data;
 
 namespace VonderkWEB.Controllers
 {
@@ -21,6 +24,20 @@ namespace VonderkWEB.Controllers
         }
 
         public ActionResult Empresa()
+        {
+
+
+            return View();
+        }
+
+        public ActionResult IndexLocation()
+        {
+
+
+            return View();
+        }
+
+        public ActionResult IndexGeoLocation()
         {
 
 
@@ -84,6 +101,59 @@ namespace VonderkWEB.Controllers
 
             }
             return View(model);
+        }
+
+
+
+
+        public ActionResult Location()
+        {
+            string markers = "[";
+            string CS = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(CS))
+            {
+                SqlCommand cmd = new SqlCommand("spGetMap", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                SqlDataReader sdr = cmd.ExecuteReader();
+                while (sdr.Read())
+                {
+                    markers += "{";
+                    markers += string.Format("'title': '{0}',", sdr["CityName"]);
+                    markers += string.Format("'lat': '{0}',", sdr["Latitude"]);
+                    markers += string.Format("'lng': '{0}',", sdr["Longitude"]);
+                    markers += string.Format("'description': '{0}'", sdr["Description"]);
+                    markers += "},";
+                }
+            }
+            markers += "];";
+            ViewBag.Markers = markers;
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Location(GoogleMap location)
+        {
+            if (ModelState.IsValid)
+            {
+                string CS = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(CS))
+                {
+                    SqlCommand cmd = new SqlCommand("spAddNewLocation", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    con.Open();
+                    cmd.Parameters.AddWithValue("@CityName", location.CityName);
+                    cmd.Parameters.AddWithValue("@Latitude", location.Latitude);
+                    cmd.Parameters.AddWithValue("@Longitude", location.Longitude);
+                    cmd.Parameters.AddWithValue("@Description", location.Description);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+
+            }
+            return RedirectToAction("Location");
         }
 
 
