@@ -17,6 +17,20 @@ namespace VonderkWEB.Controllers
 {
     public class HomeController : Controller
     {
+
+        private LuminariaEntities db = new LuminariaEntities();
+
+        [HttpPost]
+        public ActionResult AddMarker(GoogleMap e)
+        {
+            db.GoogleMaps.Add(e);
+             
+            db.SaveChanges();
+
+            return Json("Se guardo el marker correctamente", JsonRequestBehavior.AllowGet);
+        }
+
+
         public ActionResult Index()
         {
             var model = new Models.HomeViewModel().Get();
@@ -142,7 +156,7 @@ namespace VonderkWEB.Controllers
                     SqlCommand cmd = new SqlCommand("spAddNewLocation", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
-                    cmd.Parameters.AddWithValue("@CityName", location.CityName);
+                    cmd.Parameters.AddWithValue("@CityName", location.Country);
                     cmd.Parameters.AddWithValue("@Latitude", location.Latitude);
                     cmd.Parameters.AddWithValue("@Longitude", location.Longitude);
                     cmd.Parameters.AddWithValue("@Description", location.Description);

@@ -15,9 +15,14 @@ namespace VonderkWEB.Models
     public partial class GoogleMap
     {
         public int MapID { get; set; }
-        public string CityName { get; set; }
+        public string Country { get; set; }
         public Nullable<decimal> Latitude { get; set; }
         public Nullable<decimal> Longitude { get; set; }
         public string Description { get; set; }
+        public string Locality { get; set; }
+        public string Route { get; set; }
+        public Nullable<int> StreetNumber { get; set; }
+        public string AdminAreaL1 { get; set; }
+        public string AdminAreaL2 { get; set; }
     }
 }

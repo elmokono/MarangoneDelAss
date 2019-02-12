@@ -29,10 +29,15 @@
             <PropertyRef Name="MapID" />
           </Key>
           <Property Name="MapID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Latitude" Type="numeric" Precision="18" Scale="0" />
-          <Property Name="Longitude" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="Latitude" Type="decimal" Precision="10" Scale="6" />
+          <Property Name="Longitude" Type="decimal" Precision="10" Scale="6" />
           <Property Name="Description" Type="nvarchar" MaxLength="150" />
+          <Property Name="Locality" Type="nvarchar" MaxLength="50" />
+          <Property Name="Route" Type="nvarchar" MaxLength="50" />
+          <Property Name="StreetNumber" Type="int" />
+          <Property Name="AdminAreaL1" Type="nvarchar" MaxLength="50" />
+          <Property Name="AdminAreaL2" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ProductAssets">
           <Key>
@@ -332,10 +337,15 @@
             <PropertyRef Name="MapID" />
           </Key>
           <Property Name="MapID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Latitude" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="Longitude" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Latitude" Type="Decimal" Precision="10" Scale="6" />
+          <Property Name="Longitude" Type="Decimal" Precision="10" Scale="6" />
           <Property Name="Description" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Locality" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Route" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StreetNumber" Type="Int32" />
+          <Property Name="AdminAreaL1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AdminAreaL2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -429,10 +439,15 @@
           <EntitySetMapping Name="GoogleMaps">
             <EntityTypeMapping TypeName="LuminariaModel.GoogleMap">
               <MappingFragment StoreEntitySet="GoogleMaps">
+                <ScalarProperty Name="AdminAreaL2" ColumnName="AdminAreaL2" />
+                <ScalarProperty Name="AdminAreaL1" ColumnName="AdminAreaL1" />
+                <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+                <ScalarProperty Name="Route" ColumnName="Route" />
+                <ScalarProperty Name="Locality" ColumnName="Locality" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Longitude" ColumnName="Longitude" />
                 <ScalarProperty Name="Latitude" ColumnName="Latitude" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
                 <ScalarProperty Name="MapID" ColumnName="MapID" />
               </MappingFragment>
             </EntityTypeMapping>

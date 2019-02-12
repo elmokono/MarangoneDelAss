@@ -19,8 +19,14 @@
         padding: 0;
     }
 
+    #bodynew {
+    
+        padding-top: 200px;
+    
+    }
+
     #floating-panel {
-        position: absolute;
+        position: inherit;
         top: 10px;
         left: 25%;
         z-index: 5;
@@ -34,19 +40,26 @@
     }
 </style>
 
+<div id="bodynew">
 
-<div id="floating-panel">
-    <input id="address" type="textbox" value=""> <input id="submit" type="button" value="Buscar dirección">
+    <div id="floating-panel">
+        <input id="address" type="textbox" value=""> <input id="submit" type="button" value="Buscar dirección">
+    </div>
+    <div id="map" class="card" style="width: 100%; height: 400px"></div>
+
 </div>
-<div id="map" class="card" style="width: 100%; height: 400px"></div>
 
 
 <script>
+
+   
 
     function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), { zoom: 8, center: { lat: -34.397, lng: 150.644 } });
         var geocoder = new google.maps.Geocoder(); document.getElementById('submit').addEventListener('click', function () { geocodeAddress(geocoder, map); });
     }
+
+
     function geocodeAddress(geocoder, resultsMap) {
         var address = document.getElementById('address').value; geocoder.geocode({ 'address': address },
             function (results, status) {
@@ -73,10 +86,12 @@
                 // iterate through address_component array
                 $.each(arrAddress, function (i, address_component) {
                     console.log('address_component:' + i);
+                    
 
                     if (address_component.types[0] == "street_address") {
                         console.log("street_address:" + address_component.long_name);
                         itemStreet_address = address_component.long_name;
+                       
                     }
 
                     if (address_component.types[0] == "street_number") {
@@ -87,17 +102,21 @@
                     if (address_component.types[0] == "route") {
                         console.log(i + ": route:" + address_component.long_name);
                         itemRoute = address_component.long_name;
+                        
                     }
 
 
                     if (address_component.types[0] == "political") {
                         console.log("political:" + address_component.long_name);
                         itemPolitical = address_component.long_name;
+                        
                     }
 
                     if (address_component.types[0] == "country") {
                         console.log("country:" + address_component.long_name);
                         itemCountry = address_component.long_name;
+                        //marker.markerCountry = address_component.long_name;
+                        
                     }
 
                     if (address_component.types[0] == "administrative_area_level_1") {
@@ -130,18 +149,79 @@
                         itemLocality = address_component.long_name;
                     }
 
-                  
-
                     if (address_component.types[0] == "postal_code_prefix") {
                         console.log("pc:" + address_component.long_name);
                         itemPc = address_component.long_name;
                     }
 
-                   
+
+
                     //return false; // break the loop   
                 });
+
+
+                var marker = {
+                    Latitude: results[0].geometry.location.lng(),
+                    Longitude: results[0].geometry.location.lat(),
+                    Description: "descripcion test",
+                    Country: itemCountry,
+                    Locality: itemLocality,
+                    Route: itemRoute,
+                    StreetNumber: itemStreet_number,
+                    AdminAreaL1: itemAdministrative_area_level_1,
+                    AdminAreaL2: itemAdministrative_area_level_2
+
+                };
+                console.log("address asignado", marker),
+                addMarker(marker);
+                //marker.markerStreet_address = itemStreet_address;
+                //marker.markerCountry = itemCountry;
+                //marker.markerPolitical = itemPolitical;
+                //marker.markerRoute = itemRoute;
+
             });
+
+            
+
+               
             
     }
+
+
+    function addMarker(parameter1) {
+
+        console.log("dentro de la funcion;", parameter1);
+        
+
+        var serviceURL = '/Home/AddMarker';
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: serviceURL,
+            //data: { e: parameter1 },
+            data: JSON.stringify({ e: parameter1 }),
+            success: successFunc,
+            error: errorFunc
+        });
+
+
+
+        function successFunc(data, status) {
+            if (showConfirmation) {
+                alert(data);
+            }
+
+        }
+
+        function errorFunc() {
+            alert('error');
+
+
+        }
+
+
+    }
+
 
 </script>
